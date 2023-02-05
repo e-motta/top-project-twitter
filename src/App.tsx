@@ -1,34 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { Navigate, Route, Routes } from "react-router-dom";
+import Follows from "./components/Follows/Follows";
+import NotFound from "./components/generics/NotFound";
+
+import Home from "./components/Home/Home";
+import Login from "./components/Login/Login";
+import Profile from "./components/Profile/Profile";
+import EditProfile from "./components/Settings/EditProfile";
+import Layout from "./Layout";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <Routes>
+      <Route path="login" element={<Login />} />
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path=":handle" element={<Profile />} />
+        <Route path=":handle/followers" element={<Follows />} />
+        <Route path=":handle/following" element={<Follows />} />
+        <Route path="settings/profile" element={<EditProfile />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  );
 }
 
-export default App
+export default App;
