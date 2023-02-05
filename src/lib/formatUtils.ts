@@ -5,10 +5,10 @@ export const formatDate = (date: Date) => {
 
   if (timeDelta <= 3600000) {
     // minutes ago
-    formattedDate = `${new Date().getMinutes() - date.getMinutes()}m`;
+    formattedDate = `${dateDiff(new Date(), date, "minutes")}m`;
   } else if (timeDelta <= 86400000) {
     // hours ago
-    formattedDate = `${new Date().getHours() - date.getHours()}h`;
+    formattedDate = `${dateDiff(new Date(), date, "hours")}h`;
   } else if (date.getFullYear() === new Date().getFullYear()) {
     // Mmm dd
     formattedDate = date.toLocaleString("en-US", {
@@ -25,6 +25,28 @@ export const formatDate = (date: Date) => {
   }
 
   return formattedDate;
+};
+
+const dateDiff = (a: Date, b: Date, format: "minutes" | "hours") => {
+  const _MS_PER_PERIOD = format === "minutes" ? 1000 * 60 : 1000 * 60 * 60;
+
+  // Discard the time and time-zone information.
+  const utc1 = Date.UTC(
+    a.getFullYear(),
+    a.getMonth(),
+    a.getDate(),
+    a.getHours(),
+    a.getMinutes()
+  );
+  const utc2 = Date.UTC(
+    b.getFullYear(),
+    b.getMonth(),
+    b.getDate(),
+    b.getHours(),
+    b.getMinutes()
+  );
+
+  return Math.abs(Math.floor((utc2 - utc1) / _MS_PER_PERIOD));
 };
 
 export const formatNum = (num: number, digits: number) => {

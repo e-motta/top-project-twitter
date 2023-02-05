@@ -4,7 +4,6 @@ import Tweet from "../generics/Tweet";
 import NavButton from "../generics/NavButton";
 import Header from "../generics/Header";
 import bgImg from "../../assets/bg-example.jpeg";
-import { formatDate } from "../../lib/formatUtils";
 
 const Home = () => {
   // todo: query tweets data
@@ -29,7 +28,7 @@ const Home = () => {
       id: "id3",
       handle: "eduardom0tta",
       text: "This is tweet number 3",
-      date: new Date("2023-02-04T19:01:04.753Z"),
+      date: new Date("2023-02-05T18:01:04.753Z"),
       likes: 23040,
     },
   ];
