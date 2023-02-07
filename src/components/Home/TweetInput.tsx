@@ -15,7 +15,8 @@ const TweetInput = () => {
   const tweetLengthLimit = 280;
 
   const clearInput = () => {
-    if (inputRef.current) (inputRef.current as HTMLElement).innerText = "";
+    if (inputRef.current !== null && inputRef.current)
+      (inputRef.current as HTMLElement).innerText = "";
     setShowPlaceholder(true);
   };
 
@@ -35,7 +36,7 @@ const TweetInput = () => {
             const tweet = (e.target as HTMLElement).innerText;
             setNumOfCharacters(tweet.length);
 
-            if (!tweet.length || tweet.length > tweetLengthLimit) {
+            if (tweet.length === 0 || tweet.length > tweetLengthLimit) {
               flickerButtonRed(setTweetButtonBgColor, "bg-sky-500");
             } else if (tweet.length <= tweetLengthLimit) {
               console.log(tweet);
@@ -62,7 +63,7 @@ const TweetInput = () => {
       </div>
       {showPlaceholder && (
         <div className="text-xl text-gray-500 absolute top-5 left-20 pointer-events-none">
-          What's happening?
+          {"What's happening?"}
         </div>
       )}
       <div className="flex justify-end items-center gap-4 px-1">

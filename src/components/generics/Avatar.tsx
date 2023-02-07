@@ -14,7 +14,7 @@ const Avatar = ({
     lg: "min-w-[48px] sm:w-32",
   };
 
-  const disabledClass = disabled ? "pointer-events-none" : "";
+  const disabledClass = disabled !== undefined ? "pointer-events-none" : "";
 
   return (
     <Link to="/profile" className={disabledClass}>

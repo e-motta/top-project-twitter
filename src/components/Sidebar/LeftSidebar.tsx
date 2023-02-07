@@ -5,8 +5,8 @@ import NavSidebarLink from "./NavSidebarLink";
 
 const LeftSidebar = () => {
   return (
-    <nav className="px-4 py-1 min-h-screen flex flex-col justify-between ">
-      <div className="flex flex-col items-start gap-3 md:w-48">
+    <nav className="px-4 py-1 min-h-screen sm:w-[80px] md:w-[200px] flex flex-col justify-between">
+      <div className="flex flex-col items-start gap-3 md:w-48 fixed">
         <Link to={"/"}>
           <div className="p-3 rounded-full transition-all hover:bg-blue-50">
             <img src={TwitterLogo} alt="twitter logo" className="h-6 w-6" />
@@ -15,8 +15,6 @@ const LeftSidebar = () => {
         <NavSidebarLink type="home" />
         <NavSidebarLink type="profile" />
         <NavSidebarLink type="settings" />
-      </div>
-      <div className="pb-9">
         <NavSidebarButton type="more" />
       </div>
     </nav>

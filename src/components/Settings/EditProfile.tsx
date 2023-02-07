@@ -53,14 +53,14 @@ const EditProfile = () => {
           <CameraIcon className="h-6 w-6 text-white" />
         </button>
         <div
-          className="absolute bottom-0 left-0 translate-y-1/2 p-1 bg-white 
+          className="absolute bottom-0 left-0 translate-y-1/2 p-1 bg-white
           rounded-full ml-4"
         >
           <div>
             <Avatar size="lg" url={userInfo.avatar} disabled />
             <button
               type="button"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 
+              className="absolute top-1/2 left-1/2 -translate-x-1/2
                 -translate-y-1/2 p-3 rounded-full bg-gray-900 bg-opacity-50
                 transition-all hover:bg-gray-800"
             >
@@ -93,7 +93,9 @@ const EditProfile = () => {
             id="name"
             className="border border-gray-200 rounded-sm p-2 pt-6"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
         </div>
 

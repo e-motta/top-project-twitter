@@ -1,7 +1,7 @@
 import { EllipsisHorizontalCircleIcon as MoreSolid } from "@heroicons/react/24/solid";
 import { EllipsisHorizontalCircleIcon as MoreOutline } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import Popup from "../generics/Popup";
+import Popup from "../generics/LogoutPopup";
 
 const NavSidebarButton = ({ type }: { type: "more" }) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -20,7 +20,12 @@ const NavSidebarButton = ({ type }: { type: "more" }) => {
 
   return (
     <div className="relative">
-      <button type="button" onClick={() => setShowPopup(!showPopup)}>
+      <button
+        type="button"
+        onClick={() => {
+          setShowPopup(!showPopup);
+        }}
+      >
         <div
           className="p-3 rounded-full flex text-xl items-center 
           transition-all hover:bg-gray-200"
@@ -28,7 +33,7 @@ const NavSidebarButton = ({ type }: { type: "more" }) => {
           {showPopup ? options.iconsSolid[type] : options.iconsOutline[type]}
           <span
             className={`hidden px-4 justify-center md:flex ${
-              showPopup && "font-bold"
+              showPopup ? "" : "font-bold"
             }`}
           >
             {options.names[type]}

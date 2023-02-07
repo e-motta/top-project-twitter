@@ -14,23 +14,24 @@ const Header = ({
   const navigate = useNavigate();
 
   return (
-    <div
-      id="header"
-      className="flex items-center justify-between gap-4 px-2 pb-1 min-h-[52px]"
-    >
-      <div>
-        {showBackBtn && (
+    <div id="header" className="flex justify-between px-2 pb-1 min-h-[52px]">
+      <div className="flex items-center gap-4">
+        {showBackBtn !== undefined && (
           <button
             type="button"
             className="rounded-full p-2 hover:bg-gray-200"
-            onClick={() => navigate(-1)}
+            onClick={() => {
+              navigate(-1);
+            }}
           >
             <ArrowLeftIcon className="w-5 h-5" />
           </button>
         )}
         <div className="pl-2 flex flex-col">
           <div className="font-bold text-xl">{mainText}</div>
-          {subText && <div className="text-sm text-gray-500">{subText}</div>}
+          {subText !== undefined && (
+            <div className="text-sm text-gray-500">{subText}</div>
+          )}
         </div>
       </div>
       <div className="justify-self-end sm:hidden">

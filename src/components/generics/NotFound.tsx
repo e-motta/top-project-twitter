@@ -6,10 +6,12 @@ const NotFound = () => {
 
   return (
     <div className="flex flex-col items-center pt-24 gap-6">
-      <span className="text-gray-500">Hmm...this page doesn't exist.</span>
+      <span className="text-gray-500">{"Hmm...this page doesn't exist."}</span>
       <Button
         className="bg-sky-500 text-white font-bold"
-        onClick={() => navigate(-1)}
+        onClick={() => {
+          navigate(-1);
+        }}
       >
         Go back
       </Button>

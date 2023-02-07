@@ -20,8 +20,8 @@ const Button = ({
       className={`py-2 px-4 text-sm rounded-full transition-all
         hover:bg-opacity-90 active:bg-opacity-80 disabled:opacity-50
          ${className} ${outlined && "border border-neutral-300"}`}
-      type={type || "button"}
-      form={form || ""}
+      type={type ?? "button"}
+      form={form ?? ""}
       disabled={disabled}
       onClick={onClick}
     >

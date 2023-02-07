@@ -1,8 +1,27 @@
 import logoImg from "../../assets/twitter-logo-blue.png";
 import Button from "../generics/Button";
 import googleLogo from "../../assets/google-logo.svg";
+import { auth, useSignIn, useSignInAnonymous } from "../../firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect } from "react";
 
 const Login = () => {
+  const signIn = useSignIn();
+  const signInAnonymous = useSignInAnonymous();
+
+  const navigate = useNavigate();
+
+  const onAuthStateChangedCallback = useCallback(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user != null) navigate("/");
+    });
+  }, []);
+
+  useEffect(() => {
+    onAuthStateChangedCallback();
+  }, []);
+
   return (
     <div
       id="login-container"
@@ -22,15 +41,22 @@ const Login = () => {
           <div id="title" className="font-bold text-3xl">
             <h2>Sign in to Twitter</h2>
           </div>
-          <Button className="font-bold self-stretch hover:bg-gray-100" outlined>
+          <Button
+            className="font-bold self-stretch hover:bg-gray-100"
+            outlined
+            onClick={signIn}
+          >
             <img className="w-5" src={googleLogo} alt="btn-image" />
             Sign in with Google
           </Button>
           <span>
             Or click{" "}
-            <a href="#" className="text-blue-400 hover:underline">
+            <button
+              className="text-blue-400 hover:underline"
+              onClick={signInAnonymous}
+            >
               here
-            </a>{" "}
+            </button>{" "}
             to log in as a guest.
           </span>
         </div>

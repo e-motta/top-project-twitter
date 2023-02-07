@@ -64,7 +64,7 @@ const Home = () => {
       {tweets.map((t) => (
         <Tweet
           key={t.id}
-          name={usersInfo.find((u) => u.handle === t.handle)?.name || ""}
+          name={usersInfo.find((u) => u.handle === t.handle)?.name ?? ""}
           handle={t.handle}
           date={t.date}
           text={t.text}

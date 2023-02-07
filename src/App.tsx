@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Follows from "./components/Follows/Follows";
 import NotFound from "./components/generics/NotFound";
 
@@ -10,6 +10,7 @@ import Layout from "./Layout";
 
 function App() {
   return (
+    // todo: update router to new syntax
     <Routes>
       <Route path="login" element={<Login />} />
       <Route path="/" element={<Layout />}>

@@ -51,13 +51,13 @@ const Follows = () => {
       <Header mainText="Eduardo" subText="@eduardom0tta" showBackBtn />
       <div className="flex border-b border-slate-100">
         <NavButton
-          to={`/${handle}/followers`}
+          to={`/${handle ?? ""}/followers`}
           selected={selected === "followers"}
         >
           Followers
         </NavButton>
         <NavButton
-          to={`/${handle}/following`}
+          to={`/${handle ?? ""}/following`}
           selected={selected === "following"}
         >
           Following

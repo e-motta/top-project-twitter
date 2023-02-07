@@ -1,7 +1,6 @@
 import Avatar from "./Avatar";
 import { HeartIcon as HearIconOutline } from "@heroicons/react/24/outline";
 import { HeartIcon as HearIconSolid } from "@heroicons/react/24/solid";
-import { Link, useNavigate } from "react-router-dom";
 import { formatDate, formatNum } from "../../lib/formatUtils";
 
 const Tweet = ({

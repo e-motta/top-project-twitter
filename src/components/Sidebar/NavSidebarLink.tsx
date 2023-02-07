@@ -48,7 +48,7 @@ const NavSidebarLink = ({
         {selected ? options.iconsSolid[type] : options.iconsOutline[type]}
         <span
           className={`hidden px-4 justify-center md:flex ${
-            selected && "font-bold"
+            selected ? "" : "font-bold"
           }`}
         >
           {options.names[type]}

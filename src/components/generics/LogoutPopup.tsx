@@ -1,8 +1,13 @@
-const Popup = () => {
+import { useLogOut } from "../../firebase/auth";
+
+const LogoutPopup = () => {
+  const logOut = useLogOut();
+
   return (
     <button
       className="absolute bottom-0 right-0 -translate-x-1/2 
-      sm:translate-x-full md:translate-x-2/3"
+      sm:translate-x-full"
+      onClick={logOut}
     >
       <div
         className="flex items-center h-12 w-32 rounded-lg bg-white border 
@@ -14,4 +19,4 @@ const Popup = () => {
   );
 };
 
-export default Popup;
+export default LogoutPopup;

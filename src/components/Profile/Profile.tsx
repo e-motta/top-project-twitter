@@ -6,7 +6,7 @@ import NavButton from "../generics/NavButton";
 import Tweet from "../generics/Tweet";
 import Header from "../generics/Header";
 import { Link, useParams } from "react-router-dom";
-import { formatDate, formatNum } from "../../lib/formatUtils";
+import { formatNum } from "../../lib/formatUtils";
 
 const Profile = () => {
   const { handle } = useParams();
