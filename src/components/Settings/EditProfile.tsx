@@ -6,9 +6,11 @@ import AvatarImg from "../../assets/avatar_example.jpeg";
 import Button from "../generics/Button";
 import { useEffect, useState } from "react";
 import Header from "../generics/Header";
+import Input from "./Input";
 
 const EditProfile = () => {
   const [name, setName] = useState("");
+  const [handle, setHandle] = useState("");
 
   const filledInputClass = name !== "" ? "top-[8px] text-[.8rem]" : "";
 
@@ -28,7 +30,10 @@ const EditProfile = () => {
   };
 
   useEffect(() => {
-    if (userInfo) setName(userInfo.name);
+    if (userInfo) {
+      setHandle(userInfo.handle);
+      setName(userInfo.name);
+    }
   }, []);
 
   return (
@@ -79,24 +84,9 @@ const EditProfile = () => {
           console.log(e); // todo: handle submit
         }}
       >
-        <div className="flex flex-col relative group">
-          <label
-            htmlFor="name"
-            className={`text-gray-500 absolute top-4 left-2 transition-all
-              group-focus-within:top-2 group-focus-within:text-[.8rem]
-              ${filledInputClass}`}
-          >
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            className="border border-gray-200 rounded-sm p-2 pt-6"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
+        <div className="flex flex-col gap-5">
+          <Input value={name} setValue={setName} label="Name" />
+          <Input value={handle} setValue={setHandle} label="Username" />
         </div>
 
         <div>
@@ -104,6 +94,7 @@ const EditProfile = () => {
             className="text-white bg-black font-bold"
             type="submit"
             form="edit-profile"
+            disabled={name.length === 0 || handle.length === 0}
           >
             Save
           </Button>
