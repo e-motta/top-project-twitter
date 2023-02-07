@@ -33,7 +33,7 @@ const NavSidebarButton = ({ type }: { type: "more" }) => {
           {showPopup ? options.iconsSolid[type] : options.iconsOutline[type]}
           <span
             className={`hidden px-4 justify-center md:flex ${
-              showPopup ? "" : "font-bold"
+              showPopup ? "font-bold" : ""
             }`}
           >
             {options.names[type]}

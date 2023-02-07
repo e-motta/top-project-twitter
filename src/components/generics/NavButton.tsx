@@ -30,7 +30,7 @@ const NavButton = ({
         >
           <div className="pt-3 px-4 flex flex-col gap-3">
             <span className={`font-bold text-sm`}>{children}</span>
-            {selected !== undefined && (
+            {(selected ?? false) && (
               <div className="h-1 rounded-full bg-sky-500 self-stretch" />
             )}
           </div>
@@ -44,7 +44,7 @@ const NavButton = ({
         >
           <div className="pt-3 px-4 flex flex-col gap-3">
             <span className={`font-bold text-sm`}>{children}</span>
-            {selected !== undefined && (
+            {(selected ?? false) && (
               <div className="h-1 rounded-full bg-sky-500 self-stretch" />
             )}
           </div>
