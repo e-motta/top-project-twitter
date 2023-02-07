@@ -6,7 +6,7 @@ const LogoutPopup = () => {
   return (
     <button
       className="absolute bottom-0 right-0 -translate-x-1/2 
-      sm:translate-x-full"
+      sm:translate-x-full z-50"
       onClick={logOut}
     >
       <div

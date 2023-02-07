@@ -34,14 +34,14 @@ const EditProfile = () => {
   return (
     <div>
       <Header
-        mainText="Edit profile"
+        mainText={userInfo.name}
         subText={`@${userInfo.handle}`}
         showBackBtn
       />
 
       <div
         id="bg-img"
-        className="max-h-48 aspect-[25/8] bg-gray-300 relative mb-24"
+        className="max-h-48 aspect-[25/8] bg-gray-300 relative mb-24 -z-50"
       >
         <img src={userInfo.bgImage} alt="background image" />
         <button

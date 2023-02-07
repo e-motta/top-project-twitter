@@ -24,7 +24,7 @@ const Profile = () => {
     bgImage: bgImg,
     followers: ["elonmusk", "billgates"],
     following: ["elonmusk"],
-    tweets: ["id1", "id2"],
+    tweets: ["id1", "id2", "id3"],
   };
 
   // mock
@@ -54,10 +54,17 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col py-1">
-      <Header mainText="Edit profile" subText="0 Tweets" showBackBtn />
+      <Header
+        mainText={profileUserInfo.name}
+        subText={`${profileUserInfo.tweets.length} Tweets`}
+        showBackBtn
+      />
 
-      <div id="bg-img" className="max-h-48 aspect-[25/8] bg-gray-300 relative">
-        <img src={profileUserInfo.bgImage} alt="background image" />
+      <div
+        id="bg-img"
+        className="max-h-48 aspect-[25/8] bg-gray-300 relative -z-50"
+      >
+        <img src={profileUserInfo.bgImage} alt="background image relative" />
         <div
           className="absolute -bottom-2 left-0 translate-y-1/2 p-1 bg-white 
           rounded-full ml-4"
