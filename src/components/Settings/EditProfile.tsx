@@ -5,14 +5,14 @@ import bgImg from "../../assets/bg-example.jpeg";
 import AvatarImg from "../../assets/avatar_example.jpeg";
 import Button from "../generics/Button";
 import { useEffect, useState } from "react";
-import Header from "../generics/Header";
+import Header from "../Header/Header";
 import Input from "./Input";
+import Loading from "../generics/Loading";
 
 const EditProfile = () => {
   const [name, setName] = useState("");
   const [handle, setHandle] = useState("");
-
-  const filledInputClass = name !== "" ? "top-[8px] text-[.8rem]" : "";
+  const [loading, setLoading] = useState(false);
 
   // todo: query current logged in user data
   // todo: display loading spinner for page
@@ -46,7 +46,7 @@ const EditProfile = () => {
 
       <div
         id="bg-img"
-        className="max-h-48 aspect-[25/8] bg-gray-300 relative mb-24 -z-50"
+        className="max-h-48 aspect-[25/8] bg-gray-300 relative mb-24"
       >
         <img src={userInfo.bgImage} alt="background image" />
         <button
@@ -84,9 +84,10 @@ const EditProfile = () => {
           console.log(e); // todo: handle submit
         }}
       >
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 relative">
           <Input value={name} setValue={setName} label="Name" />
           <Input value={handle} setValue={setHandle} label="Username" />
+          {loading && <Loading />}
         </div>
 
         <div>
@@ -95,6 +96,12 @@ const EditProfile = () => {
             type="submit"
             form="edit-profile"
             disabled={name.length === 0 || handle.length === 0}
+            onClick={() => {
+              setLoading(true);
+              setTimeout(() => {
+                setLoading(false);
+              }, 1000);
+            }}
           >
             Save
           </Button>

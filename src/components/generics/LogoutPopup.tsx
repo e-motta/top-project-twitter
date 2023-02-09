@@ -1,4 +1,4 @@
-import { useLogOut } from "../../firebase/auth";
+import { useLogOut } from "../../firebase/hooks";
 
 const LogoutPopup = () => {
   const logOut = useLogOut();
@@ -6,7 +6,7 @@ const LogoutPopup = () => {
   return (
     <button
       className="absolute bottom-0 right-0 -translate-x-1/2 
-      sm:translate-x-full z-50"
+        sm:translate-x-full"
       onClick={logOut}
     >
       <div

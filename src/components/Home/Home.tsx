@@ -2,10 +2,14 @@ import AvatarImg from "../../assets/avatar_example.jpeg";
 import TweetInput from "./TweetInput";
 import Tweet from "../generics/Tweet";
 import NavButton from "../generics/NavButton";
-import Header from "../generics/Header";
+import Header from "../Header/Header";
 import bgImg from "../../assets/bg-example.jpeg";
+import { useContext } from "react";
+import { UserContext } from "../../firebase/UserContext";
 
 const Home = () => {
+  const user = useContext(UserContext);
+
   // todo: query tweets data
 
   // mock
@@ -41,6 +45,7 @@ const Home = () => {
     {
       handle: "eduardom0tta",
       name: "Eduardo",
+      email: "edumrs90@gmail.com",
       avatar: AvatarImg,
       bgImage: bgImg,
       followers: ["elonmusk", "billgates"],
@@ -56,11 +61,13 @@ const Home = () => {
         <NavButton to="" selected>
           For You
         </NavButton>
-        <NavButton to="" notImplemented>
-          Following
-        </NavButton>
+        {user !== null && (
+          <NavButton to="" notImplemented>
+            Following
+          </NavButton>
+        )}
       </nav>
-      <TweetInput />
+      {user !== null && <TweetInput />}
       {tweets.map((t) => (
         <Tweet
           key={t.id}

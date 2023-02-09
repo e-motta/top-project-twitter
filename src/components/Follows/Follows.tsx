@@ -1,5 +1,5 @@
 import { Link, useLocation, useParams } from "react-router-dom";
-import Header from "../generics/Header";
+import Header from "../Header/Header";
 import NavButton from "../generics/NavButton";
 import AvatarImg from "../../assets/avatar_example.jpeg";
 import Button from "../generics/Button";

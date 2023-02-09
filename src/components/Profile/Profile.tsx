@@ -4,7 +4,7 @@ import AvatarImg from "../../assets/avatar_example.jpeg";
 import Button from "../generics/Button";
 import NavButton from "../generics/NavButton";
 import Tweet from "../generics/Tweet";
-import Header from "../generics/Header";
+import Header from "../Header/Header";
 import { Link, useParams } from "react-router-dom";
 import { formatNum } from "../../lib/formatUtils";
 
@@ -60,10 +60,7 @@ const Profile = () => {
         showBackBtn
       />
 
-      <div
-        id="bg-img"
-        className="max-h-48 aspect-[25/8] bg-gray-300 relative -z-50"
-      >
+      <div id="bg-img" className="max-h-48 aspect-[25/8] bg-gray-300 relative">
         <img src={profileUserInfo.bgImage} alt="background image relative" />
         <div
           className="absolute -bottom-2 left-0 translate-y-1/2 p-1 bg-white 
