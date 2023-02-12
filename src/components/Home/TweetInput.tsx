@@ -71,6 +71,9 @@ const TweetInput = ({
         {inputText.length < TWEET_LENGTH_LIMIT + 1 || (
           <span className="text-red-600">{280 - inputText.length}</span>
         )}
+        {inputText.length < TWEET_LENGTH_LIMIT + 1 && inputText.length > 0 && (
+          <span className="text-sky-600">{280 - inputText.length}</span>
+        )}
         <Button
           type="submit"
           form="tweet"
