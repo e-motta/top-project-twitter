@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import Follows from "./components/Follows/Follows";
+import Followers from "./components/Follows/Followers";
+import Following from "./components/Follows/Following";
 import NotFound from "./components/generics/NotFound";
 
 import Home from "./components/Home/Home";
@@ -16,8 +17,8 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path=":handle" element={<Profile />} />
-        <Route path=":handle/followers" element={<Follows />} />
-        <Route path=":handle/following" element={<Follows />} />
+        <Route path=":handle/followers" element={<Followers />} />
+        <Route path=":handle/following" element={<Following />} />
         <Route path="settings/profile" element={<EditProfile />} />
         <Route path="*" element={<NotFound />} />
       </Route>
