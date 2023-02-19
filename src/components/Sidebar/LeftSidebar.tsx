@@ -4,9 +4,11 @@ import NavSidebarButton from "./NavSidebarButton";
 import NavSidebarLink from "./NavSidebarLink";
 import { useContext } from "react";
 import { UserContext } from "../../firebase/UserContext";
+import { useUserHandle } from "./hooks";
 
 const LeftSidebar = () => {
   const user = useContext(UserContext);
+  const handle = useUserHandle();
 
   return (
     <nav className="px-4 py-1 min-h-screen sm:w-[80px] md:w-[200px] flex flex-col justify-between">
@@ -19,7 +21,7 @@ const LeftSidebar = () => {
         <NavSidebarLink type="home" />
         {user !== null && (
           <>
-            <NavSidebarLink type="profile" />
+            <NavSidebarLink type="profile" handle={handle ?? "#"} />
             <NavSidebarLink type="settings" />
             <NavSidebarButton type="more" />
           </>

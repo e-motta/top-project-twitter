@@ -12,8 +12,10 @@ import {
 
 const NavSidebarLink = ({
   type,
+  handle,
 }: {
   type: "home" | "profile" | "settings";
+  handle?: string;
 }) => {
   const location = useLocation();
 
@@ -35,7 +37,7 @@ const NavSidebarLink = ({
     },
     paths: {
       home: "/",
-      profile: "/profile",
+      profile: `/${handle ?? ""}`,
       settings: "/settings/profile",
     },
   };

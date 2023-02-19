@@ -1,58 +1,37 @@
-import AvatarImg from "../../assets/avatar_example.jpeg";
 import TweetInput from "./TweetInput";
 import Tweet from "../generics/Tweet";
 import NavButton from "../generics/NavButton";
 import Header from "../Header/Header";
-import bgImg from "../../assets/bg-example.jpeg";
-import { useContext } from "react";
-import { UserContext } from "../../firebase/UserContext";
+import {
+  tweets as tweetsMock,
+  usersInfo as usersInfoMock,
+} from "../../mock_data";
+import { useUserHandle } from "../Sidebar/hooks";
+import { useProfileInfo, useTweetsbyHandlesLazy } from "../../firebase/hooks";
+import Loading from "../generics/Loading";
 
 const Home = () => {
-  const user = useContext(UserContext);
+  const userHandle = useUserHandle();
+  const userProfileInfo = useProfileInfo(userHandle ?? "");
 
-  // todo: query tweets data
-
-  // mock
-  const tweets = [
-    {
-      id: "id1",
-      handle: "eduardom0tta",
-      text: "This is tweet number 1",
-      date: new Date("2013-02-20T12:01:04.753Z"),
-      likes: 230492,
-    },
-    {
-      id: "id2",
-      handle: "eduardom0tta",
-      text: "This is tweet number 2",
-      date: new Date("2023-02-04T15:01:04.753Z"),
-      likes: 2304,
-    },
-    {
-      id: "id3",
-      handle: "eduardom0tta",
-      text: "This is tweet number 3",
-      date: new Date("2023-02-05T18:01:04.753Z"),
-      likes: 23040,
-    },
-  ];
-
-  const userHandles = tweets.map((t) => t.handle);
   // todo: query users info
 
   // mock
-  const usersInfo = [
-    {
-      handle: "eduardom0tta",
-      name: "Eduardo",
-      email: "edumrs90@gmail.com",
-      avatar: AvatarImg,
-      bgImage: bgImg,
-      followers: ["elonmusk", "billgates"],
-      following: ["elonmusk"],
-      tweets: ["id1", "id2"],
-    },
-  ];
+  const usersInfo = usersInfoMock;
+
+  // const followingHandles = currentUserInfo?.following.push(
+  //   currentUserInfo.handle
+  // );
+  // // todo: query tweets data
+  // const tweets = tweetsMock.filter((t) => followingHandles.includes(t.handle));
+  const tweets = tweetsMock;
+
+  const t = useTweetsbyHandlesLazy(["eduardom0tta"]);
+  // console.log({ t });
+
+  if (userProfileInfo === null) {
+    return <Loading />;
+  }
 
   return (
     <div id="home-container" className="min-h-screen flex flex-col">
@@ -61,13 +40,13 @@ const Home = () => {
         <NavButton to="" selected>
           For You
         </NavButton>
-        {user !== null && (
+        {userHandle !== null && (
           <NavButton to="" notImplemented>
             Following
           </NavButton>
         )}
       </nav>
-      {user !== null && <TweetInput />}
+      {userHandle !== null && <TweetInput profileInfo={userProfileInfo} />}
       {tweets.map((t) => (
         <Tweet
           key={t.id}
@@ -76,7 +55,7 @@ const Home = () => {
           date={t.date}
           text={t.text}
           likes={t.likes}
-          avatarUrl={AvatarImg}
+          avatarUrl={usersInfo.find((u) => u.handle === t.handle)?.avatar ?? ""}
         />
       ))}
     </div>

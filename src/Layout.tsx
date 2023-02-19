@@ -14,7 +14,7 @@ const Layout = () => {
         <LeftSidebar />
       </div>
       <main className="border-x w-full max-w-[600px] border-slate-100">
-        <div>
+        <div className="relative h-screen">
           <Outlet />
         </div>
       </main>

@@ -25,7 +25,7 @@ const TweetInput = ({
   return (
     <div className="flex flex-col py-2 px-4 gap-4 border-b border-neutral-100 relative">
       {loading && (
-        <div className="absolute top-0 left-0 h-1 w-full bg-sky-500 animate-pulse" />
+        <div className="absolute top-[2px] left-[150px] h-1 w-1/2 -translate-x-1/2 bg-sky-500 animate-ping" />
       )}
       <div className="flex gap-4">
         <Avatar

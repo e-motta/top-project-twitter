@@ -8,10 +8,12 @@ const Header = ({
   mainText,
   subText,
   showBackBtn,
+  altBackBtnHref,
 }: {
   mainText: string;
   subText?: string;
   showBackBtn?: boolean;
+  altBackBtnHref?: string;
 }) => {
   const navigate = useNavigate();
   const user = useContext(UserContext);
@@ -24,7 +26,9 @@ const Header = ({
             type="button"
             className="rounded-full p-2 hover:bg-gray-200"
             onClick={() => {
-              navigate(-1);
+              altBackBtnHref === undefined
+                ? navigate(-1)
+                : navigate(altBackBtnHref);
             }}
           >
             <ArrowLeftIcon className="w-5 h-5" />

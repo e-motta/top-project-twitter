@@ -1,40 +1,36 @@
 import { CameraIcon } from "@heroicons/react/24/outline";
 import Avatar from "../generics/Avatar";
-
-import bgImg from "../../assets/bg-example.jpeg";
-import AvatarImg from "../../assets/avatar_example.jpeg";
 import Button from "../generics/Button";
 import { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import Input from "./Input";
 import Loading from "../generics/Loading";
+import { useProfileInfo } from "../../firebase/hooks";
+import { useUserHandle } from "../Sidebar/hooks";
+import NotFound from "../generics/NotFound";
 
 const EditProfile = () => {
-  const [name, setName] = useState("");
-  const [handle, setHandle] = useState("");
+  const [newName, setNewName] = useState("");
+  const [newHandle, setNewHandle] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // todo: query current logged in user data
-  // todo: display loading spinner for page
-  // todo: update name with user name
-
-  // mock
-  const userInfo = {
-    handle: "elonmusk",
-    name: "Elon Musk",
-    avatar: AvatarImg,
-    bgImage: bgImg,
-    followers: ["elonmusk", "billgates"],
-    following: ["elonmusk"],
-    tweets: ["id1", "id2"],
-  };
+  const handle = useUserHandle();
+  const userInfo = useProfileInfo(handle ?? "");
 
   useEffect(() => {
-    if (userInfo) {
-      setHandle(userInfo.handle);
-      setName(userInfo.name);
+    if (userInfo != null) {
+      setNewName(userInfo.name);
+      setNewHandle(userInfo.handle);
     }
-  }, []);
+  }, [userInfo]);
+
+  if (userInfo === null) {
+    return <Loading />;
+  }
+
+  if ("notFound" in userInfo) {
+    return <NotFound />;
+  }
 
   return (
     <div>
@@ -48,7 +44,9 @@ const EditProfile = () => {
         id="bg-img"
         className="max-h-48 aspect-[25/8] bg-gray-300 relative mb-24"
       >
-        <img src={userInfo.bgImage} alt="background image" />
+        {userInfo.bgImage !== null && (
+          <img src={userInfo.bgImage} alt="background image" />
+        )}
         <button
           type="button"
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
@@ -62,7 +60,12 @@ const EditProfile = () => {
           rounded-full ml-4"
         >
           <div>
-            <Avatar size="lg" url={userInfo.avatar} disabled />
+            <Avatar
+              size="lg"
+              url={userInfo.avatar}
+              handle={userInfo.handle}
+              disabled
+            />
             <button
               type="button"
               className="absolute top-1/2 left-1/2 -translate-x-1/2
@@ -85,8 +88,8 @@ const EditProfile = () => {
         }}
       >
         <div className="flex flex-col gap-5 relative">
-          <Input value={name} setValue={setName} label="Name" />
-          <Input value={handle} setValue={setHandle} label="Username" />
+          <Input value={newName} setValue={setNewName} label="Name" />
+          <Input value={newHandle} setValue={setNewHandle} label="Username" />
           {loading && <Loading />}
         </div>
 
@@ -95,7 +98,7 @@ const EditProfile = () => {
             className="text-white bg-black font-bold"
             type="submit"
             form="edit-profile"
-            disabled={name.length === 0 || handle.length === 0}
+            disabled={newName.length === 0 || newHandle.length === 0}
             onClick={() => {
               setLoading(true);
               setTimeout(() => {

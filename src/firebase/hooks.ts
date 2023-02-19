@@ -1,26 +1,13 @@
-import {
-  signInAnonymously,
-  signInWithPopup,
-  signOut,
-  type User,
-} from "firebase/auth";
+import { signInAnonymously, signInWithPopup, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getTweetsByHandle, getTweetsByHandlesLazy } from "../service/tweets";
+import { getProfile, getProfilesByHandlesLazy } from "../service/profiles";
+import { type Tweet, type ProfileInfo } from "../types";
 import { auth, provider } from "./auth";
-
-const isUserRegistered = (user) => {
-  // query firebase for userInfo
-  const userInfo = {
-    handle: "eduardom0tta",
-    name: "Eduardo",
-    email: "edumrs90@gmail.com",
-    avatar: "",
-    bgImage: "",
-    followers: ["elonmusk", "billgates"],
-    following: ["elonmusk"],
-    tweets: ["id1", "id2"],
-  };
-};
+import { type DocWithNotFound } from "./firestore";
+import { type DocWithIdAndDate } from "./firestoreTypes";
+import { type QueryDocumentSnapshot } from "firebase/firestore";
 
 export const useSignIn = () => {
   const navigate = useNavigate();
@@ -63,4 +50,81 @@ export const useLogOut = () => {
         console.error(error.code, error.message);
       });
   };
+};
+
+export const useProfileInfo = (handle: string) => {
+  const [profileInfo, setProfileInfo] =
+    useState<DocWithNotFound<ProfileInfo>>(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getProfile(handle);
+      setProfileInfo(data);
+    };
+    if (handle !== "") void getData(); // todo: handle errors
+  }, [handle]);
+  return profileInfo;
+};
+
+export const useTweetsBySingleHandle = (handle: string) => {
+  const [tweets, setTweets] = useState<Tweet[] | null>(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getTweetsByHandle(handle);
+      setTweets(data);
+    };
+    void getData(); // todo: handle errors
+  }, []);
+
+  return tweets;
+};
+
+export const useTweetsbyHandlesLazy = (handles: string[]) => {
+  const [tweets, setTweets] = useState<Tweet[] | null>(null);
+  const [prevLastVisible, setPrevLastVisibile] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      const { data, lastVisible } = await getTweetsByHandlesLazy(
+        handles,
+        prevLastVisible
+      );
+      setTweets(data);
+      setPrevLastVisibile(lastVisible);
+    };
+    void getData(); // todo: handle errors
+  }, []);
+
+  return tweets;
+};
+
+export const useProfilesByHandlesLazy = (
+  handles: string[],
+  // currentProfiles: ProfileInfo[] | null
+  loadFollows: boolean
+) => {
+  const [profiles, setProfiles] = useState<ProfileInfo[]>([]);
+  const [prevLastVisible, setPrevLastVisibile] = useState<QueryDocumentSnapshot<
+    DocWithIdAndDate<ProfileInfo>
+  > | null>(null);
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      const { data, lastVisible } = await getProfilesByHandlesLazy(
+        handles,
+        prevLastVisible
+      );
+      if (data.length > 0 && lastVisible !== undefined) {
+        setProfiles((p) => [...p, ...data]);
+        setPrevLastVisibile(lastVisible);
+      } else {
+        setDone(true);
+      }
+    };
+    if (handles.length > 0 && loadFollows) void getData(); // todo: handle errors
+  }, [handles, loadFollows]);
+
+  return { profiles, done };
 };
