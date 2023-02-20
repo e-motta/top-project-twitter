@@ -65,6 +65,7 @@ const FollowsProfiles = ({
           </Button>
         </div>
       ))}
+      {/* todo: remove button; replace with infinite scrolling */}
       <button
         onClick={() => {
           if (!done) setLoadFollows(true);
