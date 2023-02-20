@@ -5,7 +5,7 @@ import {
 } from "firebase/firestore";
 import {
   queryDocsByFieldFromFirestore,
-  queryDocsByFieldFromFirestoreLazy,
+  queryDocsFromFirestoreLazy,
 } from "../firebase/firestore";
 import { type Tweet } from "../types";
 
@@ -24,7 +24,7 @@ export const getTweetsByHandlesLazy = async (
   handles: string[],
   prevLastVisible: QueryDocumentSnapshot<DocumentData>
 ) => {
-  const { data, lastVisible } = await queryDocsByFieldFromFirestoreLazy({
+  const { data, lastVisible } = await queryDocsFromFirestoreLazy({
     collectionName: COLLECTION_NAME,
     whereContraints: [where("handle", "in", handles)],
     orderByField: "date",

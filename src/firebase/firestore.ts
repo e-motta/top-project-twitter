@@ -2,7 +2,6 @@ import {
   addDoc,
   collection,
   doc,
-  type DocumentData,
   getDoc,
   getDocs,
   getFirestore,
@@ -10,25 +9,14 @@ import {
   orderBy,
   query,
   type QueryDocumentSnapshot,
-  type QuerySnapshot,
   setDoc,
   where,
   startAfter,
   type QueryFieldFilterConstraint,
-  type CollectionReference,
-  type QueryOrderByConstraint,
-  type QueryLimitConstraint,
-  type QueryStartAtConstraint,
-  type FirestoreDataConverter,
 } from "firebase/firestore";
 import { type ProfileInfo } from "../types";
 import { app } from "./config";
-import { profileDataConverter, tweetDataConverter } from "./converters";
-import {
-  type ProfileLazy,
-  type DocWithIdAndDate,
-  type DocWithNotFound,
-} from "./firestoreTypes";
+import { selectConverter } from "./converters";
 
 export const db = getFirestore(app);
 
@@ -50,41 +38,39 @@ export const setDocToFirestore = async (
 export const getDocFromFirestore = async <Doc>(
   collectionName: string,
   id: string
-): Promise<DocWithNotFound<Doc>> => {
-  const docSnapshot = await getDoc(doc(db, collectionName, id));
-  let data;
+) => {
+  const converter = selectConverter(collectionName);
+  const docSnapshot = await getDoc(
+    doc(db, collectionName, id).withConverter(converter)
+  );
+  let data: Doc | { notFound: boolean } | undefined;
   if (docSnapshot.exists()) {
     data = docSnapshot.data();
   } else {
     data = { notFound: true };
   }
-  return data as DocWithNotFound<Doc>;
+  return data;
 };
 
 export const queryDocsByFieldFromFirestore = async <Doc>(
   collectionName: string,
   field: string,
   target: string
-): Promise<Array<DocWithIdAndDate<Doc>>> => {
-  const q = query(collection(db, collectionName), where(field, "==", target));
+) => {
+  const converter = selectConverter(collectionName);
+  const q = query(
+    collection(db, collectionName).withConverter(converter),
+    where(field, "==", target)
+  );
   const querySnapshot = await getDocs(q);
   const data: Doc[] = [];
   querySnapshot.forEach((doc) => {
-    let date = new Date();
-    if ("date" in doc.data()) {
-      date = doc.data().date.toDate();
-    }
-    const docWithId = {
-      ...doc.data(),
-      id: doc.id,
-      date,
-    };
-    data.push(docWithId as DocWithIdAndDate<Doc>);
+    data.push(doc.data());
   });
-  return data as Array<DocWithIdAndDate<Doc>>;
+  return data;
 };
 
-export const queryDocsByFieldFromFirestoreLazy = async <Doc>({
+export const queryDocsFromFirestoreLazy = async <Doc>({
   collectionName,
   whereContraints,
   orderByField,
@@ -103,17 +89,7 @@ export const queryDocsByFieldFromFirestoreLazy = async <Doc>({
   limitTo !== undefined && queryArguments.push(limit(limitTo));
   startAfterDoc !== undefined && queryArguments.push(startAfter(startAfterDoc));
 
-  let converter: FirestoreDataConverter<any>;
-  switch (collectionName) {
-    case "users":
-      converter = profileDataConverter;
-      break;
-    case "tweets":
-      converter = tweetDataConverter;
-      break;
-    default:
-      throw TypeError("Collection name does not exist.");
-  }
+  const converter = selectConverter(collectionName);
 
   const q = query(
     collection(db, collectionName).withConverter(converter),

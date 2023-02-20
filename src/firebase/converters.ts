@@ -1,7 +1,7 @@
 import { type FirestoreDataConverter } from "firebase/firestore";
 import { type Tweet, type ProfileInfo } from "../types";
 
-export const profileDataConverter: FirestoreDataConverter<ProfileInfo> = {
+const profileDataConverter: FirestoreDataConverter<ProfileInfo> = {
   toFirestore: (data) => data,
   fromFirestore(snapshot, options) {
     const data = snapshot.data(options);
@@ -10,7 +10,7 @@ export const profileDataConverter: FirestoreDataConverter<ProfileInfo> = {
   },
 };
 
-export const tweetDataConverter: FirestoreDataConverter<Tweet> = {
+const tweetDataConverter: FirestoreDataConverter<Tweet> = {
   toFirestore: (data) => data,
   fromFirestore(snapshot, options) {
     const data = snapshot.data(options);
@@ -18,4 +18,19 @@ export const tweetDataConverter: FirestoreDataConverter<Tweet> = {
     data.id = snapshot.id;
     return data as Tweet;
   },
+};
+
+export const selectConverter = (collectionName: string) => {
+  let converter: FirestoreDataConverter<any>;
+  switch (collectionName) {
+    case "users":
+      converter = profileDataConverter;
+      break;
+    case "tweets":
+      converter = tweetDataConverter;
+      break;
+    default:
+      throw TypeError("Collection name does not exist.");
+  }
+  return converter;
 };

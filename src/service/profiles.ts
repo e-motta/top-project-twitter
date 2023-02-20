@@ -3,7 +3,7 @@ import {
   addDocToFirestore,
   getDocFromFirestore,
   queryDocsByFieldFromFirestore,
-  queryDocsByFieldFromFirestoreLazy,
+  queryDocsFromFirestoreLazy,
   setDocToFirestore,
 } from "../firebase/firestore";
 import { type DocWithIdAndDate } from "../firebase/firestoreTypes";
@@ -39,7 +39,7 @@ export const getProfilesByHandlesLazy = async (
   handles: string[],
   prevLastVisible: QueryDocumentSnapshot<DocWithIdAndDate<ProfileInfo>> | null
 ) => {
-  const { data, lastVisible } = await queryDocsByFieldFromFirestoreLazy({
+  const { data, lastVisible } = await queryDocsFromFirestoreLazy({
     collectionName: COLLECTION_NAME,
     whereContraints: [where("handle", "in", handles)],
     orderByField: "email",
