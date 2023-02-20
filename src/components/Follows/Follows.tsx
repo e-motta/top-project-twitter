@@ -4,7 +4,6 @@ import NavButton from "../generics/NavButton";
 import { useProfileInfo } from "../../firebase/hooks";
 import Loading from "../generics/Loading";
 import NotFound from "../generics/NotFound";
-import Following from "./Following";
 import FollowsProfiles from "./FollowsProfiles";
 
 const Follows = () => {
@@ -45,11 +44,7 @@ const Follows = () => {
           Following
         </NavButton>
       </div>
-      {selected === "followers" ? (
-        <FollowsProfiles userInfo={userInfo} key="followers" />
-      ) : (
-        <FollowsProfiles userInfo={userInfo} key="following" />
-      )}
+      <FollowsProfiles userInfo={userInfo} key={selected} />
     </>
   );
 };
