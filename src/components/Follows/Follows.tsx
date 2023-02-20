@@ -5,7 +5,7 @@ import { useProfileInfo } from "../../firebase/hooks";
 import Loading from "../generics/Loading";
 import NotFound from "../generics/NotFound";
 import Following from "./Following";
-import Followers from "./Followers";
+import FollowsProfiles from "./FollowsProfiles";
 
 const Follows = () => {
   const { pathname } = useLocation();
@@ -46,9 +46,9 @@ const Follows = () => {
         </NavButton>
       </div>
       {selected === "followers" ? (
-        <Followers userInfo={userInfo} />
+        <FollowsProfiles userInfo={userInfo} key="followers" />
       ) : (
-        <Following userInfo={userInfo} />
+        <FollowsProfiles userInfo={userInfo} key="following" />
       )}
     </>
   );

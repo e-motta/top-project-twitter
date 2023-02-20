@@ -43,7 +43,7 @@ export const getProfilesByHandlesLazy = async (
     collectionName: COLLECTION_NAME,
     whereContraints: [where("handle", "in", handles)],
     orderByField: "email",
-    limitTo: 1,
+    limitTo: 10,
     startAfterDoc: prevLastVisible,
   });
   return { data, lastVisible };

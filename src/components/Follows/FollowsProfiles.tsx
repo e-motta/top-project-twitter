@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Button from "../generics/Button";
 import Avatar from "../generics/Avatar";
 import { useProfilesByHandlesLazy } from "../../firebase/hooks";
@@ -7,20 +7,42 @@ import { useEffect, useState } from "react";
 import { type ProfileInfo } from "../../types";
 import { type DocWithNotFound } from "../../firebase/firestoreTypes";
 
-const Following = ({
+const FollowsProfiles = ({
   userInfo,
 }: {
   userInfo: DocWithNotFound<ProfileInfo>;
 }) => {
   const [followsHandles, setFollowsHandles] = useState<string[]>([]);
+  const [loadFollows, setLoadFollows] = useState(false);
 
+  const location = useLocation();
+  const profiles = location.pathname.includes("followers")
+    ? "followers"
+    : "following";
+
+  // useEffect(() => {
+  //   if (userInfo !== null) setFollowsHandles(userInfo.followers);
+  // }, [userInfo]);
   useEffect(() => {
-    if (userInfo !== null) setFollowsHandles(userInfo.following);
+    if (userInfo !== null) setFollowsHandles(userInfo[profiles]);
   }, [userInfo]);
 
-  const follows = useProfilesByHandlesLazy(followsHandles, null);
+  const { profiles: follows, done } = useProfilesByHandlesLazy(
+    followsHandles,
+    loadFollows
+  );
 
-  if (followsHandles === null || follows === null) return <Loading />;
+  useEffect(() => {
+    setLoadFollows(true);
+  }, []);
+
+  useEffect(() => {
+    if (loadFollows) {
+      setLoadFollows(false);
+    }
+  }, [loadFollows]);
+
+  if (followsHandles.length === 0 || loadFollows) return <Loading />;
 
   return (
     <div>
@@ -43,8 +65,15 @@ const Following = ({
           </Button>
         </div>
       ))}
+      <button
+        onClick={() => {
+          if (!done) setLoadFollows(true);
+        }}
+      >
+        Load more
+      </button>
     </div>
   );
 };
 
-export default Following;
+export default FollowsProfiles;

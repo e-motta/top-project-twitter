@@ -128,7 +128,7 @@ export const queryDocsByFieldFromFirestoreLazy = async <Doc>({
   querySnapshot.forEach((doc) => {
     data.push(doc.data());
   });
-  console.log({ data });
+
   return {
     data,
     lastVisible,
