@@ -22,9 +22,9 @@ export const getTweetsByHandle = async (handle: string) => {
 
 export const getTweetsByHandlesLazy = async (
   handles: string[],
-  prevLastVisible: QueryDocumentSnapshot<DocumentData>
+  prevLastVisible: QueryDocumentSnapshot<DocumentData> | null
 ) => {
-  const { data, lastVisible } = await queryDocsFromFirestoreLazy({
+  const { data, lastVisible } = await queryDocsFromFirestoreLazy<Tweet>({
     collectionName: COLLECTION_NAME,
     whereContraints: [where("handle", "in", handles)],
     orderByField: "date",

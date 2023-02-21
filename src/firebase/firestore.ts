@@ -13,6 +13,7 @@ import {
   where,
   startAfter,
   type QueryFieldFilterConstraint,
+  type DocumentData,
 } from "firebase/firestore";
 import { type ProfileInfo } from "../types";
 import { app } from "./config";
@@ -43,13 +44,15 @@ export const getDocFromFirestore = async <Doc>(
   const docSnapshot = await getDoc(
     doc(db, collectionName, id).withConverter(converter)
   );
-  let data: Doc | { notFound: boolean } | undefined;
+  let data: Doc | null = null;
+  let status: 200 | 404;
   if (docSnapshot.exists()) {
     data = docSnapshot.data();
+    status = 200;
   } else {
-    data = { notFound: true };
+    status = 404;
   }
-  return data;
+  return { data, status };
 };
 
 export const queryDocsByFieldFromFirestore = async <Doc>(
@@ -81,7 +84,7 @@ export const queryDocsFromFirestoreLazy = async <Doc>({
   whereContraints: QueryFieldFilterConstraint[];
   orderByField?: string;
   limitTo?: number;
-  startAfterDoc?: QueryDocumentSnapshot<Doc> | null;
+  startAfterDoc?: QueryDocumentSnapshot<DocumentData> | null;
 }) => {
   const queryArguments = [];
 

@@ -6,13 +6,16 @@ import {
   tweets as tweetsMock,
   usersInfo as usersInfoMock,
 } from "../../mock_data";
-import { useUserHandle } from "../Sidebar/hooks";
-import { useProfileInfo, useTweetsbyHandlesLazy } from "../../firebase/hooks";
+import {
+  useProfileInfo,
+  useTweetsbyHandlesLazy,
+  useUserHandle,
+} from "../../firebase/hooks";
 import Loading from "../generics/Loading";
 
 const Home = () => {
-  const userHandle = useUserHandle();
-  const userProfileInfo = useProfileInfo(userHandle ?? "");
+  const userHandle = useUserHandle() ?? "";
+  const { profileInfo: userProfileInfo, status } = useProfileInfo(userHandle);
 
   // todo: query users info
 
@@ -29,7 +32,7 @@ const Home = () => {
   const t = useTweetsbyHandlesLazy(["eduardom0tta"]);
   // console.log({ t });
 
-  if (userProfileInfo === null) {
+  if (status === null || userProfileInfo === null) {
     return <Loading />;
   }
 

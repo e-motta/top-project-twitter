@@ -4,7 +4,7 @@ import NavSidebarButton from "./NavSidebarButton";
 import NavSidebarLink from "./NavSidebarLink";
 import { useContext } from "react";
 import { UserContext } from "../../firebase/UserContext";
-import { useUserHandle } from "./hooks";
+import { useUserHandle } from "../../firebase/hooks";
 
 const LeftSidebar = () => {
   const user = useContext(UserContext);

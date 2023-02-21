@@ -13,14 +13,14 @@ import { useProfileInfo, useTweetsBySingleHandle } from "../../firebase/hooks";
 const Profile = () => {
   const { handle } = useParams();
 
-  const profileInfo = useProfileInfo(handle ?? "");
+  const { profileInfo, status } = useProfileInfo(handle ?? "");
   const profileTweets = useTweetsBySingleHandle(handle ?? "");
 
-  if (profileInfo === null) {
+  if (status === null) {
     return <Loading />;
   }
 
-  if ("notFound" in profileInfo) {
+  if (status === 404 || profileInfo === null) {
     return <NotFound />;
   }
 

@@ -1,4 +1,8 @@
-import { where, type QueryDocumentSnapshot } from "firebase/firestore";
+import {
+  type DocumentData,
+  where,
+  type QueryDocumentSnapshot,
+} from "firebase/firestore";
 import {
   addDocToFirestore,
   getDocFromFirestore,
@@ -6,7 +10,6 @@ import {
   queryDocsFromFirestoreLazy,
   setDocToFirestore,
 } from "../firebase/firestore";
-import { type DocWithIdAndDate } from "../firebase/firestoreTypes";
 import { type ProfileInfo } from "../types";
 
 const COLLECTION_NAME = "users";
@@ -37,9 +40,9 @@ export const getProfileByEmail = async (email: string) => {
 
 export const getProfilesByHandlesLazy = async (
   handles: string[],
-  prevLastVisible: QueryDocumentSnapshot<DocWithIdAndDate<ProfileInfo>> | null
+  prevLastVisible: QueryDocumentSnapshot<DocumentData> | null
 ) => {
-  const { data, lastVisible } = await queryDocsFromFirestoreLazy({
+  const { data, lastVisible } = await queryDocsFromFirestoreLazy<ProfileInfo>({
     collectionName: COLLECTION_NAME,
     whereContraints: [where("handle", "in", handles)],
     orderByField: "email",

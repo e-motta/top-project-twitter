@@ -2,13 +2,8 @@ import Avatar from "../generics/Avatar";
 import Button from "../generics/Button";
 import { useRef, useState } from "react";
 import { type ProfileInfo } from "../../types";
-import { type DocWithNotFound } from "../../firebase/firestore";
 
-const TweetInput = ({
-  profileInfo,
-}: {
-  profileInfo: DocWithNotFound<ProfileInfo>;
-}) => {
+const TweetInput = ({ profileInfo }: { profileInfo: ProfileInfo }) => {
   const TWEET_LENGTH_LIMIT = 280;
 
   const [inputText, setInputText] = useState("");

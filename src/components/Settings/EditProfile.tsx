@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import Input from "./Input";
 import Loading from "../generics/Loading";
-import { useProfileInfo } from "../../firebase/hooks";
-import { useUserHandle } from "../Sidebar/hooks";
+import { useProfileInfo, useUserHandle } from "../../firebase/hooks";
 import NotFound from "../generics/NotFound";
 
 const EditProfile = () => {
@@ -15,7 +14,7 @@ const EditProfile = () => {
   const [loading, setLoading] = useState(false);
 
   const handle = useUserHandle();
-  const userInfo = useProfileInfo(handle ?? "");
+  const { profileInfo: userInfo, status } = useProfileInfo(handle ?? "");
 
   useEffect(() => {
     if (userInfo != null) {
@@ -24,11 +23,11 @@ const EditProfile = () => {
     }
   }, [userInfo]);
 
-  if (userInfo === null) {
+  if (status === null) {
     return <Loading />;
   }
 
-  if ("notFound" in userInfo) {
+  if (status === 404 || userInfo === null) {
     return <NotFound />;
   }
 

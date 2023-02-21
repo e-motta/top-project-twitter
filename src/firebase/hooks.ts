@@ -1,13 +1,19 @@
 import { signInAnonymously, signInWithPopup, signOut } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTweetsByHandle, getTweetsByHandlesLazy } from "../service/tweets";
-import { getProfile, getProfilesByHandlesLazy } from "../service/profiles";
+import {
+  getProfile,
+  getProfileByEmail,
+  getProfilesByHandlesLazy,
+} from "../service/profiles";
 import { type Tweet, type ProfileInfo } from "../types";
 import { auth, provider } from "./auth";
-import { type DocWithNotFound } from "./firestore";
-import { type DocWithIdAndDate } from "./firestoreTypes";
-import { type QueryDocumentSnapshot } from "firebase/firestore";
+import {
+  type DocumentData,
+  type QueryDocumentSnapshot,
+} from "firebase/firestore";
+import { UserContext } from "./UserContext";
 
 export const useSignIn = () => {
   const navigate = useNavigate();
@@ -52,18 +58,35 @@ export const useLogOut = () => {
   };
 };
 
+export const useUserHandle = () => {
+  const user = useContext(UserContext);
+  const [handle, setHandle] = useState<string | null>(null);
+
+  let email: string;
+  if (user !== null) email = user.email ?? "anonymousUser";
+
+  const get = async () => {
+    const profilesWithEmail = await getProfileByEmail(email ?? "");
+    if (profilesWithEmail.length > 0) setHandle(profilesWithEmail[0].handle);
+  };
+  void get(); // todo: handle error?
+
+  return handle;
+};
+
 export const useProfileInfo = (handle: string) => {
-  const [profileInfo, setProfileInfo] =
-    useState<DocWithNotFound<ProfileInfo>>(null);
+  const [profileInfo, setProfileInfo] = useState<ProfileInfo | null>(null);
+  const [status, setStatus] = useState<200 | 404 | null>(null);
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getProfile(handle);
+      const { data, status } = await getProfile(handle);
       setProfileInfo(data);
+      setStatus(status);
     };
     if (handle !== "") void getData(); // todo: handle errors
   }, [handle]);
-  return profileInfo;
+  return { profileInfo, status };
 };
 
 export const useTweetsBySingleHandle = (handle: string) => {
@@ -82,7 +105,8 @@ export const useTweetsBySingleHandle = (handle: string) => {
 
 export const useTweetsbyHandlesLazy = (handles: string[]) => {
   const [tweets, setTweets] = useState<Tweet[] | null>(null);
-  const [prevLastVisible, setPrevLastVisibile] = useState(null);
+  const [prevLastVisible, setPrevLastVisibile] =
+    useState<QueryDocumentSnapshot<DocumentData> | null>(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -101,13 +125,11 @@ export const useTweetsbyHandlesLazy = (handles: string[]) => {
 
 export const useProfilesByHandlesLazy = (
   handles: string[],
-  // currentProfiles: ProfileInfo[] | null
   loadFollows: boolean
 ) => {
   const [profiles, setProfiles] = useState<ProfileInfo[]>([]);
-  const [prevLastVisible, setPrevLastVisibile] = useState<QueryDocumentSnapshot<
-    DocWithIdAndDate<ProfileInfo>
-  > | null>(null);
+  const [prevLastVisible, setPrevLastVisibile] =
+    useState<QueryDocumentSnapshot<ProfileInfo> | null>(null);
   const [done, setDone] = useState(false);
 
   useEffect(() => {

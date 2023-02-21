@@ -5,13 +5,8 @@ import { useProfilesByHandlesLazy } from "../../firebase/hooks";
 import Loading from "../generics/Loading";
 import { useEffect, useState } from "react";
 import { type ProfileInfo } from "../../types";
-import { type DocWithNotFound } from "../../firebase/firestoreTypes";
 
-const FollowsProfiles = ({
-  userInfo,
-}: {
-  userInfo: DocWithNotFound<ProfileInfo>;
-}) => {
+const FollowsProfiles = ({ userInfo }: { userInfo: ProfileInfo }) => {
   const [followsHandles, setFollowsHandles] = useState<string[]>([]);
   const [loadFollows, setLoadFollows] = useState(false);
 
@@ -42,7 +37,7 @@ const FollowsProfiles = ({
     }
   }, [loadFollows]);
 
-  if (followsHandles.length === 0 || loadFollows) return <Loading />;
+  if (followsHandles.length === 0) return <Loading />;
 
   return (
     <div>
@@ -73,6 +68,7 @@ const FollowsProfiles = ({
       >
         Load more
       </button>
+      {loadFollows && <Loading />}
     </div>
   );
 };

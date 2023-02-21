@@ -12,13 +12,13 @@ const Follows = () => {
   const selected = pathname.includes("followers") ? "followers" : "following";
 
   const { handle } = useParams();
-  const userInfo = useProfileInfo(handle ?? "");
+  const { profileInfo: userInfo, status } = useProfileInfo(handle ?? "");
 
-  if (userInfo === null || userInfo === undefined) {
+  if (status === null) {
     return <Loading />;
   }
 
-  if ("notFound" in userInfo) {
+  if (status === 404 || userInfo === null) {
     return <NotFound />;
   }
 
@@ -32,13 +32,13 @@ const Follows = () => {
       />
       <div className="flex border-b border-slate-100">
         <NavButton
-          to={`/${handle ?? ""}/followers`}
+          to={handle !== undefined ? `/${handle}/followers` : ""}
           selected={selected === "followers"}
         >
           Followers
         </NavButton>
         <NavButton
-          to={`/${handle ?? ""}/following`}
+          to={handle !== undefined ? `/${handle}/following` : ""}
           selected={selected === "following"}
         >
           Following
