@@ -15,6 +15,8 @@ import {
 } from "firebase/firestore";
 import { UserContext } from "./UserContext";
 
+// Auth
+
 export const useSignIn = () => {
   const navigate = useNavigate();
   return async () => {
@@ -58,6 +60,8 @@ export const useLogOut = () => {
   };
 };
 
+// User
+
 export const useUserHandle = () => {
   const user = useContext(UserContext);
   const [handle, setHandle] = useState<string | null>(null);
@@ -74,6 +78,8 @@ export const useUserHandle = () => {
   return handle;
 };
 
+// Profile
+
 export const useProfileInfo = (handle: string) => {
   const [profileInfo, setProfileInfo] = useState<ProfileInfo | null>(null);
   const [status, setStatus] = useState<200 | 404 | null>(null);
@@ -88,6 +94,36 @@ export const useProfileInfo = (handle: string) => {
   }, [handle]);
   return { profileInfo, status };
 };
+
+export const useProfilesByHandlesLazy = (
+  handles: string[],
+  loadFollows: boolean
+) => {
+  const [profiles, setProfiles] = useState<ProfileInfo[]>([]);
+  const [prevLastVisible, setPrevLastVisibile] =
+    useState<QueryDocumentSnapshot<ProfileInfo> | null>(null);
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      const { data, lastVisible } = await getProfilesByHandlesLazy(
+        handles,
+        prevLastVisible
+      );
+      if (data.length > 0 && lastVisible !== undefined) {
+        setProfiles((p) => [...p, ...data]);
+        setPrevLastVisibile(lastVisible);
+      } else {
+        setDone(true);
+      }
+    };
+    if (handles.length > 0 && loadFollows) void getData(); // todo: handle errors
+  }, [handles, loadFollows]);
+
+  return { profiles, done };
+};
+
+// Tweets
 
 export const useTweetsBySingleHandle = (handle: string) => {
   const [tweets, setTweets] = useState<Tweet[] | null>(null);
@@ -121,32 +157,4 @@ export const useTweetsbyHandlesLazy = (handles: string[]) => {
   }, []);
 
   return tweets;
-};
-
-export const useProfilesByHandlesLazy = (
-  handles: string[],
-  loadFollows: boolean
-) => {
-  const [profiles, setProfiles] = useState<ProfileInfo[]>([]);
-  const [prevLastVisible, setPrevLastVisibile] =
-    useState<QueryDocumentSnapshot<ProfileInfo> | null>(null);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    const getData = async () => {
-      const { data, lastVisible } = await getProfilesByHandlesLazy(
-        handles,
-        prevLastVisible
-      );
-      if (data.length > 0 && lastVisible !== undefined) {
-        setProfiles((p) => [...p, ...data]);
-        setPrevLastVisibile(lastVisible);
-      } else {
-        setDone(true);
-      }
-    };
-    if (handles.length > 0 && loadFollows) void getData(); // todo: handle errors
-  }, [handles, loadFollows]);
-
-  return { profiles, done };
 };
