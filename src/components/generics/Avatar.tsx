@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 const Avatar = ({
   size,
   url,
-  handle,
+  username,
   disabled,
 }: {
   size: "md" | "lg";
   url: string | null;
-  handle: string;
+  username: string;
   disabled?: boolean;
 }) => {
   const sizes = {
@@ -24,7 +24,7 @@ const Avatar = ({
     "https://firebasestorage.googleapis.com/v0/b/twitter-9036d.appspot.com/o/avatars%2Fdefault-avatar.png?alt=media&token=2729ef8b-be7b-4fd5-91f1-27e34f86bbce";
 
   return (
-    <Link to={`/${handle}`} className={disabledClass}>
+    <Link to={`/${username}`} className={disabledClass}>
       <div
         className={`min-w-[48px] w-12 transition-all hover:opacity-90 ${sizes[size]}`}
       >

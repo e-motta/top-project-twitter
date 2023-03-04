@@ -1,9 +1,9 @@
 import Avatar from "../generics/Avatar";
 import Button from "../generics/Button";
 import { useRef, useState } from "react";
-import { type ProfileInfo } from "../../types";
+import { type User } from "../../types";
 
-const TweetInput = ({ profileInfo }: { profileInfo: ProfileInfo }) => {
+const TweetInput = ({ userInfo }: { userInfo: User }) => {
   const TWEET_LENGTH_LIMIT = 280;
 
   const [inputText, setInputText] = useState("");
@@ -25,8 +25,8 @@ const TweetInput = ({ profileInfo }: { profileInfo: ProfileInfo }) => {
       <div className="flex gap-4">
         <Avatar
           size="md"
-          url={profileInfo?.avatar ?? ""}
-          handle={profileInfo?.handle ?? ""}
+          url={userInfo?.avatar ?? ""}
+          username={userInfo?.username ?? ""}
         />
         <form
           id="tweet"

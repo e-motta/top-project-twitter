@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../firebase/UserContext";
+import { AuthContext } from "../../firebase/AuthContext";
 import NavSidebarButton from "../Sidebar/NavSidebarButton";
 
 const Header = ({
@@ -16,7 +16,7 @@ const Header = ({
   altBackBtnHref?: string;
 }) => {
   const navigate = useNavigate();
-  const user = useContext(UserContext);
+  const authUser = useContext(AuthContext);
 
   return (
     <div id="header" className="flex justify-between px-2 pb-1 min-h-[52px]">
@@ -41,7 +41,7 @@ const Header = ({
           )}
         </div>
       </div>
-      {user !== null && (
+      {authUser !== null && (
         <div className="justify-self-end sm:hidden">
           <NavSidebarButton type="more" />
         </div>

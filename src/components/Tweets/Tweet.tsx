@@ -1,4 +1,4 @@
-import Avatar from "./Avatar";
+import Avatar from "../generics/Avatar";
 import { HeartIcon as HearIconOutline } from "@heroicons/react/24/outline";
 import { HeartIcon as HearIconSolid } from "@heroicons/react/24/solid";
 import { formatDate, formatNum } from "../../lib/formatUtils";
@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 
 const Tweet = ({
   name,
-  handle,
+  username,
   date,
   text,
   likes,
   avatarUrl,
 }: {
   name: string;
-  handle: string;
-  date: Date;
+  username: string;
+  date: Date | undefined;
   text: string;
   likes: number;
   avatarUrl: string | null;
@@ -26,14 +26,16 @@ const Tweet = ({
     >
       <div className="flex gap-2">
         <div className="ml-4 mt-3">
-          <Avatar size="md" url={avatarUrl} handle={handle} />
+          <Avatar size="md" url={avatarUrl} username={username} />
         </div>
-        <Link to={`/${handle}`} className="pt-3 flex flex-col text-[0.95rem]">
+        <Link to={`/${username}`} className="pt-3 flex flex-col text-[0.95rem]">
           <div id="tweet-header" className="flex gap-2">
             <span className="font-bold hover:underline">{name}</span>
             <span className="text-gray-500 flex gap-1">
-              <span>@{handle}</span>·
-              <span className="hover:underline">{formatDate(date)}</span>
+              <span>@{username}</span>·
+              <span className="hover:underline">
+                {formatDate(date ?? new Date())}
+              </span>
             </span>
           </div>
           <div id="tweet-body">{text}</div>

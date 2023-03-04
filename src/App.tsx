@@ -16,9 +16,9 @@ function App() {
       <Route path="login" element={<Login />} />
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path=":handle" element={<Profile />} />
-        <Route path=":handle/followers" element={<Follows />} />
-        <Route path=":handle/following" element={<Follows />} />
+        <Route path=":username" element={<Profile />} />
+        <Route path=":username/followers" element={<Follows />} />
+        <Route path=":username/following" element={<Follows />} />
         <Route path="settings/profile" element={<EditProfile />} />
         <Route path="*" element={<NotFound />} />
       </Route>

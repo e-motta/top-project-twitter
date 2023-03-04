@@ -3,12 +3,17 @@ import { Link } from "react-router-dom";
 import NavSidebarButton from "./NavSidebarButton";
 import NavSidebarLink from "./NavSidebarLink";
 import { useContext } from "react";
-import { UserContext } from "../../firebase/UserContext";
-import { useUserHandle } from "../../firebase/hooks";
+import { AuthContext } from "../../firebase/AuthContext";
+import { useAuthUserUsername } from "../../firebase/hooks";
+import NetworkError from "../generics/NetworkError";
 
 const LeftSidebar = () => {
-  const user = useContext(UserContext);
-  const handle = useUserHandle();
+  const authUser = useContext(AuthContext);
+  const { username, isError } = useAuthUserUsername();
+
+  if (isError) {
+    return <NetworkError />;
+  }
 
   return (
     <nav className="px-4 py-1 min-h-screen sm:w-[80px] md:w-[200px] flex flex-col justify-between">
@@ -19,9 +24,9 @@ const LeftSidebar = () => {
           </div>
         </Link>
         <NavSidebarLink type="home" />
-        {user !== null && (
+        {authUser !== null && (
           <>
-            <NavSidebarLink type="profile" handle={handle ?? "#"} />
+            <NavSidebarLink type="profile" username={username ?? "#"} />
             <NavSidebarLink type="settings" />
             <NavSidebarButton type="more" />
           </>

@@ -1,18 +1,21 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import logoImg from "../../assets/twitter-logo-blue.png";
 import Button from "../generics/Button";
 import googleLogo from "../../assets/google-logo.svg";
 import { auth } from "../../firebase/auth";
 import { useSignIn, useSignInAnonymous } from "../../firebase/hooks";
 import Loading from "../generics/Loading";
+import NetworkError from "../generics/NetworkError";
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
-
-  const signIn = useSignIn();
-  const signInAnonymous = useSignInAnonymous();
+  const { signIn, isLoading, isError } = useSignIn();
+  const {
+    signIn: signInAnonymous,
+    isLoading: isLoadingAnonymous,
+    isError: isErrorAnonymous,
+  } = useSignInAnonymous();
 
   const navigate = useNavigate();
 
@@ -26,6 +29,10 @@ const Login = () => {
     onAuthStateChangedCallback();
   }, []);
 
+  if (isError || isErrorAnonymous) {
+    return <NetworkError />;
+  }
+
   return (
     <div
       id="login-container"
@@ -35,7 +42,7 @@ const Login = () => {
         id="login-box"
         className="bg-white w-[600px] h-96 rounded-2xl flex justify-center p-3 py-16"
       >
-        {loading ? (
+        {isLoading || isLoadingAnonymous ? (
           <Loading />
         ) : (
           <div
@@ -52,7 +59,6 @@ const Login = () => {
               className="font-bold self-stretch hover:bg-gray-100"
               outlined
               onClick={async () => {
-                setLoading(true);
                 await signIn();
               }}
             >
@@ -64,7 +70,6 @@ const Login = () => {
               <button
                 className="text-blue-400 hover:underline"
                 onClick={async () => {
-                  setLoading(true);
                   await signInAnonymous();
                 }}
               >

@@ -1,12 +1,17 @@
 import { useLogOut } from "../../firebase/hooks";
+import NetworkError from "./NetworkError";
 
 const LogoutPopup = () => {
-  const logOut = useLogOut();
+  const { logOut, isError } = useLogOut();
+
+  if (isError) {
+    return <NetworkError />;
+  }
 
   return (
     <button
-      className="absolute bottom-0 right-0 -translate-x-1/2 
-        sm:translate-x-full"
+      className="absolute bottom-[2px] right-0 -translate-x-1/2 
+        sm:translate-x-[140px]"
       onClick={logOut}
     >
       <div

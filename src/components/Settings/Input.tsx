@@ -7,7 +7,7 @@ const Input = ({
   setValue: (value: React.SetStateAction<string>) => void;
   label: string;
 }) => {
-  const filledInputClass = value !== "" ? "top-[8px] text-[.8rem]" : "";
+  const filledInputClass = value !== "" ? "top-2 text-[.8rem]" : "";
 
   return (
     <div className="flex flex-col relative group">

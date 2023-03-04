@@ -14,30 +14,35 @@ import {
   startAfter,
   type QueryFieldFilterConstraint,
   type DocumentData,
+  getCountFromServer,
+  type FieldPath,
+  type OrderByDirection,
 } from "firebase/firestore";
-import { type ProfileInfo } from "../types";
 import { app } from "./config";
 import { selectConverter } from "./converters";
+import { type Collection } from "../types";
 
 export const db = getFirestore(app);
 
-export const addDocToFirestore = async (
-  collectionName: string,
-  docObj: ProfileInfo
+export const addDocToFirestore = async <Doc>(
+  collectionName: Collection,
+  docObj: Doc
 ) => {
-  await addDoc(collection(db, collectionName), docObj);
+  const converter = selectConverter(collectionName);
+  await addDoc(collection(db, collectionName).withConverter(converter), docObj);
 };
 
-export const setDocToFirestore = async (
-  collectionName: string,
-  docObj: any,
+export const setDocToFirestore = async <Doc>(
+  collectionName: Collection,
+  docObj: Doc,
   id: string
 ) => {
-  await setDoc(doc(db, collectionName, id), docObj);
+  const converter = selectConverter(collectionName);
+  await setDoc(doc(db, collectionName, id).withConverter(converter), docObj);
 };
 
 export const getDocFromFirestore = async <Doc>(
-  collectionName: string,
+  collectionName: Collection,
   id: string
 ) => {
   const converter = selectConverter(collectionName);
@@ -56,7 +61,7 @@ export const getDocFromFirestore = async <Doc>(
 };
 
 export const queryDocsByFieldFromFirestore = async <Doc>(
-  collectionName: string,
+  collectionName: Collection,
   field: string,
   target: string
 ) => {
@@ -73,22 +78,45 @@ export const queryDocsByFieldFromFirestore = async <Doc>(
   return data;
 };
 
+export const queryDocsByFieldsFromFirestore = async <Doc>(
+  collectionName: Collection,
+  fields: string[],
+  target: string | FieldPath
+) => {
+  const converter = selectConverter(collectionName);
+  const q = query(
+    collection(db, collectionName).withConverter(converter),
+    where(target, "in", fields)
+  );
+  const querySnapshot = await getDocs(q);
+  const data: Doc[] = [];
+  querySnapshot.forEach((doc) => {
+    data.push(doc.data());
+  });
+  return data;
+};
+
+export interface QueryDocsByFirestoreLazy {
+  collectionName: Collection;
+  whereContraints: QueryFieldFilterConstraint[];
+  orderByField?: string | FieldPath;
+  orderByDirection?: OrderByDirection;
+  limitTo?: number;
+  startAfterDoc?: QueryDocumentSnapshot<DocumentData> | null;
+}
+
 export const queryDocsFromFirestoreLazy = async <Doc>({
   collectionName,
   whereContraints,
   orderByField,
+  orderByDirection,
   limitTo,
   startAfterDoc,
-}: {
-  collectionName: "users" | "tweets";
-  whereContraints: QueryFieldFilterConstraint[];
-  orderByField?: string;
-  limitTo?: number;
-  startAfterDoc?: QueryDocumentSnapshot<DocumentData> | null;
-}) => {
+}: QueryDocsByFirestoreLazy) => {
   const queryArguments = [];
 
-  orderByField !== undefined && queryArguments.push(orderBy(orderByField));
+  orderByField !== undefined &&
+    queryArguments.push(orderBy(orderByField, orderByDirection));
   limitTo !== undefined && queryArguments.push(limit(limitTo));
   startAfterDoc !== undefined && queryArguments.push(startAfter(startAfterDoc));
 
@@ -112,4 +140,16 @@ export const queryDocsFromFirestoreLazy = async <Doc>({
     data,
     lastVisible,
   };
+};
+
+export const getCountByQuery = async ({
+  collectionName,
+  whereConstraints,
+}: {
+  collectionName: Collection;
+  whereConstraints: QueryFieldFilterConstraint[];
+}) => {
+  const q = query(collection(db, collectionName), ...whereConstraints);
+  const querySnapshot = await getCountFromServer(q);
+  return querySnapshot.data().count;
 };

@@ -2,14 +2,14 @@ import { Outlet } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
 import LeftSidebar from "./components/Sidebar/LeftSidebar";
 import { useContext } from "react";
-import { UserContext } from "./firebase/UserContext";
+import { AuthContext } from "./firebase/AuthContext";
 import Delayed from "./components/generics/Delayed";
 
 const Layout = () => {
-  const user = useContext(UserContext);
+  const authUser = useContext(AuthContext);
 
   return (
-    <div className="flex justify-center">
+    <div id="main-container" className="flex justify-center">
       <div className="hidden sm:block z-50">
         <LeftSidebar />
       </div>
@@ -18,7 +18,7 @@ const Layout = () => {
           <Outlet />
         </div>
       </main>
-      {user === null && (
+      {authUser === null && (
         <Delayed>
           <Footer />
         </Delayed>

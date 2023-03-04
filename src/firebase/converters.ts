@@ -1,20 +1,23 @@
-import { type FirestoreDataConverter } from "firebase/firestore";
-import { type Tweet, type ProfileInfo } from "../types";
+import { Timestamp, type FirestoreDataConverter } from "firebase/firestore";
+import { type Tweet, type User } from "../types";
 
-const profileDataConverter: FirestoreDataConverter<ProfileInfo> = {
+const userDataConverter: FirestoreDataConverter<User> = {
   toFirestore: (data) => data,
   fromFirestore(snapshot, options) {
     const data = snapshot.data(options);
-    data.handle = snapshot.id;
-    return data as ProfileInfo;
+    data.id = snapshot.id; // todo: change id ?
+    return data as User;
   },
 };
 
 const tweetDataConverter: FirestoreDataConverter<Tweet> = {
-  toFirestore: (data) => data,
+  toFirestore: (data) => {
+    if (data.created_at === undefined) data.created_at = Timestamp.now();
+    return data;
+  },
   fromFirestore(snapshot, options) {
     const data = snapshot.data(options);
-    data.date = data.date.toDate();
+    data.created_at = data.created_at.toDate();
     data.id = snapshot.id;
     return data as Tweet;
   },
@@ -24,7 +27,7 @@ export const selectConverter = (collectionName: string) => {
   let converter: FirestoreDataConverter<any>;
   switch (collectionName) {
     case "users":
-      converter = profileDataConverter;
+      converter = userDataConverter;
       break;
     case "tweets":
       converter = tweetDataConverter;

@@ -1,68 +1,64 @@
 import TweetInput from "./TweetInput";
-import Tweet from "../generics/Tweet";
 import NavButton from "../generics/NavButton";
 import Header from "../Header/Header";
-import {
-  tweets as tweetsMock,
-  usersInfo as usersInfoMock,
-} from "../../mock_data";
-import {
-  useProfileInfo,
-  useTweetsbyHandlesLazy,
-  useUserHandle,
-} from "../../firebase/hooks";
+import { useUserInfo, useAuthUserUsername } from "../../firebase/hooks";
 import Loading from "../generics/Loading";
+import NetworkError from "../generics/NetworkError";
+import { useMemo } from "react";
+import TweetsTimeline from "../Tweets/TweetsTimeline";
 
 const Home = () => {
-  const userHandle = useUserHandle() ?? "";
-  const { profileInfo: userProfileInfo, status } = useProfileInfo(userHandle);
+  const {
+    username,
+    isLoading: isUsernameLoading,
+    isSuccess: isUsernameSuccess,
+    isError: isUsernameError,
+  } = useAuthUserUsername();
 
-  // todo: query users info
+  const {
+    data: userInfo,
+    isLoading: isUserInfoLoading,
+    isSuccess: isUserInfoSuccess,
+    isError: isUserInfoError,
+  } = useUserInfo(username);
 
-  // mock
-  const usersInfo = usersInfoMock;
+  const followingUserIds = useMemo(() => {
+    return userInfo !== undefined && userInfo !== null
+      ? [...userInfo.following, userInfo.id ?? "?"]
+      : null;
+  }, [userInfo]);
 
-  // const followingHandles = currentUserInfo?.following.push(
-  //   currentUserInfo.handle
-  // );
-  // // todo: query tweets data
-  // const tweets = tweetsMock.filter((t) => followingHandles.includes(t.handle));
-  const tweets = tweetsMock;
-
-  const t = useTweetsbyHandlesLazy(["eduardom0tta"]);
-  // console.log({ t });
-
-  if (status === null || userProfileInfo === null) {
+  if (isUsernameLoading || isUserInfoLoading) {
     return <Loading />;
   }
 
-  return (
-    <div id="home-container" className="min-h-screen flex flex-col">
-      <Header mainText="Home" />
-      <nav className="flex border-b border-slate-100">
-        <NavButton to="" selected>
-          For You
-        </NavButton>
-        {userHandle !== null && (
-          <NavButton to="" notImplemented>
-            Following
+  if (isUsernameError || isUserInfoError) {
+    return <NetworkError />;
+  }
+
+  if (isUserInfoSuccess && userInfo !== null)
+    return (
+      <div id="home-container" className="min-h-screen flex flex-col">
+        <Header mainText="Home" />
+
+        <nav className="flex border-b border-slate-100">
+          <NavButton to="" selected>
+            For You
           </NavButton>
-        )}
-      </nav>
-      {userHandle !== null && <TweetInput profileInfo={userProfileInfo} />}
-      {tweets.map((t) => (
-        <Tweet
-          key={t.id}
-          name={usersInfo.find((u) => u.handle === t.handle)?.name ?? ""}
-          handle={t.handle}
-          date={t.date}
-          text={t.text}
-          likes={t.likes}
-          avatarUrl={usersInfo.find((u) => u.handle === t.handle)?.avatar ?? ""}
-        />
-      ))}
-    </div>
-  );
+          {username !== null && (
+            <NavButton to="" notImplemented>
+              Following
+            </NavButton>
+          )}
+        </nav>
+
+        {isUsernameSuccess && <TweetInput userInfo={userInfo} />}
+
+        {isUserInfoSuccess && <TweetsTimeline userIds={followingUserIds} />}
+      </div>
+    );
+
+  return null;
 };
 
 export default Home;

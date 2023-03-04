@@ -1,160 +1,158 @@
 import { signInAnonymously, signInWithPopup, signOut } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getTweetsByHandle, getTweetsByHandlesLazy } from "../service/tweets";
 import {
-  getProfile,
-  getProfileByEmail,
-  getProfilesByHandlesLazy,
-} from "../service/profiles";
-import { type Tweet, type ProfileInfo } from "../types";
+  getTweetsByUserId,
+  getTweetsByUserIdsLazy,
+  getTweetsCount,
+} from "../service/tweets";
+import {
+  getUserByEmail,
+  getUsersByUsernamesLazy,
+  getUserByUsername,
+  getFollowersCount,
+  getUsersById,
+} from "../service/users";
+import { type Tweet, type User } from "../types";
 import { auth, provider } from "./auth";
+import { AuthContext } from "./AuthContext";
 import {
-  type DocumentData,
-  type QueryDocumentSnapshot,
-} from "firebase/firestore";
-import { UserContext } from "./UserContext";
+  useFetchCountGeneric,
+  useFetchFromFirestoreGeneric,
+  useFetchFromFirestoreGenericLazy,
+} from "./genericHooks";
 
 // Auth
 
 export const useSignIn = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
   const navigate = useNavigate();
-  return async () => {
+
+  const signIn = async () => {
+    setIsLoading(true);
     await signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
-        console.log({ user });
+      .then(() => {
         navigate("/");
+        setIsLoading(false);
       })
-      .catch((error) => {
-        console.error(error.code, error.message);
+      .catch((e) => {
+        console.error(e);
+        setIsError(true);
       });
   };
+
+  return { signIn, isLoading, isError };
 };
 
 export const useSignInAnonymous = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
   const navigate = useNavigate();
-  return async () => {
+
+  const signIn = async () => {
+    setIsLoading(true);
     await signInAnonymously(auth)
-      .then((result) => {
-        console.log({ result });
+      .then(() => {
         navigate("/");
+        setIsLoading(false);
       })
-      .catch((error) => {
-        console.error(error.code, error.message);
+      .catch((e) => {
+        console.error(e);
+        setIsError(true);
       });
   };
+
+  return { signIn, isLoading, isError };
 };
 
 export const useLogOut = () => {
+  const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
-  return async () => {
+  const logOut = async () => {
     await signOut(auth)
       .then(() => {
-        // Sign-out successful.
         navigate("/login");
       })
-      .catch((error) => {
-        console.error(error.code, error.message);
+      .catch((e) => {
+        console.error(e);
+        setIsError(true);
       });
   };
+  return { logOut, isError };
 };
 
 // User
 
-export const useUserHandle = () => {
-  const user = useContext(UserContext);
-  const [handle, setHandle] = useState<string | null>(null);
+export const useAuthUserUsername = () => {
+  const authUser = useContext(AuthContext);
+
+  const [username, setUsername] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   let email: string;
-  if (user !== null) email = user.email ?? "anonymousUser";
-
-  const get = async () => {
-    const profilesWithEmail = await getProfileByEmail(email ?? "");
-    if (profilesWithEmail.length > 0) setHandle(profilesWithEmail[0].handle);
-  };
-  void get(); // todo: handle error?
-
-  return handle;
-};
-
-// Profile
-
-export const useProfileInfo = (handle: string) => {
-  const [profileInfo, setProfileInfo] = useState<ProfileInfo | null>(null);
-  const [status, setStatus] = useState<200 | 404 | null>(null);
+  if (authUser !== null) email = authUser.email ?? "anonymousUser";
 
   useEffect(() => {
-    const getData = async () => {
-      const { data, status } = await getProfile(handle);
-      setProfileInfo(data);
-      setStatus(status);
-    };
-    if (handle !== "") void getData(); // todo: handle errors
-  }, [handle]);
-  return { profileInfo, status };
-};
-
-export const useProfilesByHandlesLazy = (
-  handles: string[],
-  loadFollows: boolean
-) => {
-  const [profiles, setProfiles] = useState<ProfileInfo[]>([]);
-  const [prevLastVisible, setPrevLastVisibile] =
-    useState<QueryDocumentSnapshot<ProfileInfo> | null>(null);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    const getData = async () => {
-      const { data, lastVisible } = await getProfilesByHandlesLazy(
-        handles,
-        prevLastVisible
-      );
-      if (data.length > 0 && lastVisible !== undefined) {
-        setProfiles((p) => [...p, ...data]);
-        setPrevLastVisibile(lastVisible);
-      } else {
-        setDone(true);
+    const getUsername = async () => {
+      setIsLoading(true);
+      try {
+        const usersWithEmail = await getUserByEmail(email ?? "");
+        if (usersWithEmail.length > 0) {
+          setIsSuccess(true);
+          setUsername(usersWithEmail[0].username);
+        }
+        setIsLoading(false);
+      } catch (e) {
+        console.error(e);
+        setIsError(true);
       }
     };
-    if (handles.length > 0 && loadFollows) void getData(); // todo: handle errors
-  }, [handles, loadFollows]);
+    void getUsername();
+  }, [authUser]);
 
-  return { profiles, done };
+  return { username, isLoading, isSuccess, isError };
+};
+
+export const useUserInfo = (username: string | null) => {
+  return useFetchFromFirestoreGeneric<User>(getUserByUsername, username);
+};
+
+export const useUsersByUsernamesLazy = (usernames: string[] | null) => {
+  return useFetchFromFirestoreGenericLazy<User>(
+    getUsersByUsernamesLazy,
+    usernames
+  );
+};
+
+export const useUsersByIds = (ids: string[] | null) => {
+  return useFetchFromFirestoreGeneric<User[]>(getUsersById, ids);
 };
 
 // Tweets
 
-export const useTweetsBySingleHandle = (handle: string) => {
-  const [tweets, setTweets] = useState<Tweet[] | null>(null);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getTweetsByHandle(handle);
-      setTweets(data);
-    };
-    void getData(); // todo: handle errors
-  }, []);
-
-  return tweets;
+export const useTweetsByUserId = (userId: string) => {
+  // delete? (still in use, check uses)
+  return useFetchFromFirestoreGeneric<Tweet[]>(getTweetsByUserId, userId);
 };
 
-export const useTweetsbyHandlesLazy = (handles: string[]) => {
-  const [tweets, setTweets] = useState<Tweet[] | null>(null);
-  const [prevLastVisible, setPrevLastVisibile] =
-    useState<QueryDocumentSnapshot<DocumentData> | null>(null);
-
+export const useTweetsbyUserIdsLazy = (userIds: string[] | null) => {
+  const { data, loadMore, hasMore, isLoading, isSuccess, isError, error } =
+    useFetchFromFirestoreGenericLazy<Tweet>(getTweetsByUserIdsLazy, userIds);
   useEffect(() => {
-    const getData = async () => {
-      const { data, lastVisible } = await getTweetsByHandlesLazy(
-        handles,
-        prevLastVisible
-      );
-      setTweets(data);
-      setPrevLastVisibile(lastVisible);
-    };
-    void getData(); // todo: handle errors
+    loadMore();
   }, []);
+  return { data, loadMore, hasMore, isLoading, isSuccess, isError, error };
+};
 
-  return tweets;
+export const useFollowersCount = (userId: string) => {
+  return useFetchCountGeneric(getFollowersCount, userId);
+};
+
+export const useTweetsCount = (userId: string) => {
+  return useFetchCountGeneric(getTweetsCount, userId);
 };
