@@ -63,6 +63,7 @@ export const useFetchFromFirestoreGenericLazy = <Doc>(
           param,
           prevLastVisible
         );
+        console.log(data);
         if (responseData !== undefined) {
           if (responseData.length > 0 && lastVisible !== undefined) {
             setData((d) => {
@@ -90,10 +91,14 @@ export const useFetchFromFirestoreGenericLazy = <Doc>(
     }
   }, [effectDeps]);
 
+  useEffect(() => {
+    setLoad(true);
+  }, []);
+
   const loadMore = () => {
     setLoad(true);
   };
-  console.log({ data });
+
   return { data, loadMore, hasMore, isLoading, isSuccess, isError, error };
 };
 

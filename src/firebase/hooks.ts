@@ -12,6 +12,7 @@ import {
   getUserByUsername,
   getFollowersCount,
   getUsersById,
+  getUsersByIdLazy,
 } from "../service/users";
 import { type Tweet, type User } from "../types";
 import { auth, provider } from "./auth";
@@ -129,6 +130,10 @@ export const useUsersByUsernamesLazy = (usernames: string[] | null) => {
   );
 };
 
+export const useUsersByIdLazy = (ids: string[] | null) => {
+  return useFetchFromFirestoreGenericLazy<User>(getUsersByIdLazy, ids);
+};
+
 export const useUsersByIds = (ids: string[] | null) => {
   return useFetchFromFirestoreGeneric<User[]>(getUsersById, ids);
 };
@@ -141,12 +146,10 @@ export const useTweetsByUserId = (userId: string) => {
 };
 
 export const useTweetsbyUserIdsLazy = (userIds: string[] | null) => {
-  const { data, loadMore, hasMore, isLoading, isSuccess, isError, error } =
-    useFetchFromFirestoreGenericLazy<Tweet>(getTweetsByUserIdsLazy, userIds);
-  useEffect(() => {
-    loadMore();
-  }, []);
-  return { data, loadMore, hasMore, isLoading, isSuccess, isError, error };
+  return useFetchFromFirestoreGenericLazy<Tweet>(
+    getTweetsByUserIdsLazy,
+    userIds
+  );
 };
 
 export const useFollowersCount = (userId: string) => {

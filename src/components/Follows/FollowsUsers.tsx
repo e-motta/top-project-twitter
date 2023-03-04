@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
 import Button from "../generics/Button";
 import Avatar from "../generics/Avatar";
-import { useUsersByUsernamesLazy } from "../../firebase/hooks";
+import {
+  useAuthUserUsername,
+  useUserInfo,
+  useUsersByIdLazy,
+} from "../../firebase/hooks";
 import Loading from "../generics/Loading";
 import { useEffect, useState } from "react";
 import { type User } from "../../types";
 import NetworkError from "../generics/NetworkError";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const FollowsUsers = ({
   userInfo,
@@ -14,6 +19,10 @@ const FollowsUsers = ({
   userInfo: User;
   selected: "followers" | "following";
 }) => {
+  const { username: authUserUsername } = useAuthUserUsername();
+  const { data: authUserInfo } = useUserInfo(authUserUsername ?? "");
+  const authUserFollowing = authUserInfo?.following;
+
   const [followsUsernames, setFollowsUsernames] = useState<string[] | null>(
     null
   );
@@ -21,19 +30,14 @@ const FollowsUsers = ({
   useEffect(() => {
     if (userInfo !== null) setFollowsUsernames(userInfo[selected]);
   }, [userInfo]);
-  console.log(followsUsernames);
 
   const {
     data: follows,
-    isLoading,
+    loadMore,
+    hasMore,
     isSuccess,
     isError,
-  } = useUsersByUsernamesLazy(followsUsernames);
-  console.log({ followsUsernames, follows });
-
-  if (isLoading || follows === null) {
-    return <Loading />;
-  }
+  } = useUsersByIdLazy(followsUsernames);
 
   if (isError) {
     return <NetworkError />;
@@ -41,44 +45,56 @@ const FollowsUsers = ({
 
   if (isSuccess && follows !== null)
     return (
-      <div>
-        {follows.map((f) => (
-          <div
-            key={f.username}
-            className="py-3 px-4 flex justify-between transition-all hover:bg-gray-100"
-          >
-            <div className="flex gap-3">
-              <div>
-                <Avatar
-                  size="md"
-                  url={f.profile_image_url}
-                  username={f.username}
-                />
-              </div>
-              <Link
-                to={`/${f.username}`}
-                className="text-[.9rem] flex flex-col"
-              >
-                <span className="font-bold hover:underline">{f.name}</span>
-                <span className="text-gray-500">@{f.username}</span>
-              </Link>
+      <>
+        <InfiniteScroll
+          dataLength={follows.length}
+          next={loadMore}
+          hasMore={hasMore}
+          loader={
+            <div className="relative h-12">
+              <Loading />
             </div>
-            <Button outlined className="font-bold self-center">
-              Following
-            </Button>
-          </div>
-        ))}
-        {/* todo: remove button; replace with infinite scrolling */}
-        <button
-          onClick={() => {
-            if (!done) setLoadFollows(true);
-          }}
+          }
         >
-          Load more
-        </button>
-        {loadFollows && <Loading />}
-      </div>
+          {follows.map((f) => (
+            <div
+              key={f.username}
+              className="py-3 px-4 flex justify-between items-center 
+                transition-all hover:bg-gray-100"
+            >
+              <div className="flex gap-3">
+                <div>
+                  <Avatar
+                    size="md"
+                    url={f.profile_image_url}
+                    username={f.username ?? ""}
+                  />
+                </div>
+                <Link
+                  to={`/${f.username ?? ""}`}
+                  className="text-[.9rem] flex flex-col"
+                >
+                  <span className="font-bold hover:underline">{f.name}</span>
+                  <span className="text-gray-500">@{f.username}</span>
+                </Link>
+              </div>
+              {authUserFollowing === undefined ||
+              authUserFollowing.includes(f.id ?? "") ? (
+                <Button className="font-bold hover:bg-gray-100" outlined>
+                  Following
+                </Button>
+              ) : (
+                <Button className="text-white bg-black font-bold">
+                  Follow
+                </Button>
+              )}
+            </div>
+          ))}
+        </InfiniteScroll>
+      </>
     );
+
+  return null;
 };
 
 export default FollowsUsers;

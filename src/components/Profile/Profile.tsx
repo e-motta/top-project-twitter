@@ -11,11 +11,16 @@ import {
   useUserInfo,
   useFollowersCount,
   useTweetsCount,
+  useAuthUserUsername,
 } from "../../firebase/hooks";
 import NetworkError from "../generics/NetworkError";
 import TweetsTimeline from "../Tweets/TweetsTimeline";
 
 const Profile = () => {
+  const { username: authUserUsername } = useAuthUserUsername();
+  const { data: authUserInfo } = useUserInfo(authUserUsername ?? "");
+  const authUserFollowing = authUserInfo?.following;
+
   const { username } = useParams();
 
   const {
@@ -85,15 +90,20 @@ const Profile = () => {
 
         <div id="profile-info" className="flex flex-col pb-5">
           <div className="h-20 flex justify-end items-start px-3 py-5">
-            <Link to="/settings/profile">
+            {authUserUsername === username ? (
+              <Link to="/settings/profile">
+                <Button className="font-bold hover:bg-gray-100" outlined>
+                  Edit profile
+                </Button>
+              </Link>
+            ) : authUserFollowing === undefined ||
+              authUserFollowing.includes(profileInfo.id ?? "") ? (
               <Button className="font-bold hover:bg-gray-100" outlined>
-                Edit profile
+                Following
               </Button>
-            </Link>
-            {/* <Button className="text-white bg-black font-bold">Follow</Button> */}
-            {/* <Button className="font-bold hover:bg-gray-100" outlined>
-            Following
-          </Button> */}
+            ) : (
+              <Button className="text-white bg-black font-bold">Follow</Button>
+            )}
           </div>
           <div className="flex flex-col px-4">
             <span className="font-bold text-xl">{profileInfo.name}</span>

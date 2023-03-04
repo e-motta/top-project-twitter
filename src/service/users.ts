@@ -10,6 +10,7 @@ import {
   getDocFromFirestore,
   queryDocsByFieldFromFirestore,
   queryDocsByFieldsFromFirestore,
+  type QueryDocsByFirestoreLazy,
   queryDocsFromFirestoreLazy,
   setDocToFirestore,
 } from "../firebase/firestore";
@@ -42,16 +43,21 @@ export const getUsersById = async (ids: string[] | null) => {
 };
 
 export const getUsersByIdLazy = async (
-  ids: string[],
+  ids: string[] | null,
   prevLastVisible: QueryDocumentSnapshot<DocumentData> | null
 ) => {
-  const { data, lastVisible } = await queryDocsFromFirestoreLazy<User>({
+  const args: QueryDocsByFirestoreLazy = {
     collectionName: COLLECTION_NAME,
     whereContraints: [where(documentId(), "in", ids)],
-    orderByField: "username",
+    orderByField: "__name__",
     limitTo: 10,
-    startAfterDoc: prevLastVisible,
-  });
+  };
+
+  if (prevLastVisible !== null) {
+    args.startAfterDoc = prevLastVisible;
+  }
+
+  const { data, lastVisible } = await queryDocsFromFirestoreLazy<User>(args);
   return { data, lastVisible };
 };
 
@@ -84,6 +90,7 @@ export const getUsersByUsernamesLazy = async (
     limitTo: 10,
     startAfterDoc: prevLastVisible,
   });
+  console.log("users", { usernames, data, lastVisible });
   return { data, lastVisible };
 };
 
