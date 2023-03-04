@@ -13,7 +13,6 @@ const TweetsTimeline = ({ userIds }: { userIds: string[] | null }) => {
     isSuccess: isTweetsSuccess,
     isError: isTweetsError,
   } = useTweetsbyUserIdsLazy(userIds ?? null);
-  console.log(tweets);
 
   const {
     data: tweetsUsersInfo,

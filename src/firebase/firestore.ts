@@ -113,14 +113,6 @@ export const queryDocsFromFirestoreLazy = async <Doc>({
   limitTo,
   startAfterDoc,
 }: QueryDocsByFirestoreLazy) => {
-  console.log({
-    collectionName,
-    whereContraints,
-    orderByField,
-    orderByDirection,
-    limitTo,
-    startAfterDoc,
-  });
   const queryArguments = [];
 
   orderByField !== undefined &&

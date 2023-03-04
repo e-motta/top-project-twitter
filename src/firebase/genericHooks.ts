@@ -63,7 +63,6 @@ export const useFetchFromFirestoreGenericLazy = <Doc>(
           param,
           prevLastVisible
         );
-        console.log(data);
         if (responseData !== undefined) {
           if (responseData.length > 0 && lastVisible !== undefined) {
             setData((d) => {

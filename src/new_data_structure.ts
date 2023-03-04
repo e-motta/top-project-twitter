@@ -19,8 +19,7 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 1. Change data structures in app. PARTIAL
-// 2. Toggle every element that depends on AuthUser PENDING
+// 1. Add more tweets and users to db
 // 3. Implement Register component
 // 4. Redirect to Register if user is logged in but doesn't have a username
 // 5. Fix Follows component

@@ -90,7 +90,6 @@ export const getUsersByUsernamesLazy = async (
     limitTo: 10,
     startAfterDoc: prevLastVisible,
   });
-  console.log("users", { usernames, data, lastVisible });
   return { data, lastVisible };
 };
 

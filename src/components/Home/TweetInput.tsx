@@ -25,7 +25,7 @@ const TweetInput = ({ userInfo }: { userInfo: User }) => {
       <div className="flex gap-4">
         <Avatar
           size="md"
-          url={userInfo?.avatar ?? ""}
+          url={userInfo?.profile_image_url ?? ""}
           username={userInfo?.username ?? ""}
         />
         <form
@@ -35,7 +35,6 @@ const TweetInput = ({ userInfo }: { userInfo: User }) => {
           onSubmit={(e) => {
             e.preventDefault();
             if (inputText.length <= TWEET_LENGTH_LIMIT) {
-              console.log(inputText);
               setLoading(true);
               setTimeout(() => {
                 // todo: remove setTimeout
