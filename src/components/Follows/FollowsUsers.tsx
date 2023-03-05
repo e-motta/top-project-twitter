@@ -28,7 +28,7 @@ const FollowsUsers = ({
   );
 
   useEffect(() => {
-    if (userInfo !== null) setFollowsUsernames(userInfo[selected]);
+    if (userInfo !== null) setFollowsUsernames([...userInfo[selected], "?"]);
   }, [userInfo]);
 
   const {
@@ -41,6 +41,27 @@ const FollowsUsers = ({
 
   if (isError) {
     return <NetworkError />;
+  }
+
+  if (isSuccess && userInfo[selected].length === 0) {
+    let title: string;
+    let message: string;
+
+    if (selected === "followers") {
+      title = "Looking for followers?";
+      message =
+        "When someone follows this account, they'll show up here. Tweeting and interacting with others helps boost followers.";
+    } else {
+      title = "This account isn't following anyone";
+      message = "Once they follow accounts, they'll show up here.";
+    }
+
+    return (
+      <div className="mt-10 mx-24 flex flex-col gap-4">
+        <h2 className="text-5xl font-bold">{title}</h2>
+        <span className="text-gray-500 text-xl">{message}</span>
+      </div>
+    );
   }
 
   if (isSuccess && follows !== null)

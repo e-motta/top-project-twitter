@@ -24,6 +24,17 @@ const TweetsTimeline = ({ userIds }: { userIds: string[] | null }) => {
     return <NetworkError />;
   }
 
+  if (isTweetsSuccess && tweets === null) {
+    const title = "This account hasn't Tweeted";
+    const message = "When they do, their Tweets will show up here.";
+    return (
+      <div className="mt-10 mx-24 flex flex-col gap-4">
+        <h2 className="text-5xl font-bold">{title}</h2>
+        <span className="text-gray-500 text-xl">{message}</span>
+      </div>
+    );
+  }
+
   if (
     isTweetsUsersInfoSuccess &&
     isTweetsSuccess &&
