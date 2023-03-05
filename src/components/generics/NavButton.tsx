@@ -11,7 +11,7 @@ const NavButton = ({
   notImplemented?: boolean;
   to: string;
 }) => {
-  const color = selected !== undefined ? "" : "text-gray-500";
+  const color = selected === undefined || !selected ? "text-gray-500" : "";
 
   const onClick = () => {
     if (notImplemented !== undefined) {
