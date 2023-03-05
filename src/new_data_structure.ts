@@ -19,10 +19,8 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 2. Add more tweets and users to db
 // 3. Implement Register component
 // 4. Redirect to Register if user is logged in but doesn't have a username
 // 6. Implement Anonymous user
-// 7. Fix: Followers/Following NavButton - text must be grey when disabled
 // 8. Implement: Following button must turn Unfollow with red text
 // 9. Implement: For you / Following tabs

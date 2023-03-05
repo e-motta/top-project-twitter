@@ -39,54 +39,6 @@ export const tweets = [
     created_at: new Date("2023-02-02T12:01:04.753Z"),
     likes: 4500,
   },
-  {
-    author_id: "lVdyKfmdickhzNFIDBL4",
-    text: "I am in awe of people who have dedicated their lives to making the world a more equitable place, and I feel lucky to be able to support their efforts.",
-    created_at: new Date("2022-12-20T12:01:04.753Z"),
-    likes: 5300,
-  },
-  {
-    author_id: "lVdyKfmdickhzNFIDBL4",
-    text: "Africa has always been at the heart of our foundation’s mission. Today, we are announcing our commitment of $7 billion over the next 4 years for the development of more breakthrough innovations in health and agriculture across the continent.",
-    created_at: new Date("2022-11-17T12:01:04.753Z"),
-    likes: 2600,
-  },
-  {
-    author_id: "g1yQGuEjkvyAgniW6I2O",
-    text: "Hello, world! I am Elon Musk.",
-    created_at: new Date("2016-02-04T15:01:04.753Z"),
-    likes: 230492,
-  },
-  {
-    author_id: "g1yQGuEjkvyAgniW6I2O",
-    text: "The ability of Twitter advertising to reach the most influential people in the world is often not fully appreciated. While a few other social networks are technically bigger, Twitter is where the writers & leaders spend their time.",
-    created_at: new Date("2023-03-01T19:01:04.753Z"),
-    likes: 23040,
-  },
-  {
-    author_id: "g1yQGuEjkvyAgniW6I2O",
-    text: "You’re not gonna believe this, but we’re running a little late! Presentation starts in ~5 mins.",
-    created_at: new Date("2023-03-01T18:01:04.753Z"),
-    likes: 57600,
-  },
-  {
-    author_id: "g1yQGuEjkvyAgniW6I2O",
-    text: "What do you call an infinite gear ratio? All torque, no action.",
-    created_at: new Date("2023-03-02T18:01:04.753Z"),
-    likes: 92000,
-  },
-  {
-    author_id: "g1yQGuEjkvyAgniW6I2O",
-    text: "BasedAI",
-    created_at: new Date("2023-02-28T18:01:04.753Z"),
-    likes: 54000,
-  },
-  {
-    author_id: "g1yQGuEjkvyAgniW6I2O",
-    text: "Having a bit of AI existential angst today",
-    created_at: new Date("2023-02-26T18:01:04.753Z"),
-    likes: 95100,
-  },
 ];
 
 // mock
@@ -132,7 +84,7 @@ export const useAddUserToDb = () => {
 export const useAddTweetsToDb = () => {
   useEffect(() => {
     const add = async () => {
-      await addDocToFirestore<Tweet>("tweets", tweets[14]);
+      await addDocToFirestore<Tweet>("tweets", tweets[0]);
     };
     void add();
   }, []);

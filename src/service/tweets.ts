@@ -30,7 +30,7 @@ export const getTweetsByUserIdsLazy = async (
 ) => {
   const args: QueryDocsByFirestoreLazy = {
     collectionName: COLLECTION_NAME,
-    whereContraints: [where("author_id", "in", userIds)],
+    whereContraints: [where("author_id", "in", userIds?.slice(0, 10))],
     orderByField: "created_at",
     orderByDirection: "desc",
     limitTo: 10,

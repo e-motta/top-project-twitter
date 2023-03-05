@@ -48,7 +48,7 @@ export const getUsersByIdLazy = async (
 ) => {
   const args: QueryDocsByFirestoreLazy = {
     collectionName: COLLECTION_NAME,
-    whereContraints: [where(documentId(), "in", ids)],
+    whereContraints: [where(documentId(), "in", ids?.slice(0, 10))],
     orderByField: "__name__",
     limitTo: 10,
   };
@@ -85,7 +85,7 @@ export const getUsersByUsernamesLazy = async (
 ) => {
   const { data, lastVisible } = await queryDocsFromFirestoreLazy<User>({
     collectionName: COLLECTION_NAME,
-    whereContraints: [where("username", "in", usernames)],
+    whereContraints: [where("username", "in", usernames?.slice(0, 10))],
     orderByField: "email",
     limitTo: 10,
     startAfterDoc: prevLastVisible,
@@ -96,7 +96,9 @@ export const getUsersByUsernamesLazy = async (
 export const getFollowersCount = async (userId: string) => {
   const count = await getCountByQuery({
     collectionName: COLLECTION_NAME,
-    whereConstraints: [where("following", "array-contains", userId)],
+    whereConstraints: [
+      where("following", "array-contains", userId.slice(0, 10)),
+    ],
   });
   return count;
 };
