@@ -1,5 +1,5 @@
 import TweetInput from "./TweetInput";
-import NavButton from "../generics/NavButton";
+import NavButton from "../buttons/NavButton";
 import Header from "../Header/Header";
 import {
   useUserInfo,

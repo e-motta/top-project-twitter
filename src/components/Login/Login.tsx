@@ -2,7 +2,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect } from "react";
 import logoImg from "../../assets/twitter-logo-blue.png";
-import Button from "../generics/Button";
+import Button from "../buttons/Button";
 import googleLogo from "../../assets/google-logo.svg";
 import { auth } from "../../firebase/auth";
 import { useSignIn, useSignInAnonymous } from "../../firebase/hooks";

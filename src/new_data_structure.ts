@@ -23,6 +23,5 @@ export const user = {
 // 4. Redirect to Register if user is logged in but doesn't have a username
 // 6. Implement Anonymous user
 // 8. Implement: Following button must turn Unfollow with red text
-// 9. Implement: For you / Following tabs
 // 10. Update Router to new syntax
 // 11. Implement: Delete tweets

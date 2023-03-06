@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Button from "../generics/Button";
 import Avatar from "../generics/Avatar";
 import {
   useAuthUserUsername,
@@ -11,6 +10,8 @@ import { useEffect, useState } from "react";
 import { type User } from "../../types";
 import NetworkError from "../generics/NetworkError";
 import InfiniteScroll from "react-infinite-scroll-component";
+import FollowButton from "../buttons/FollowButton";
+import FollowingButton from "../buttons/FollowingButton";
 
 const FollowsUsers = ({
   userInfo,
@@ -101,13 +102,9 @@ const FollowsUsers = ({
               </div>
               {authUserFollowing === undefined ||
               authUserFollowing.includes(f.id ?? "") ? (
-                <Button className="font-bold hover:bg-gray-100" outlined>
-                  Following
-                </Button>
+                <FollowingButton />
               ) : (
-                <Button className="text-white bg-black font-bold">
-                  Follow
-                </Button>
+                <FollowButton />
               )}
             </div>
           ))}

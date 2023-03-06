@@ -1,6 +1,5 @@
 import Avatar from "../generics/Avatar";
-import Button from "../generics/Button";
-import NavButton from "../generics/NavButton";
+import NavButton from "../buttons/NavButton";
 import Header from "../Header/Header";
 import { Link, useParams } from "react-router-dom";
 import { formatNum } from "../../lib/formatUtils";
@@ -15,6 +14,9 @@ import {
 } from "../../firebase/hooks";
 import NetworkError from "../generics/NetworkError";
 import TweetsTimeline from "../Tweets/TweetsTimeline";
+import EditProfileButton from "../buttons/EditProfileButton";
+import FollowButton from "../buttons/FollowButton";
+import FollowingButton from "../buttons/FollowingButton";
 
 const Profile = () => {
   const { username: authUserUsername } = useAuthUserUsername();
@@ -39,7 +41,6 @@ const Profile = () => {
     isLoading: isFollowersCountLoading,
     isError: isFollowersCountError,
   } = useFollowersCount(profileInfo?.id ?? "");
-  console.log({ followersCount });
 
   if (isProfileInfoLoading) {
     return <Loading />;
@@ -92,18 +93,12 @@ const Profile = () => {
         <div id="profile-info" className="flex flex-col pb-5">
           <div className="h-20 flex justify-end items-start px-3 py-5">
             {authUserUsername === username ? (
-              <Link to="/settings/profile">
-                <Button className="font-bold hover:bg-gray-100" outlined>
-                  Edit profile
-                </Button>
-              </Link>
+              <EditProfileButton />
             ) : authUserFollowing === undefined ||
               authUserFollowing.includes(profileInfo.id ?? "") ? (
-              <Button className="font-bold hover:bg-gray-100" outlined>
-                Following
-              </Button>
+              <FollowingButton />
             ) : (
-              <Button className="text-white bg-black font-bold">Follow</Button>
+              <FollowButton />
             )}
           </div>
           <div className="flex flex-col px-4">

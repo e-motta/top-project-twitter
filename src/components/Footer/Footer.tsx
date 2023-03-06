@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Button from "../generics/Button";
+import Button from "../buttons/Button";
 
 const Footer = () => {
   return (

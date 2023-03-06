@@ -1,7 +1,7 @@
 import Avatar from "../generics/Avatar";
-import Button from "../generics/Button";
 import { useRef, useState } from "react";
 import { type User } from "../../types";
+import TweetButton from "../buttons/TweetButton";
 
 const TweetInput = ({ userInfo }: { userInfo: User }) => {
   const TWEET_LENGTH_LIMIT = 280;
@@ -68,18 +68,11 @@ const TweetInput = ({ userInfo }: { userInfo: User }) => {
         {inputText.length < TWEET_LENGTH_LIMIT + 1 && inputText.length > 0 && (
           <span className="text-sky-600">{280 - inputText.length}</span>
         )}
-        <Button
-          type="submit"
-          form="tweet"
-          disabled={
-            loading ||
-            inputText.length === 0 ||
-            inputText.length > TWEET_LENGTH_LIMIT
-          }
-          className="text-white font-bold bg-sky-500"
-        >
-          Tweet
-        </Button>
+        <TweetButton
+          loading={loading}
+          inputText={inputText}
+          tweetLengthLimit={TWEET_LENGTH_LIMIT}
+        />
       </div>
     </div>
   );

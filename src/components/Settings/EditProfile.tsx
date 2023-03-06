@@ -1,6 +1,6 @@
 import { CameraIcon } from "@heroicons/react/24/outline";
 import Avatar from "../generics/Avatar";
-import Button from "../generics/Button";
+import Button from "../buttons/Button";
 import { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import Input from "./Input";
