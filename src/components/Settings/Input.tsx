@@ -7,14 +7,14 @@ const Input = ({
   setValue: (value: React.SetStateAction<string>) => void;
   label: string;
 }) => {
-  const filledInputClass = value !== "" ? "top-2 text-[.8rem]" : "";
+  const filledInputClass = value !== "" ? "top-1 text-[.8rem]" : "";
 
   return (
     <div className="flex flex-col relative group">
       <label
         htmlFor="name"
         className={`text-gray-500 absolute top-4 left-2 transition-all
-          group-focus-within:top-2 group-focus-within:text-[.8rem]
+          group-focus-within:top-1 group-focus-within:text-[.8rem]
           ${filledInputClass}`}
       >
         {label}

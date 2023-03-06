@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Follows from "./components/Follows/Follows";
 // import Following from "./components/Follows/Following";
 import NotFound from "./components/generics/NotFound";
+import Register from "./components/generics/Register";
 
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
@@ -22,6 +23,7 @@ function App() {
         <Route path="settings/profile" element={<EditProfile />} />
         <Route path="*" element={<NotFound />} />
       </Route>
+      <Route path="signup" element={<Register />} />
     </Routes>
   );
 }
