@@ -1,13 +1,21 @@
 import TweetInput from "./TweetInput";
 import NavButton from "../generics/NavButton";
 import Header from "../Header/Header";
-import { useUserInfo, useAuthUserUsername } from "../../firebase/hooks";
+import {
+  useUserInfo,
+  useAuthUserUsername,
+  useAllUserIds,
+} from "../../firebase/hooks";
 import Loading from "../generics/Loading";
 import NetworkError from "../generics/NetworkError";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import TweetsTimeline from "../Tweets/TweetsTimeline";
 
 const Home = () => {
+  const [selectedNav, setSelectedNav] = useState<"for-you" | "following">(
+    "for-you"
+  );
+
   const {
     username,
     isLoading: isUsernameLoading,
@@ -28,7 +36,21 @@ const Home = () => {
       : null;
   }, [userInfo]);
 
-  if (isUsernameLoading || isUserInfoLoading) {
+  const {
+    data: allUserIds,
+    isLoading: isAllUserIdsLoading,
+    isError: isAllUserIdsError,
+  } = useAllUserIds();
+
+  const tweetsUserIds =
+    selectedNav === "following" ? followingUserIds : allUserIds;
+
+  if (
+    isUsernameLoading ||
+    isUserInfoLoading ||
+    isAllUserIdsLoading ||
+    isAllUserIdsError
+  ) {
     return <Loading />;
   }
 
@@ -42,11 +64,21 @@ const Home = () => {
         <Header mainText="Home" />
 
         <nav className="flex border-b border-slate-100">
-          <NavButton to="" selected>
-            For You
+          <NavButton
+            id="for-you"
+            to=""
+            selected={selectedNav === "for-you"}
+            onClick={setSelectedNav}
+          >
+            For you
           </NavButton>
           {username !== null && (
-            <NavButton to="" notImplemented>
+            <NavButton
+              id="following"
+              to=""
+              selected={selectedNav === "following"}
+              onClick={setSelectedNav}
+            >
               Following
             </NavButton>
           )}
@@ -54,7 +86,12 @@ const Home = () => {
 
         {isUsernameSuccess && <TweetInput userInfo={userInfo} />}
 
-        {isUserInfoSuccess && <TweetsTimeline userIds={followingUserIds} />}
+        {isUserInfoSuccess && (
+          <TweetsTimeline
+            userIds={tweetsUserIds}
+            key={JSON.stringify(tweetsUserIds)}
+          />
+        )}
       </div>
     );
 

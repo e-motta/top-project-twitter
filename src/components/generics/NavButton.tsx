@@ -2,31 +2,37 @@ import { Link } from "react-router-dom";
 
 const NavButton = ({
   children,
+  id,
   selected,
   notImplemented,
   to,
+  onClick,
 }: {
   children: React.ReactNode;
+  id?: "for-you" | "following";
   selected?: boolean;
   notImplemented?: boolean;
-  to: string;
+  to?: string;
+  onClick?: React.Dispatch<React.SetStateAction<"following" | "for-you">>;
 }) => {
   const color = selected === undefined || !selected ? "text-gray-500" : "";
 
-  const onClick = () => {
-    if (notImplemented !== undefined) {
+  const onButtonClick = () => {
+    if (notImplemented === true) {
       alert("Not implemented!");
     }
+    if (selected !== undefined && onClick !== undefined)
+      onClick(id ?? "following");
   };
 
   return (
     <>
-      {notImplemented !== undefined ? (
+      {to === undefined ? (
         <a
           className={`w-full flex justify-center transition-all ${color}
         hover:bg-gray-200`}
           href="#"
-          onClick={onClick}
+          onClick={onButtonClick}
         >
           <div className="pt-3 px-4 flex flex-col gap-3">
             <span className={`font-bold text-sm`}>{children}</span>
@@ -40,7 +46,7 @@ const NavButton = ({
           to={to}
           className={`w-full flex justify-center transition-all ${color}
           hover:bg-gray-200`}
-          onClick={onClick}
+          onClick={onButtonClick}
         >
           <div className="pt-3 px-4 flex flex-col gap-3">
             <span className={`font-bold text-sm mx-[2px]`}>{children}</span>

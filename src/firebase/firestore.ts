@@ -41,6 +41,7 @@ export const setDocToFirestore = async <Doc>(
   await setDoc(doc(db, collectionName, id).withConverter(converter), docObj);
 };
 
+// todo: refactor or remove if unused
 export const getDocFromFirestore = async <Doc>(
   collectionName: Collection,
   id: string
@@ -58,6 +59,20 @@ export const getDocFromFirestore = async <Doc>(
     status = 404;
   }
   return { data, status };
+};
+
+export const getAllCollectionDocsFromFirestore = async (
+  collectionName: Collection
+) => {
+  const converter = selectConverter(collectionName);
+  const querySnapshot = await getDocs(
+    collection(db, collectionName).withConverter(converter)
+  );
+  const data: string[] = [];
+  querySnapshot.forEach((doc) => {
+    data.push(doc.id);
+  });
+  return data;
 };
 
 export const queryDocsByFieldFromFirestore = async <Doc>(

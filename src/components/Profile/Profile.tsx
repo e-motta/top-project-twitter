@@ -39,6 +39,7 @@ const Profile = () => {
     isLoading: isFollowersCountLoading,
     isError: isFollowersCountError,
   } = useFollowersCount(profileInfo?.id ?? "");
+  console.log({ followersCount });
 
   if (isProfileInfoLoading) {
     return <Loading />;

@@ -25,8 +25,8 @@ const TweetsTimeline = ({ userIds }: { userIds: string[] | null }) => {
   }
 
   if (isTweetsSuccess && tweets === null) {
-    const title = "This account hasn't Tweeted";
-    const message = "When they do, their Tweets will show up here.";
+    const title = "No tweets to show!";
+    const message = "Tweets will appear here after they've been tweeted.";
     return (
       <div className="mt-10 mx-24 flex flex-col gap-4">
         <h2 className="text-5xl font-bold">{title}</h2>

@@ -13,6 +13,7 @@ import {
   getFollowersCount,
   getUsersById,
   getUsersByIdLazy,
+  getAllUserIds,
 } from "../service/users";
 import { type Tweet, type User } from "../types";
 import { auth, provider } from "./auth";
@@ -136,6 +137,30 @@ export const useUsersByIdLazy = (ids: string[] | null) => {
 
 export const useUsersByIds = (ids: string[] | null) => {
   return useFetchFromFirestoreGeneric<User[]>(getUsersById, ids);
+};
+
+export const useAllUserIds = () => {
+  const [data, setData] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const getIds = async () => {
+      setIsLoading(true);
+      try {
+        const ids = await getAllUserIds();
+        setData(ids);
+        setIsSuccess(true);
+        setIsLoading(false);
+      } catch (e) {
+        console.error(e);
+        setIsError(true);
+      }
+    };
+    void getIds();
+  }, []);
+  return { data, isLoading, isSuccess, isError };
 };
 
 // Tweets

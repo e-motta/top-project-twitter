@@ -13,6 +13,7 @@ import {
   type QueryDocsByFirestoreLazy,
   queryDocsFromFirestoreLazy,
   setDocToFirestore,
+  getAllCollectionDocsFromFirestore,
 } from "../firebase/firestore";
 import { type User } from "../types";
 
@@ -96,9 +97,12 @@ export const getUsersByUsernamesLazy = async (
 export const getFollowersCount = async (userId: string) => {
   const count = await getCountByQuery({
     collectionName: COLLECTION_NAME,
-    whereConstraints: [
-      where("following", "array-contains", userId.slice(0, 10)),
-    ],
+    whereConstraints: [where("following", "array-contains", userId)],
   });
   return count;
+};
+
+export const getAllUserIds = async () => {
+  const ids = await getAllCollectionDocsFromFirestore(COLLECTION_NAME);
+  return ids;
 };
