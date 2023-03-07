@@ -19,7 +19,6 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 3. Implement Register component
 // 3. Implement verifications for inputs in UserInfoForm (frontend for now)
 // 4. Redirect to Register if user is logged in but doesn't have a username
 // 5. Redirect from Register to Home if the user already has a username

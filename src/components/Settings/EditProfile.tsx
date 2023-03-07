@@ -3,7 +3,7 @@ import Loading from "../generics/Loading";
 import { useUserInfo, useAuthUserUsername } from "../../firebase/hooks";
 import NotFound from "../generics/NotFound";
 import NetworkError from "../generics/NetworkError";
-import UserInfoForm from "../generics/UserInfoForm";
+import UserInfoForm from "../UserInfoForm/UserInfoForm";
 
 const EditProfile = () => {
   const {
