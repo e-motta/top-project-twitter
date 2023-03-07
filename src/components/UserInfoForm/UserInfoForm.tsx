@@ -1,6 +1,5 @@
 import { CameraIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useAuthUserUsername, useUserInfo } from "../../firebase/hooks";
 import Button from "../buttons/Button";
 import Input from "../Settings/Input";
@@ -8,44 +7,11 @@ import Avatar from "../generics/Avatar";
 import Loading from "../generics/Loading";
 import NetworkError from "../generics/NetworkError";
 import NotFound from "../generics/NotFound";
-import { validateName, validateUsername } from "./helpers";
+import useForm from "./useForm";
 
 const UserInfoForm = ({ redirectTo }: { redirectTo?: string }) => {
-  const [newName, setNewName] = useState("");
-  const [newNameMessage, setNewNameMessage] = useState("");
-  const [newUsername, setNewUsername] = useState("");
-  const [newUsernameMessage, setNewUsernameMessage] = useState("");
-  const [submitLoading, setSubmitLoading] = useState(false);
+  const form = useForm(redirectTo);
 
-  // todo: convert to custom hook - start
-  const navigate = useNavigate();
-
-  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSubmitLoading(true);
-
-    const { valid: isNewNameValid, message: newNameStatusMessage } =
-      validateName(newName);
-    const { valid: isNewUsernameValid, message: newUsernameStatusMessage } =
-      validateUsername(newUsername);
-
-    if (newNameStatusMessage !== "") setNewNameMessage(newNameStatusMessage);
-    if (newUsernameStatusMessage !== "")
-      setNewUsernameMessage(newUsernameStatusMessage);
-
-    if (isNewNameValid && isNewUsernameValid) {
-      setTimeout(() => {
-        setSubmitLoading(false);
-      }, 1000);
-
-      // todo: call redirect conditionally only when inputs are valid and response is ok
-      if (redirectTo !== undefined) navigate(redirectTo);
-    }
-
-    setSubmitLoading(false);
-  };
-
-  // todo: convert to custom hook - end
   const {
     username,
     isLoading: isUsernameLoading,
@@ -61,8 +27,8 @@ const UserInfoForm = ({ redirectTo }: { redirectTo?: string }) => {
 
   useEffect(() => {
     if (userInfo !== null) {
-      setNewName(userInfo.name);
-      if (userInfo.username !== null) setNewUsername(userInfo.username);
+      form.setNewName(userInfo.name);
+      if (userInfo.username !== null) form.setNewUsername(userInfo.username);
     }
   }, [userInfo]);
 
@@ -124,41 +90,43 @@ const UserInfoForm = ({ redirectTo }: { redirectTo?: string }) => {
           action="#"
           className="flex flex-col gap-5 p-4"
           onSubmit={(e) => {
-            submitForm(e);
+            form.onSubmitForm(e);
           }}
         >
           <div className="flex flex-col gap-5 relative">
             <Input
-              value={newName}
+              value={form.newName}
               setValue={(e) => {
-                setNewNameMessage("");
-                setNewName(e);
+                form.setNewNameMessage("");
+                form.setNewName(e);
               }}
               label="Name"
-              validationMessage={newNameMessage}
+              validationMessage={form.newNameMessage}
             />
             <Input
-              value={newUsername}
+              value={form.newUsername}
               setValue={(e) => {
-                setNewUsernameMessage("");
-                setNewUsername(e);
+                form.setNewUsernameMessage("");
+                form.setNewUsername(e);
               }}
               label="Username"
-              validationMessage={newUsernameMessage}
+              validationMessage={form.newUsernameMessage}
             />
-            {submitLoading && <Loading />}
+            {form.submitLoading && <Loading />}
           </div>
-
-          <div>
-            <Button
-              className="text-white bg-black font-bold"
-              type="submit"
-              form="edit-profile"
-              disabled={newName.length === 0 || newUsername.length === 0}
-              // onClick={submitForm}
-            >
-              Save
-            </Button>
+          <div className="flex justify-start">
+            <div onClick={form.onClickDisabledButton}>
+              <Button
+                className="text-white bg-black font-bold disabled:pointer-events-none"
+                type="submit"
+                form="edit-profile"
+                disabled={
+                  form.newName.length === 0 || form.newUsername.length === 0
+                }
+              >
+                Save
+              </Button>
+            </div>
           </div>
         </form>
       </>
