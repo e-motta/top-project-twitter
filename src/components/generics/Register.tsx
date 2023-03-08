@@ -1,7 +1,44 @@
+import { useNavigate } from "react-router-dom";
 import TwitterLogo from "../../assets/twitter-logo-blue.png";
+import {
+  useAuthUserUsername,
+  useLogOut,
+  useUserInfo,
+} from "../../firebase/hooks";
 import UserInfoForm from "../UserInfoForm/UserInfoForm";
+import Loading from "./Loading";
+import NetworkError from "./NetworkError";
 
 const Register = () => {
+  const { logOut, isError } = useLogOut();
+  const navigate = useNavigate();
+
+  const {
+    username,
+    isLoading: isUsernameLoading,
+    isSuccess: isUsernameSuccess,
+    isError: isUsernameError,
+  } = useAuthUserUsername();
+
+  const {
+    data: userInfo,
+    isLoading: isUserInfoLoading,
+    isSuccess: isUserInfoSuccess,
+    isError: isUserInfoError,
+  } = useUserInfo(username);
+
+  if (isUsernameLoading || isUserInfoLoading) {
+    return <Loading />;
+  }
+
+  if (isError || isUsernameError || isUserInfoError) {
+    return <NetworkError />;
+  }
+  console.log({ userInfo });
+  if (isUsernameSuccess && isUserInfoSuccess && userInfo !== null) {
+    navigate("/");
+  }
+
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-[600px]">
@@ -16,7 +53,16 @@ const Register = () => {
               Choose a Name and a Username to finish signing up.
             </span>
             <span className="text-gray-500">
-              You can optionally upload an avatar and a background picture.
+              You can also upload an avatar and a background picture for your
+              profile.
+            </span>
+            <span>
+              <button
+                className="text-red-300 text-sm hover:text-red-400"
+                onClick={logOut}
+              >
+                Or click here to cancel.
+              </button>
             </span>
           </div>
         </div>
