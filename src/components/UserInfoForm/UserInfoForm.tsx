@@ -15,6 +15,7 @@ const UserInfoForm = ({ redirectTo }: { redirectTo?: string }) => {
   const {
     username,
     isLoading: isUsernameLoading,
+    isSuccess: isUsernameSuccess,
     isError: isUsernameError,
   } = useAuthUserUsername();
 
@@ -44,16 +45,23 @@ const UserInfoForm = ({ redirectTo }: { redirectTo?: string }) => {
     return <NetworkError />;
   }
 
-  if (isUserInfoSuccess && userInfo !== null)
+  if (isUsernameSuccess)
     return (
       <>
         <div
           id="bg-img"
           className="max-h-48 aspect-[25/8] bg-gray-300 relative mb-24"
         >
-          {userInfo.background_image_url !== null && (
-            <img src={userInfo.background_image_url} alt="background image" />
-          )}
+          {userInfo !== null
+            ? userInfo.background_image_url !== null && (
+                <img
+                  src={userInfo.background_image_url}
+                  alt="background image"
+                />
+              )
+            : // <img src={"/"} alt="background image" />  todo: fix when upload is working
+              ""}
+
           <button
             type="button"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
@@ -67,12 +75,17 @@ const UserInfoForm = ({ redirectTo }: { redirectTo?: string }) => {
           rounded-full ml-4"
           >
             <div>
-              <Avatar
-                size="lg"
-                url={userInfo.profile_image_url}
-                username={userInfo.username ?? ""}
-                disabled
-              />
+              {userInfo !== null ? (
+                <Avatar
+                  size="lg"
+                  url={userInfo.profile_image_url}
+                  username={userInfo.username ?? ""}
+                  disabled
+                />
+              ) : (
+                <Avatar size="lg" url={""} username={""} disabled />
+              )}
+
               <button
                 type="button"
                 className="absolute top-1/2 left-1/2 -translate-x-1/2

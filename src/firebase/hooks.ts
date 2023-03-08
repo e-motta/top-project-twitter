@@ -105,9 +105,9 @@ export const useAuthUserUsername = () => {
       try {
         const usersWithEmail = await getUserByEmail(email ?? "");
         if (usersWithEmail.length > 0) {
-          setIsSuccess(true);
           setUsername(usersWithEmail[0].username);
         }
+        setIsSuccess(true);
         setIsLoading(false);
       } catch (e) {
         console.error(e);

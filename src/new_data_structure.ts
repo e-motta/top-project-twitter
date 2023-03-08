@@ -19,7 +19,7 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 3. Extract UserInfoForm form logic into custom hook
+// 3. Show empty Register/UserInfoForm when user is not signed in
 // 4. Redirect to Register if user is logged in but doesn't have a username
 // 5. Redirect from Register to Home if the user already has a username
 // 6. Implement Anonymous user

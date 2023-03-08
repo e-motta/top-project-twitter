@@ -26,7 +26,6 @@ const Home = () => {
   const {
     data: userInfo,
     isLoading: isUserInfoLoading,
-    isSuccess: isUserInfoSuccess,
     isError: isUserInfoError,
   } = useUserInfo(username);
 
@@ -58,7 +57,7 @@ const Home = () => {
     return <NetworkError />;
   }
 
-  if (isUserInfoSuccess && userInfo !== null)
+  if (isUsernameSuccess)
     return (
       <div id="home-container" className="min-h-screen flex flex-col">
         <Header mainText="Home" />
@@ -84,14 +83,14 @@ const Home = () => {
           )}
         </nav>
 
-        {isUsernameSuccess && <TweetInput userInfo={userInfo} />}
-
-        {isUserInfoSuccess && (
-          <TweetsTimeline
-            userIds={tweetsUserIds}
-            key={JSON.stringify(tweetsUserIds)}
-          />
+        {isUsernameSuccess && userInfo !== null && (
+          <TweetInput userInfo={userInfo} />
         )}
+
+        <TweetsTimeline
+          userIds={tweetsUserIds}
+          key={JSON.stringify(tweetsUserIds)}
+        />
       </div>
     );
 
