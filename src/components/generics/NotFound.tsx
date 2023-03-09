@@ -1,7 +1,12 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../buttons/Button";
 
 const NotFound = () => {
+  useEffect(() => {
+    document.title = "Not Found / Twitter";
+  }, []);
+
   const navigate = useNavigate();
 
   return (

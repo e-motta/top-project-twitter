@@ -6,6 +6,7 @@ import Loading from "../generics/Loading";
 import NotFound from "../generics/NotFound";
 import FollowsUsers from "./FollowsUsers";
 import NetworkError from "../generics/NetworkError";
+import { useEffect } from "react";
 
 const Follows = () => {
   const { pathname } = useLocation();
@@ -19,6 +20,19 @@ const Follows = () => {
     isSuccess,
     isError,
   } = useUserInfo(username ?? "");
+
+  useEffect(() => {
+    const title =
+      selected === "followers"
+        ? `People following ${userInfo?.name ?? ""} (@${
+            userInfo?.username ?? ""
+          })`
+        : `People followed by${userInfo?.name ?? ""} (@${
+            userInfo?.username ?? ""
+          })`;
+    document.title =
+      userInfo?.name !== undefined ? `${title} / Twitter` : "Twitter";
+  }, [JSON.stringify(userInfo?.name), JSON.stringify(userInfo?.username)]);
 
   if (isLoading) {
     return <Loading />;

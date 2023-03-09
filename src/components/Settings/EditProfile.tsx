@@ -5,8 +5,13 @@ import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
 import NotFound from "../generics/NotFound";
 import NetworkError from "../generics/NetworkError";
 import UserInfoForm from "../UserInfoForm/UserInfoForm";
+import { useEffect } from "react";
 
 const EditProfile = () => {
+  useEffect(() => {
+    document.title = "Edit profile / Twitter";
+  }, []);
+
   const {
     username,
     isLoading: isUsernameLoading,

@@ -6,8 +6,13 @@ import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
 import UserInfoForm from "../UserInfoForm/UserInfoForm";
 import Loading from "./Loading";
 import NetworkError from "./NetworkError";
+import { useEffect } from "react";
 
 const Register = () => {
+  useEffect(() => {
+    document.title = "Sign Up / Twitter";
+  }, []);
+
   const { logOut, isError } = useLogOut();
   const navigate = useNavigate();
 

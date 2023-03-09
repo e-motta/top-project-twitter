@@ -5,10 +5,14 @@ import { useUserInfo, useAllUserIds } from "../../service/hooks/usersHooks";
 import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
 import Loading from "../generics/Loading";
 import NetworkError from "../generics/NetworkError";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import TweetsTimeline from "../Tweets/TweetsTimeline";
 
 const Home = () => {
+  useEffect(() => {
+    document.title = "Home / Twitter";
+  }, []);
+
   const [selectedNav, setSelectedNav] = useState<"for-you" | "following">(
     "for-you"
   );

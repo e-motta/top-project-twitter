@@ -10,6 +10,10 @@ import NetworkError from "../generics/NetworkError";
 import { useSignIn, useSignInAnonymous } from "../../firebase/authHooks";
 
 const Login = () => {
+  useEffect(() => {
+    document.title = "Login / Twitter";
+  }, []);
+
   const { signIn, isLoading, isError } = useSignIn();
   const {
     signIn: signInAnonymous,

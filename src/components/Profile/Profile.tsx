@@ -17,6 +17,7 @@ import TweetsTimeline from "../Tweets/TweetsTimeline";
 import EditProfileButton from "../buttons/EditProfileButton";
 import FollowButton from "../buttons/FollowButton";
 import FollowingButton from "../buttons/FollowingButton";
+import { useEffect } from "react";
 
 const Profile = () => {
   const { username: authUserUsername } = useAuthUserUsername();
@@ -31,6 +32,17 @@ const Profile = () => {
     isSuccess: isProfileInfoSuccess,
     isError: profileInfoIsError,
   } = useUserInfo(username ?? "");
+
+  useEffect(() => {
+    const title = `${profileInfo?.name ?? ""} (@${
+      profileInfo?.username ?? ""
+    })`;
+    document.title =
+      profileInfo?.name !== undefined ? `${title} / Twitter` : "Twitter";
+  }, [
+    JSON.stringify(profileInfo?.name),
+    JSON.stringify(profileInfo?.username),
+  ]);
 
   const { data: tweetsCount, isError: isTweetsCountError } = useTweetsCount(
     profileInfo?.id ?? ""
