@@ -1,14 +1,3 @@
-// export interface User {
-//   username: string;
-//   name: string;
-//   email: string;
-//   avatar: string;
-//   bgImage: string;
-//   followers: string[];
-//   following: string[];
-//   tweets: string[];
-// }
-
 export interface User {
   id?: string;
   name: string;
@@ -20,14 +9,6 @@ export interface User {
   followers: string[];
   liked_tweets: string[];
 }
-
-// export interface Tweet {
-//   id: string;
-//   date: Date;
-//   handle: string;
-//   likes: number;
-//   text: string;
-// }
 
 export interface Tweet {
   id?: string;

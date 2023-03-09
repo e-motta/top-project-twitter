@@ -19,9 +19,10 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 4. Redirect to Register if user is logged in but doesn't have a username
-// 4.1 Add Cancel/Logout button to Register?
-// 5. Redirect from Register to Home if the user already has a username
-// 6. Implement Anonymous user
-// 10. Update Router to new syntax
-// 11. Implement: Delete tweets
+// 1. Move "firestoreHooks" to service dir ? / split hooks in users/tweets files
+// 2. Update Router to new syntax
+// 3. Implement: Delete tweets
+// 4. Move all types to types.ts?
+// 5. Implement liked tweets: checked when liked; effect when clicked
+
+// *. Delete mock_data.ts and new_data_structure.ts when finished
