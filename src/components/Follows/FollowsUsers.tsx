@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
 import Avatar from "../generics/Avatar";
-import {
-  useAuthUserUsername,
-  useUserInfo,
-  useUsersByIdLazy,
-} from "../../firebase/hooks";
+import { useUserInfo, useUsersByIdLazy } from "../../service/hooks/usersHooks";
+import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
 import Loading from "../generics/Loading";
 import { useEffect, useState } from "react";
 import { type User } from "../../types";

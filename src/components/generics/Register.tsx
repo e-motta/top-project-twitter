@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import TwitterLogo from "../../assets/twitter-logo-blue.png";
-import {
-  useAuthUserUsername,
-  useLogOut,
-  useUserInfo,
-} from "../../firebase/hooks";
+import { useLogOut } from "../../firebase/authHooks";
+import { useUserInfo } from "../../service/hooks/usersHooks";
+import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
 import UserInfoForm from "../UserInfoForm/UserInfoForm";
 import Loading from "./Loading";
 import NetworkError from "./NetworkError";

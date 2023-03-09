@@ -1,6 +1,7 @@
 import { CameraIcon } from "@heroicons/react/24/outline";
 import { useEffect } from "react";
-import { useAuthUserUsername, useUserInfo } from "../../firebase/hooks";
+import { useUserInfo } from "../../service/hooks/usersHooks";
+import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
 import Button from "../buttons/Button";
 import Input from "../Settings/Input";
 import Avatar from "../generics/Avatar";

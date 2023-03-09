@@ -1,6 +1,7 @@
 import TwitterLogo from "../../assets/twitter-logo-blue.png";
 import Tweet from "./Tweet";
-import { useTweetsbyUserIdsLazy, useUsersByIds } from "../../firebase/hooks";
+import { useTweetsbyUserIdsLazy } from "../../service/hooks/tweetsHooks";
+import { useUsersByIds } from "../../service/hooks/usersHooks";
 import Loading from "../generics/Loading";
 import NetworkError from "../generics/NetworkError";
 import InfiniteScroll from "react-infinite-scroll-component";

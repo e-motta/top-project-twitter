@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import Follows from "./components/Follows/Follows";
 import Loading from "./components/generics/Loading";
 import NetworkError from "./components/generics/NetworkError";
-// import Following from "./components/Follows/Following";
 import NotFound from "./components/generics/NotFound";
 import Register from "./components/generics/Register";
 
@@ -10,7 +9,8 @@ import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import EditProfile from "./components/Settings/EditProfile";
-import { useAuthUserUsername, useUserInfo } from "./firebase/hooks";
+import { useUserInfo } from "./service/hooks/usersHooks";
+import { useAuthUserUsername } from "./service/hooks/useAuthUserUsername";
 import Layout from "./Layout";
 
 function App() {

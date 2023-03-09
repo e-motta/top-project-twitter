@@ -1,6 +1,7 @@
 import Header from "../Header/Header";
 import Loading from "../generics/Loading";
-import { useUserInfo, useAuthUserUsername } from "../../firebase/hooks";
+import { useUserInfo } from "../../service/hooks/usersHooks";
+import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
 import NotFound from "../generics/NotFound";
 import NetworkError from "../generics/NetworkError";
 import UserInfoForm from "../UserInfoForm/UserInfoForm";

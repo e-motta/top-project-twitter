@@ -1,7 +1,7 @@
 import { useLocation, useParams } from "react-router-dom";
 import Header from "../Header/Header";
 import NavButton from "../buttons/NavButton";
-import { useUserInfo } from "../../firebase/hooks";
+import { useUserInfo } from "../../service/hooks/usersHooks";
 import Loading from "../generics/Loading";
 import NotFound from "../generics/NotFound";
 import FollowsUsers from "./FollowsUsers";

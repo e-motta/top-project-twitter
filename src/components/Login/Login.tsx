@@ -5,9 +5,9 @@ import logoImg from "../../assets/twitter-logo-blue.png";
 import Button from "../buttons/Button";
 import googleLogo from "../../assets/google-logo.svg";
 import { auth } from "../../firebase/auth";
-import { useSignIn, useSignInAnonymous } from "../../firebase/hooks";
 import Loading from "../generics/Loading";
 import NetworkError from "../generics/NetworkError";
+import { useSignIn, useSignInAnonymous } from "../../firebase/authHooks";
 
 const Login = () => {
   const { signIn, isLoading, isError } = useSignIn();

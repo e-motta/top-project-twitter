@@ -1,11 +1,8 @@
 import TweetInput from "./TweetInput";
 import NavButton from "../buttons/NavButton";
 import Header from "../Header/Header";
-import {
-  useUserInfo,
-  useAuthUserUsername,
-  useAllUserIds,
-} from "../../firebase/hooks";
+import { useUserInfo, useAllUserIds } from "../../service/hooks/usersHooks";
+import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
 import Loading from "../generics/Loading";
 import NetworkError from "../generics/NetworkError";
 import { useMemo, useState } from "react";

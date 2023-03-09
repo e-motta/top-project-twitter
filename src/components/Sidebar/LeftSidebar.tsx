@@ -4,7 +4,7 @@ import NavSidebarButton from "./NavSidebarButton";
 import NavSidebarLink from "./NavSidebarLink";
 import { useContext } from "react";
 import { AuthContext } from "../../firebase/AuthContext";
-import { useAuthUserUsername } from "../../firebase/hooks";
+import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
 import NetworkError from "../generics/NetworkError";
 
 const LeftSidebar = () => {

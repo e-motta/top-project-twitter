@@ -6,7 +6,8 @@ import {
 import { HeartIcon as HearIconSolid } from "@heroicons/react/24/solid";
 import { formatDate, formatNum } from "../../lib/formatUtils";
 import { Link } from "react-router-dom";
-import { useAuthUserUsername, useUserInfo } from "../../firebase/hooks";
+import { useUserInfo } from "../../service/hooks/usersHooks";
+import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
 import { useEffect, useState } from "react";
 
 const Tweet = ({

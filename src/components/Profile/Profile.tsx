@@ -7,11 +7,11 @@ import Loading from "../generics/Loading";
 import { type User } from "../../types";
 import NotFound from "../generics/NotFound";
 import {
-  useUserInfo,
   useFollowersCount,
   useTweetsCount,
-  useAuthUserUsername,
-} from "../../firebase/hooks";
+} from "../../service/hooks/tweetsHooks";
+import { useUserInfo } from "../../service/hooks/usersHooks";
+import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
 import NetworkError from "../generics/NetworkError";
 import TweetsTimeline from "../Tweets/TweetsTimeline";
 import EditProfileButton from "../buttons/EditProfileButton";

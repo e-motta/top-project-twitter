@@ -1,4 +1,4 @@
-import { useLogOut } from "../../firebase/hooks";
+import { useLogOut } from "../../firebase/authHooks";
 import NetworkError from "./NetworkError";
 
 const LogoutPopup = () => {
