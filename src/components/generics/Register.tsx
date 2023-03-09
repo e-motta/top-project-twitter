@@ -34,7 +34,7 @@ const Register = () => {
   if (isError || isUsernameError || isUserInfoError) {
     return <NetworkError />;
   }
-  console.log({ userInfo });
+
   if (isUsernameSuccess && isUserInfoSuccess && userInfo !== null) {
     navigate("/");
   }

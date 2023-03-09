@@ -6,9 +6,11 @@ import {
 import { HeartIcon as HearIconSolid } from "@heroicons/react/24/solid";
 import { formatDate, formatNum } from "../../lib/formatUtils";
 import { Link } from "react-router-dom";
-import { useAuthUserUsername } from "../../firebase/hooks";
+import { useAuthUserUsername, useUserInfo } from "../../firebase/hooks";
+import { useEffect, useState } from "react";
 
 const Tweet = ({
+  id,
   name,
   username,
   date,
@@ -16,6 +18,7 @@ const Tweet = ({
   likes,
   avatarUrl,
 }: {
+  id: string;
   name: string;
   username: string;
   date: Date | undefined;
@@ -24,6 +27,14 @@ const Tweet = ({
   avatarUrl: string | null;
 }) => {
   const { username: authUsername } = useAuthUserUsername();
+  const { data: userInfo } = useUserInfo(username);
+
+  const [liked, setLiked] = useState(false);
+  const [likesNum, setLikesNum] = useState(likes);
+
+  useEffect(() => {
+    if (userInfo !== null) setLiked(userInfo.liked_tweets.includes(id));
+  }, [JSON.stringify(userInfo?.liked_tweets), id]);
 
   return (
     <div
@@ -59,14 +70,22 @@ const Tweet = ({
         <button
           className="flex items-center gap-1 ml-16 group hover:text-pink-500"
           type="button"
+          onClick={() => {
+            setLiked(!liked);
+            setLikesNum((l) => (liked ? (l -= 1) : (l += 1)));
+          }}
         >
           <span
             className="rounded-full p-2 transition-all 
             group-hover:bg-pink-100 group-active:bg-pink-200"
           >
-            <HearIconOutline className="h-5 w-5" />
+            {liked ? (
+              <HearIconSolid className="h-5 w-5 text-pink-500" />
+            ) : (
+              <HearIconOutline className="h-5 w-5" />
+            )}
           </span>
-          <span className="text-sm">{formatNum(likes, 1)}</span>
+          <span className="text-sm">{formatNum(likesNum, 1)}</span>
         </button>
       </div>
     </div>

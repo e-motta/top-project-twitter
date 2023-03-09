@@ -66,6 +66,7 @@ const TweetsTimeline = ({ userIds }: { userIds: string[] | null }) => {
             {tweets?.map((t) => (
               <Tweet
                 key={t.id}
+                id={t.id ?? ""}
                 name={
                   tweetsUsersInfo.find((u) => u.id === t.author_id)?.name ?? ""
                 }
