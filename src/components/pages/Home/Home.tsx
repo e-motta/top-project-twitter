@@ -1,12 +1,12 @@
 import TweetInput from "./TweetInput";
-import NavButton from "../buttons/NavButton";
-import Header from "../Header/Header";
-import { useUserInfo, useAllUserIds } from "../../service/hooks/usersHooks";
-import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
-import Loading from "../generics/Loading";
-import NetworkError from "../generics/NetworkError";
+import NavButton from "../../generics/buttons/NavButton";
+import Header from "../../generics/Header/Header";
+import { useUserInfo, useAllUserIds } from "../../../service/hooks/usersHooks";
+import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import Loading from "../../generics/Loading";
+import NetworkError from "../NetworkError";
 import { useEffect, useMemo, useState } from "react";
-import TweetsTimeline from "../Tweets/TweetsTimeline";
+import TweetsTimeline from "../../generics/Tweets/TweetsTimeline";
 
 const Home = () => {
   useEffect(() => {

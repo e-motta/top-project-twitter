@@ -1,7 +1,7 @@
-import Avatar from "../generics/Avatar";
+import Avatar from "../../generics/Avatar";
 import { useRef, useState } from "react";
-import { type User } from "../../types";
-import TweetButton from "../buttons/TweetButton";
+import { type User } from "../../../types";
+import TweetButton from "../../generics/buttons/TweetButton";
 
 const TweetInput = ({ userInfo }: { userInfo: User }) => {
   const TWEET_LENGTH_LIMIT = 280;

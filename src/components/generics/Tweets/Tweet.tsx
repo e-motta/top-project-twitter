@@ -1,14 +1,14 @@
-import Avatar from "../generics/Avatar";
 import {
   HeartIcon as HearIconOutline,
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { HeartIcon as HearIconSolid } from "@heroicons/react/24/solid";
-import { formatDate, formatNum } from "../../lib/formatUtils";
 import { Link } from "react-router-dom";
-import { useUserInfo } from "../../service/hooks/usersHooks";
-import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
 import { useEffect, useState } from "react";
+import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import { useUserInfo } from "../../../service/hooks/usersHooks";
+import Avatar from "../Avatar";
+import { formatDate, formatNum } from "../../../lib/formatUtils";
 
 const Tweet = ({
   id,

@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
-import Footer from "./components/Footer/Footer";
-import LeftSidebar from "./components/Sidebar/LeftSidebar";
+import Footer from "./components/generics/Footer/Footer";
 import { useContext } from "react";
 import { AuthContext } from "./firebase/AuthContext";
 import Delayed from "./components/generics/Delayed";
+import LeftSidebar from "./components/generics/Sidebar/LeftSidebar";
 
 const Layout = () => {
   const authUser = useContext(AuthContext);

@@ -3,10 +3,10 @@ import TwitterLogo from "../../assets/twitter-logo-blue.png";
 import { useLogOut } from "../../firebase/authHooks";
 import { useUserInfo } from "../../service/hooks/usersHooks";
 import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
-import UserInfoForm from "../UserInfoForm/UserInfoForm";
-import Loading from "./Loading";
+import Loading from "../generics/Loading";
 import NetworkError from "./NetworkError";
 import { useEffect } from "react";
+import UserInfoForm from "../generics/UserInfoForm/UserInfoForm";
 
 const Register = () => {
   useEffect(() => {

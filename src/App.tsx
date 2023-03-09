@@ -1,17 +1,17 @@
 import { Route, Routes } from "react-router-dom";
-import Follows from "./components/Follows/Follows";
+import Follows from "./components/pages/Follows/Follows";
 import Loading from "./components/generics/Loading";
-import NetworkError from "./components/generics/NetworkError";
-import NotFound from "./components/generics/NotFound";
-import Register from "./components/generics/Register";
+import NetworkError from "./components/pages/NetworkError";
+import Register from "./components/pages/Register";
 
-import Home from "./components/Home/Home";
-import Login from "./components/Login/Login";
-import Profile from "./components/Profile/Profile";
-import EditProfile from "./components/Settings/EditProfile";
+import Home from "./components/pages/Home/Home";
+import Login from "./components/pages/Login/Login";
+import Profile from "./components/pages/Profile/Profile";
+import EditProfile from "./components/pages/Settings/EditProfile";
 import { useUserInfo } from "./service/hooks/usersHooks";
 import { useAuthUserUsername } from "./service/hooks/useAuthUserUsername";
 import Layout from "./Layout";
+import NotFound from "./components/pages/NotFound";
 
 function App() {
   const {

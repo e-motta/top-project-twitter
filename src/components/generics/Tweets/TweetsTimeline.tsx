@@ -1,10 +1,10 @@
-import TwitterLogo from "../../assets/twitter-logo-blue.png";
+import TwitterLogo from "../../../assets/twitter-logo-blue.png";
 import Tweet from "./Tweet";
-import { useTweetsbyUserIdsLazy } from "../../service/hooks/tweetsHooks";
-import { useUsersByIds } from "../../service/hooks/usersHooks";
-import Loading from "../generics/Loading";
-import NetworkError from "../generics/NetworkError";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useTweetsbyUserIdsLazy } from "../../../service/hooks/tweetsHooks";
+import { useUsersByIds } from "../../../service/hooks/usersHooks";
+import NetworkError from "../../pages/NetworkError";
+import Loading from "../Loading";
 
 const TweetsTimeline = ({ userIds }: { userIds: string[] | null }) => {
   const {

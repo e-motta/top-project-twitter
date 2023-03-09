@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../buttons/Button";
+import Button from "../generics/buttons/Button";
 
 const NotFound = () => {
   useEffect(() => {

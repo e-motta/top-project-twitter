@@ -1,11 +1,11 @@
-import TwitterLogo from "../../assets/twitter-logo-blue.png";
+import TwitterLogo from "../../../assets/twitter-logo-blue.png";
 import { Link } from "react-router-dom";
 import NavSidebarButton from "./NavSidebarButton";
 import NavSidebarLink from "./NavSidebarLink";
 import { useContext } from "react";
-import { AuthContext } from "../../firebase/AuthContext";
-import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
-import NetworkError from "../generics/NetworkError";
+import { AuthContext } from "../../../firebase/AuthContext";
+import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import NetworkError from "../../pages/NetworkError";
 
 const LeftSidebar = () => {
   const authUser = useContext(AuthContext);

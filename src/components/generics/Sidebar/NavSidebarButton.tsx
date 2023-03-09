@@ -1,7 +1,7 @@
 import { EllipsisHorizontalCircleIcon as MoreSolid } from "@heroicons/react/24/solid";
 import { EllipsisHorizontalCircleIcon as MoreOutline } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import Popup from "../generics/LogoutPopup";
+import LogoutPopup from "../LogoutPopup";
 
 const NavSidebarButton = ({ type }: { type: "more" }) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -40,7 +40,7 @@ const NavSidebarButton = ({ type }: { type: "more" }) => {
           </span>
         </div>
       </button>
-      {showPopup && <Popup />}
+      {showPopup && <LogoutPopup />}
     </div>
   );
 };

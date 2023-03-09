@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom";
-import Avatar from "../generics/Avatar";
-import { useUserInfo, useUsersByIdLazy } from "../../service/hooks/usersHooks";
-import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
-import Loading from "../generics/Loading";
+import Avatar from "../../generics/Avatar";
+import {
+  useUserInfo,
+  useUsersByIdLazy,
+} from "../../../service/hooks/usersHooks";
+import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import Loading from "../../generics/Loading";
 import { useEffect, useState } from "react";
-import { type User } from "../../types";
-import NetworkError from "../generics/NetworkError";
+import { type User } from "../../../types";
+import NetworkError from "../NetworkError";
 import InfiniteScroll from "react-infinite-scroll-component";
-import FollowButton from "../buttons/FollowButton";
-import FollowingButton from "../buttons/FollowingButton";
+import FollowButton from "../../generics/buttons/FollowButton";
+import FollowingButton from "../../generics/buttons/FollowingButton";
 
 const FollowsUsers = ({
   userInfo,

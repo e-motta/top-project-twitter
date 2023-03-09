@@ -1,23 +1,23 @@
-import Avatar from "../generics/Avatar";
-import NavButton from "../buttons/NavButton";
-import Header from "../Header/Header";
+import Avatar from "../../generics/Avatar";
+import NavButton from "../../generics/buttons/NavButton";
+import Header from "../../generics/Header/Header";
 import { Link, useParams } from "react-router-dom";
-import { formatNum } from "../../lib/formatUtils";
-import Loading from "../generics/Loading";
-import { type User } from "../../types";
-import NotFound from "../generics/NotFound";
+import { formatNum } from "../../../lib/formatUtils";
+import Loading from "../../generics/Loading";
+import { type User } from "../../../types";
 import {
   useFollowersCount,
   useTweetsCount,
-} from "../../service/hooks/tweetsHooks";
-import { useUserInfo } from "../../service/hooks/usersHooks";
-import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
-import NetworkError from "../generics/NetworkError";
-import TweetsTimeline from "../Tweets/TweetsTimeline";
-import EditProfileButton from "../buttons/EditProfileButton";
-import FollowButton from "../buttons/FollowButton";
-import FollowingButton from "../buttons/FollowingButton";
+} from "../../../service/hooks/tweetsHooks";
+import { useUserInfo } from "../../../service/hooks/usersHooks";
+import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import NetworkError from "../NetworkError";
+import EditProfileButton from "../../generics/buttons/EditProfileButton";
+import FollowButton from "../../generics/buttons/FollowButton";
+import FollowingButton from "../../generics/buttons/FollowingButton";
 import { useEffect } from "react";
+import NotFound from "../NotFound";
+import TweetsTimeline from "../../generics/Tweets/TweetsTimeline";
 
 const Profile = () => {
   const { username: authUserUsername } = useAuthUserUsername();

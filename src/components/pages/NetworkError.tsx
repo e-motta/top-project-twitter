@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../buttons/Button";
+import Button from "../generics/buttons/Button";
 
 const NetworkError = () => {
   const navigate = useNavigate();

@@ -1,11 +1,11 @@
-import Header from "../Header/Header";
-import Loading from "../generics/Loading";
-import { useUserInfo } from "../../service/hooks/usersHooks";
-import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
-import NotFound from "../generics/NotFound";
-import NetworkError from "../generics/NetworkError";
-import UserInfoForm from "../UserInfoForm/UserInfoForm";
+import Header from "../../generics/Header/Header";
+import Loading from "../../generics/Loading";
+import { useUserInfo } from "../../../service/hooks/usersHooks";
+import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import NetworkError from "../NetworkError";
 import { useEffect } from "react";
+import NotFound from "../NotFound";
+import UserInfoForm from "../../generics/UserInfoForm/UserInfoForm";
 
 const EditProfile = () => {
   useEffect(() => {

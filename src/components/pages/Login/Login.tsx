@@ -1,13 +1,13 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect } from "react";
-import logoImg from "../../assets/twitter-logo-blue.png";
-import Button from "../buttons/Button";
-import googleLogo from "../../assets/google-logo.svg";
-import { auth } from "../../firebase/auth";
-import Loading from "../generics/Loading";
-import NetworkError from "../generics/NetworkError";
-import { useSignIn, useSignInAnonymous } from "../../firebase/authHooks";
+import logoImg from "../../../assets/twitter-logo-blue.png";
+import Button from "../../generics/buttons/Button";
+import googleLogo from "../../../assets/google-logo.svg";
+import { auth } from "../../../firebase/auth";
+import Loading from "../../generics/Loading";
+import NetworkError from "../NetworkError";
+import { useSignIn, useSignInAnonymous } from "../../../firebase/authHooks";
 
 const Login = () => {
   useEffect(() => {

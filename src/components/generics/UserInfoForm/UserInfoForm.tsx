@@ -1,13 +1,13 @@
 import { CameraIcon } from "@heroicons/react/24/outline";
 import { useEffect } from "react";
-import { useUserInfo } from "../../service/hooks/usersHooks";
-import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
+import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import { useUserInfo } from "../../../service/hooks/usersHooks";
+import NetworkError from "../../pages/NetworkError";
+import NotFound from "../../pages/NotFound";
+import Input from "../../pages/Settings/Input";
+import Avatar from "../Avatar";
 import Button from "../buttons/Button";
-import Input from "../Settings/Input";
-import Avatar from "../generics/Avatar";
-import Loading from "../generics/Loading";
-import NetworkError from "../generics/NetworkError";
-import NotFound from "../generics/NotFound";
+import Loading from "../Loading";
 import useForm from "./useForm";
 
 const UserInfoForm = ({ redirectTo }: { redirectTo?: string }) => {
