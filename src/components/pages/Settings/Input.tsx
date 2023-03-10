@@ -9,14 +9,14 @@ const Input = ({
   label: string;
   validationMessage?: string;
 }) => {
-  const filledInputClass = value !== "" ? "top-1 text-[.8rem]" : "";
+  const filledInputClass = value !== "" ? "top-2 text-[.8rem]" : "";
 
   return (
     <div className="flex flex-col relative group">
       <label
         htmlFor="name"
         className={`absolute top-4 left-2 transition-all
-          group-focus-within:top-1 group-focus-within:text-[.8rem]
+          group-focus-within:top-2 group-focus-within:text-[.8rem]
           ${filledInputClass} ${
           validationMessage !== "" ? "text-red-500" : "text-gray-500"
         }`}
