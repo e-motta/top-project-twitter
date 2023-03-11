@@ -33,7 +33,6 @@ function App() {
   }
 
   return (
-    // todo: update router to new syntax
     <Routes>
       <Route path="login" element={<Login />} />
       {isUsernameSuccess && username === null && authUser !== null && (
