@@ -28,7 +28,9 @@ const Tweet = ({
   avatarUrl: string | null;
 }) => {
   const { username: authUsername } = useAuthUserUsername();
-  const { data: userInfo } = useUserInfo(username);
+  const { data: userInfo } = useUserInfo(authUsername);
+
+  const isLoggedIn = authUsername !== null;
 
   const [liked, setLiked] = useState(false);
   const [likesNum, setLikesNum] = useState(likes);
@@ -69,16 +71,23 @@ const Tweet = ({
       </div>
       <div id="tweet-footer" className="flex items-center gap-3 text-gray-500">
         <button
-          className="flex items-center gap-1 ml-16 group hover:text-pink-500"
+          className={`flex items-center gap-1 ml-16 group ${
+            isLoggedIn ? "hover:text-pink-500" : "cursor-auto"
+          }`}
           type="button"
           onClick={() => {
-            setLiked(!liked);
-            setLikesNum((l) => (liked ? (l -= 1) : (l += 1)));
+            if (isLoggedIn) {
+              setLiked(!liked);
+              setLikesNum((l) => (liked ? (l -= 1) : (l += 1)));
+            }
           }}
         >
           <span
-            className="rounded-full p-2 transition-all 
-            group-hover:bg-pink-100 group-active:bg-pink-200"
+            className={`rounded-full p-2 transition-all ${
+              isLoggedIn
+                ? "group-hover:bg-pink-100 group-active:bg-pink-200"
+                : ""
+            }`}
           >
             {liked ? (
               <HearIconSolid className="h-5 w-5 text-pink-500" />
