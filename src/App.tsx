@@ -8,12 +8,15 @@ import Home from "./components/pages/Home/Home";
 import Login from "./components/pages/Login/Login";
 import Profile from "./components/pages/Profile/Profile";
 import EditProfile from "./components/pages/Settings/EditProfile";
-import { useUserInfo } from "./service/hooks/usersHooks";
 import { useAuthUserUsername } from "./service/hooks/useAuthUserUsername";
 import Layout from "./Layout";
 import NotFound from "./components/pages/NotFound";
+import { useContext } from "react";
+import { AuthContext } from "./firebase/AuthContext";
 
 function App() {
+  const authUser = useContext(AuthContext);
+
   const {
     username,
     isLoading: isUsernameLoading,
@@ -21,18 +24,11 @@ function App() {
     isError: isUsernameError,
   } = useAuthUserUsername();
 
-  const {
-    data: userInfo,
-    isLoading: isUserInfoLoading,
-    isSuccess: isUserInfoSuccess,
-    isError: isUserInfoError,
-  } = useUserInfo(username);
-
-  if (isUsernameLoading || isUserInfoLoading) {
+  if (isUsernameLoading) {
     return <Loading />;
   }
 
-  if (isUsernameError || isUserInfoError) {
+  if (isUsernameError) {
     return <NetworkError />;
   }
 
@@ -40,10 +36,10 @@ function App() {
     // todo: update router to new syntax
     <Routes>
       <Route path="login" element={<Login />} />
-      {isUsernameSuccess && userInfo === null && (
+      {isUsernameSuccess && username === null && authUser !== null && (
         <Route path="*" element={<Register />} />
       )}
-      {isUsernameSuccess && isUserInfoSuccess && (
+      {isUsernameSuccess && (
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path=":username" element={<Profile />} />

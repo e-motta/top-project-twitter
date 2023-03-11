@@ -79,7 +79,7 @@ const Login = () => {
               >
                 here
               </button>{" "}
-              to log in as a guest.
+              to log in as a guest user.
             </span>
           </div>
         )}

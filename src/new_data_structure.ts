@@ -19,7 +19,6 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 2. Update Router to new syntax
-// 5. Change title when navigating
+// 1. Prevent likes from working when not logged in
 
 // *. Delete mock_data.ts and new_data_structure.ts when finished
