@@ -1,14 +1,11 @@
-import {
-  HeartIcon as HearIconOutline,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
-import { HeartIcon as HearIconSolid } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
 import { useUserInfo } from "../../../service/hooks/usersHooks";
 import Avatar from "../Avatar";
-import { formatDate, formatNum } from "../../../lib/formatUtils";
+import { formatDate } from "../../../lib/formatUtils";
+import LikeButton from "./LikeButton";
 
 const Tweet = ({
   id,
@@ -33,7 +30,6 @@ const Tweet = ({
   const isLoggedIn = authUsername !== null;
 
   const [liked, setLiked] = useState(false);
-  const [likesNum, setLikesNum] = useState(likes);
 
   useEffect(() => {
     if (userInfo !== null) setLiked(userInfo.liked_tweets.includes(id));
@@ -70,33 +66,14 @@ const Tweet = ({
         )}
       </div>
       <div id="tweet-footer" className="flex items-center gap-3 text-gray-500">
-        <button
-          className={`flex items-center gap-1 ml-16 group ${
-            isLoggedIn ? "hover:text-pink-500" : "cursor-auto"
-          }`}
-          type="button"
-          onClick={() => {
-            if (isLoggedIn) {
-              setLiked(!liked);
-              setLikesNum((l) => (liked ? (l -= 1) : (l += 1)));
-            }
-          }}
-        >
-          <span
-            className={`rounded-full p-2 transition-all ${
-              isLoggedIn
-                ? "group-hover:bg-pink-100 group-active:bg-pink-200"
-                : ""
-            }`}
-          >
-            {liked ? (
-              <HearIconSolid className="h-5 w-5 text-pink-500" />
-            ) : (
-              <HearIconOutline className="h-5 w-5" />
-            )}
-          </span>
-          <span className="text-sm">{formatNum(likesNum, 1)}</span>
-        </button>
+        <LikeButton
+          tweetId={id}
+          userInfo={userInfo}
+          likedByAuthUser={liked}
+          likes={likes}
+          setLiked={setLiked}
+          isLoggedIn={isLoggedIn} // move to component?
+        />
       </div>
     </div>
   );

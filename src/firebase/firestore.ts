@@ -2,7 +2,6 @@ import {
   addDoc,
   collection,
   doc,
-  getDoc,
   getDocs,
   getFirestore,
   limit,
@@ -17,12 +16,15 @@ import {
   getCountFromServer,
   type FieldPath,
   type OrderByDirection,
+  updateDoc,
 } from "firebase/firestore";
 import { app } from "./config";
 import { selectConverter } from "./converters";
 import { type Collection } from "../types";
 
 export const db = getFirestore(app);
+
+// POST
 
 export const addDocToFirestore = async <Doc>(
   collectionName: Collection,
@@ -41,25 +43,17 @@ export const setDocToFirestore = async <Doc>(
   await setDoc(doc(db, collectionName, id).withConverter(converter), docObj);
 };
 
-// todo: refactor or remove if unused
-export const getDocFromFirestore = async <Doc>(
+// UPDATE
+
+export const updateDocInFireStore = async (
   collectionName: Collection,
+  partialDocObj: Record<string, any>,
   id: string
 ) => {
-  const converter = selectConverter(collectionName);
-  const docSnapshot = await getDoc(
-    doc(db, collectionName, id).withConverter(converter)
-  );
-  let data: Doc | null = null;
-  let status: 200 | 404;
-  if (docSnapshot.exists()) {
-    data = docSnapshot.data();
-    status = 200;
-  } else {
-    status = 404;
-  }
-  return { data, status };
+  await updateDoc(doc(db, collectionName, id), partialDocObj);
 };
+
+// GET
 
 export const getAllCollectionDocsFromFirestore = async (
   collectionName: Collection

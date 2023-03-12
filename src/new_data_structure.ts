@@ -19,6 +19,14 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 1. Prevent likes from working when not logged in
+// 1. Post to backend when tweet is liked
+// 2. Post to backend when user is followed (following and followers arrays (both users))
+// 2.1. Update follow button optimistically
+// 3. Post to backend when user is unfollowed (following and followers arrays (both users))
+// 3.1. Update unfollow button optimistically
+// 4. Post to backend when updating profile
+// 5. Post to backend when sending tweet
+// 6. Upload images (expand)
 
 // *. Delete mock_data.ts and new_data_structure.ts when finished
+// *2. Remove any comments, console.log, unused files

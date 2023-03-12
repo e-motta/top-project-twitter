@@ -3,23 +3,25 @@ import {
   where,
   type QueryDocumentSnapshot,
   documentId,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import {
   addDocToFirestore,
   getCountByQuery,
-  getDocFromFirestore,
   queryDocsByFieldFromFirestore,
   queryDocsByFieldsFromFirestore,
   type QueryDocsByFirestoreLazy,
   queryDocsFromFirestoreLazy,
   setDocToFirestore,
   getAllCollectionDocsFromFirestore,
+  updateDocInFireStore,
 } from "../firebase/firestore";
 import { type User } from "../types";
 
 const COLLECTION_NAME = "users";
 
-// todo: handle errors
+// POST
 
 export const postUser = async (data: User) => {
   await addDocToFirestore(COLLECTION_NAME, data);
@@ -29,10 +31,30 @@ export const postUserWithId = async (data: User, id: string) => {
   await setDocToFirestore(COLLECTION_NAME, data, id);
 };
 
-export const getUserById = async (id: string) => {
-  const user = await getDocFromFirestore<User>(COLLECTION_NAME, id);
-  return user;
+// UPDATE
+export const addToTweetsLikedByUser = async (
+  tweetId: string,
+  userId: string
+) => {
+  const partialDoc = {
+    liked_tweets: arrayUnion(tweetId),
+  };
+
+  await updateDocInFireStore(COLLECTION_NAME, partialDoc, userId);
 };
+
+export const removeFromTweetsLikedByUser = async (
+  tweetId: string,
+  userId: string
+) => {
+  const partialDoc = {
+    liked_tweets: arrayRemove(tweetId),
+  };
+
+  await updateDocInFireStore(COLLECTION_NAME, partialDoc, userId);
+};
+
+// GET
 
 export const getUsersById = async (ids: string[] | null) => {
   const users = await queryDocsByFieldsFromFirestore<User[]>(

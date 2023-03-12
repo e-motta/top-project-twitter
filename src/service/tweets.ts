@@ -8,12 +8,30 @@ import {
   type QueryDocsByFirestoreLazy,
   queryDocsFromFirestoreLazy,
   getCountByQuery,
+  updateDocInFireStore,
 } from "../firebase/firestore";
 import { type Tweet } from "../types";
 
 const COLLECTION_NAME = "tweets";
 
+// POST
+
 export const postTweet = () => {};
+
+// UPDATE
+
+export const updateTweetLikes = async (
+  tweetId: string,
+  updatedLikes: number
+) => {
+  const partialDoc = {
+    likes: updatedLikes,
+  };
+
+  await updateDocInFireStore(COLLECTION_NAME, partialDoc, tweetId);
+};
+
+// GET
 
 export const getTweetsByUserId = async (userId: string) => {
   const tweets = await queryDocsByFieldFromFirestore<Tweet>(
