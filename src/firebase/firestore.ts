@@ -17,6 +17,7 @@ import {
   type FieldPath,
   type OrderByDirection,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { app } from "./config";
 import { selectConverter } from "./converters";
@@ -161,4 +162,16 @@ export const getCountByQuery = async ({
   const q = query(collection(db, collectionName), ...whereConstraints);
   const querySnapshot = await getCountFromServer(q);
   return querySnapshot.data().count;
+};
+
+// DELETE
+
+export const deleteDocFromFirestore = async ({
+  collectionName,
+  id,
+}: {
+  collectionName: Collection;
+  id: string;
+}) => {
+  await deleteDoc(doc(db, collectionName, id));
 };

@@ -11,6 +11,7 @@ const TweetsTimeline = ({ userIds }: { userIds: string[] | null }) => {
     data: tweets,
     loadMore: loadMoreTweets,
     hasMore: hasMoreTweets,
+    deleteDoc: deleteTweet,
     isSuccess: isTweetsSuccess,
     isError: isTweetsError,
   } = useTweetsbyUserIdsLazy(userIds ?? null);
@@ -43,50 +44,44 @@ const TweetsTimeline = ({ userIds }: { userIds: string[] | null }) => {
     tweets !== null
   )
     return (
-      <>
-        {
-          <InfiniteScroll
-            dataLength={tweets.length}
-            next={loadMoreTweets}
-            hasMore={hasMoreTweets}
-            loader={
-              <div className="relative h-12">
-                <Loading />
-              </div>
-            }
-            endMessage={
-              <span className="flex justify-center mt-4 mb-8">
-                <img
-                  src={TwitterLogo}
-                  alt="twitter logo"
-                  className="h-6 w-6 opacity-50"
-                />
-              </span>
-            }
-          >
-            {tweets?.map((t) => (
-              <Tweet
-                key={t.id}
-                id={t.id ?? ""}
-                name={
-                  tweetsUsersInfo.find((u) => u.id === t.author_id)?.name ?? ""
-                }
-                username={
-                  tweetsUsersInfo.find((u) => u.id === t.author_id)?.username ??
-                  ""
-                }
-                date={t.created_at}
-                text={t.text}
-                likes={t.likes}
-                avatarUrl={
-                  tweetsUsersInfo.find((u) => u.id === t.author_id)
-                    ?.profile_image_url ?? ""
-                }
-              />
-            ))}
-          </InfiniteScroll>
+      <InfiniteScroll
+        dataLength={tweets.length}
+        next={loadMoreTweets}
+        hasMore={hasMoreTweets}
+        loader={
+          <div className="relative h-12">
+            <Loading />
+          </div>
         }
-      </>
+        endMessage={
+          <span className="flex justify-center mt-4 mb-8">
+            <img
+              src={TwitterLogo}
+              alt="twitter logo"
+              className="h-6 w-6 opacity-50"
+            />
+          </span>
+        }
+      >
+        {tweets?.map((t) => (
+          <Tweet
+            key={t.id}
+            id={t.id ?? ""}
+            name={tweetsUsersInfo.find((u) => u.id === t.author_id)?.name ?? ""}
+            username={
+              tweetsUsersInfo.find((u) => u.id === t.author_id)?.username ?? ""
+            }
+            date={t.created_at}
+            text={t.text}
+            likes={t.likes}
+            avatarUrl={
+              tweetsUsersInfo.find((u) => u.id === t.author_id)
+                ?.profile_image_url ?? ""
+            }
+            deleteTweet={deleteTweet}
+          />
+        ))}
+      </InfiniteScroll>
     );
   return <></>;
 };

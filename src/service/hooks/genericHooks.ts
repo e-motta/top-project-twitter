@@ -36,7 +36,7 @@ export const useFetchFromFirestoreGeneric = <Doc>(
   return { data, isLoading, isSuccess, isError, error };
 };
 
-export const useFetchFromFirestoreGenericLazy = <Doc>(
+export const useFetchFromFirestoreGenericLazy = <Doc extends { id?: string }>(
   fetchFunc: (arg0: any, arg1: any) => Promise<any>,
   param: any
 ) => {
@@ -98,7 +98,23 @@ export const useFetchFromFirestoreGenericLazy = <Doc>(
     setLoad(true);
   };
 
-  return { data, loadMore, hasMore, isLoading, isSuccess, isError, error };
+  const deleteDoc = (id: string) => {
+    setData((d) => {
+      if (d !== null) return d.filter((d) => d.id !== id);
+      return null;
+    });
+  };
+
+  return {
+    data,
+    loadMore,
+    hasMore,
+    deleteDoc,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  };
 };
 
 export const useFetchCountGeneric = (

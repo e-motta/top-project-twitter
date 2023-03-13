@@ -19,7 +19,7 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 1. Post to backend when tweet is liked
+// 1. Post to backend when tweet is deleted
 // 2. Post to backend when user is followed (following and followers arrays (both users))
 // 2.1. Update follow button optimistically
 // 3. Post to backend when user is unfollowed (following and followers arrays (both users))

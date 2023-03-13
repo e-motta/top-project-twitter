@@ -1,4 +1,3 @@
-import { TrashIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
@@ -6,6 +5,7 @@ import { useUserInfo } from "../../../service/hooks/usersHooks";
 import Avatar from "../Avatar";
 import { formatDate } from "../../../lib/formatUtils";
 import LikeButton from "./LikeButton";
+import DeleteButton from "./DeleteButton";
 
 const Tweet = ({
   id,
@@ -15,6 +15,7 @@ const Tweet = ({
   text,
   likes,
   avatarUrl,
+  deleteTweet,
 }: {
   id: string;
   name: string;
@@ -23,6 +24,7 @@ const Tweet = ({
   text: string;
   likes: number;
   avatarUrl: string | null;
+  deleteTweet: (id: string) => void;
 }) => {
   const { username: authUsername } = useAuthUserUsername();
   const { data: userInfo } = useUserInfo(authUsername);
@@ -57,12 +59,7 @@ const Tweet = ({
           <div id="tweet-body">{text}</div>
         </Link>
         {authUsername === username && (
-          <button
-            className="absolute top-1 right-0 p-2 rounded-full group transition-all
-            hover:bg-red-100 active:bg-red-200"
-          >
-            <TrashIcon className="h-5 w-5 text-gray-400 group-hover:text-red-500" />
-          </button>
+          <DeleteButton tweetId={id} onClick={deleteTweet} />
         )}
       </div>
       <div id="tweet-footer" className="flex items-center gap-3 text-gray-500">

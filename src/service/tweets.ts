@@ -9,6 +9,7 @@ import {
   queryDocsFromFirestoreLazy,
   getCountByQuery,
   updateDocInFireStore,
+  deleteDocFromFirestore,
 } from "../firebase/firestore";
 import { type Tweet } from "../types";
 
@@ -68,4 +69,13 @@ export const getTweetsCount = async (userId: string) => {
     whereConstraints: [where("author_id", "==", userId)],
   });
   return count;
+};
+
+// DELETE
+
+export const deleteTweet = async (tweetId: string) => {
+  await deleteDocFromFirestore({
+    collectionName: COLLECTION_NAME,
+    id: tweetId,
+  });
 };
