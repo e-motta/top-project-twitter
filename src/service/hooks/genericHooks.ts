@@ -98,6 +98,16 @@ export const useFetchFromFirestoreGenericLazy = <Doc extends { id?: string }>(
     setLoad(true);
   };
 
+  const addDoc = (docObj: Doc) => {
+    setData((d) => {
+      if (d !== null) {
+        return [docObj, ...d];
+      } else {
+        return null;
+      }
+    });
+  };
+
   const deleteDoc = (id: string) => {
     setData((d) => {
       if (d !== null) return d.filter((d) => d.id !== id);
@@ -109,6 +119,7 @@ export const useFetchFromFirestoreGenericLazy = <Doc extends { id?: string }>(
     data,
     loadMore,
     hasMore,
+    addDoc,
     deleteDoc,
     isLoading,
     isSuccess,

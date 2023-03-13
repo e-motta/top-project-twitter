@@ -19,14 +19,13 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 1. Post to backend when tweet is deleted
 // 2. Post to backend when user is followed (following and followers arrays (both users))
 // 2.1. Update follow button optimistically
 // 3. Post to backend when user is unfollowed (following and followers arrays (both users))
 // 3.1. Update unfollow button optimistically
 // 4. Post to backend when updating profile
-// 5. Post to backend when sending tweet
-// 6. Upload images (expand)
+// 5. Update state and post to backend when sending tweet
+// 6. Upload images (expand task)
 
 // *. Delete mock_data.ts and new_data_structure.ts when finished
 // *2. Remove any comments, console.log, unused files

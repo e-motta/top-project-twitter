@@ -5,12 +5,23 @@ import { useTweetsbyUserIdsLazy } from "../../../service/hooks/tweetsHooks";
 import { useUsersByIds } from "../../../service/hooks/usersHooks";
 import NetworkError from "../../pages/NetworkError";
 import Loading from "../Loading";
+import { type User } from "../../../types";
+import TweetInput from "../../pages/Home/TweetInput";
 
-const TweetsTimeline = ({ userIds }: { userIds: string[] | null }) => {
+const TweetsTimeline = ({
+  userIds,
+  showTweetInput,
+  userInfo,
+}: {
+  userIds: string[] | null;
+  showTweetInput?: boolean;
+  userInfo?: User | null;
+}) => {
   const {
     data: tweets,
     loadMore: loadMoreTweets,
     hasMore: hasMoreTweets,
+    addDoc: addTweet,
     deleteDoc: deleteTweet,
     isSuccess: isTweetsSuccess,
     isError: isTweetsError,
@@ -44,44 +55,55 @@ const TweetsTimeline = ({ userIds }: { userIds: string[] | null }) => {
     tweets !== null
   )
     return (
-      <InfiniteScroll
-        dataLength={tweets.length}
-        next={loadMoreTweets}
-        hasMore={hasMoreTweets}
-        loader={
-          <div className="relative h-12">
-            <Loading />
-          </div>
-        }
-        endMessage={
-          <span className="flex justify-center mt-4 mb-8">
-            <img
-              src={TwitterLogo}
-              alt="twitter logo"
-              className="h-6 w-6 opacity-50"
+      <>
+        {showTweetInput !== undefined &&
+          showTweetInput &&
+          userInfo !== null &&
+          userInfo !== undefined && (
+            <TweetInput userInfo={userInfo} addTweet={addTweet} />
+          )}
+        <InfiniteScroll
+          dataLength={tweets.length}
+          next={loadMoreTweets}
+          hasMore={hasMoreTweets}
+          loader={
+            <div className="relative h-12">
+              <Loading />
+            </div>
+          }
+          endMessage={
+            <span className="flex justify-center mt-4 mb-8">
+              <img
+                src={TwitterLogo}
+                alt="twitter logo"
+                className="h-6 w-6 opacity-50"
+              />
+            </span>
+          }
+        >
+          {tweets?.map((t) => (
+            <Tweet
+              key={t.id}
+              id={t.id ?? ""}
+              name={
+                tweetsUsersInfo.find((u) => u.id === t.author_id)?.name ?? ""
+              }
+              username={
+                tweetsUsersInfo.find((u) => u.id === t.author_id)?.username ??
+                ""
+              }
+              date={t.created_at}
+              text={t.text}
+              likes={t.likes}
+              avatarUrl={
+                tweetsUsersInfo.find((u) => u.id === t.author_id)
+                  ?.profile_image_url ?? ""
+              }
+              deleteTweet={deleteTweet}
             />
-          </span>
-        }
-      >
-        {tweets?.map((t) => (
-          <Tweet
-            key={t.id}
-            id={t.id ?? ""}
-            name={tweetsUsersInfo.find((u) => u.id === t.author_id)?.name ?? ""}
-            username={
-              tweetsUsersInfo.find((u) => u.id === t.author_id)?.username ?? ""
-            }
-            date={t.created_at}
-            text={t.text}
-            likes={t.likes}
-            avatarUrl={
-              tweetsUsersInfo.find((u) => u.id === t.author_id)
-                ?.profile_image_url ?? ""
-            }
-            deleteTweet={deleteTweet}
-          />
-        ))}
-      </InfiniteScroll>
+          ))}
+        </InfiniteScroll>
+      </>
     );
   return <></>;
 };

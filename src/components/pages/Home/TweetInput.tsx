@@ -1,13 +1,21 @@
 import Avatar from "../../generics/Avatar";
 import { useRef, useState } from "react";
-import { type User } from "../../../types";
+import { type Tweet, type User } from "../../../types";
 import TweetButton from "../../generics/buttons/TweetButton";
+import { postTweet } from "../../../service/tweets";
 
-const TweetInput = ({ userInfo }: { userInfo: User }) => {
+const TweetInput = ({
+  userInfo,
+  addTweet,
+}: {
+  userInfo: User;
+  addTweet: (docObj: Tweet) => void;
+}) => {
   const TWEET_LENGTH_LIMIT = 280;
 
   const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const inputRef = useRef(null);
 
@@ -15,6 +23,36 @@ const TweetInput = ({ userInfo }: { userInfo: User }) => {
     if (inputRef.current !== null)
       (inputRef.current as HTMLElement).innerText = "";
     setInputText("");
+  };
+
+  const onTweetSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (inputText.length <= TWEET_LENGTH_LIMIT) {
+      setLoading(true);
+      try {
+        if (userInfo.id === undefined) throw new TypeError();
+
+        const tweetObj: Tweet = {
+          author_id: userInfo.id,
+          created_at: new Date(),
+          likes: 0,
+          text: inputText,
+        };
+
+        const tweetId = await postTweet(tweetObj);
+
+        tweetObj.id = tweetId;
+        addTweet(tweetObj);
+
+        setLoading(false);
+        clearInput();
+      } catch (e) {
+        console.error(e);
+        setErrorMessage("An error ocurred. Please try again later.");
+        setLoading(false);
+      }
+    }
   };
 
   return (
@@ -32,18 +70,7 @@ const TweetInput = ({ userInfo }: { userInfo: User }) => {
           id="tweet"
           action="#"
           className="flex flex-col w-full gap-4 pt-3 relative transition-all"
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (inputText.length <= TWEET_LENGTH_LIMIT) {
-              setLoading(true);
-              setTimeout(() => {
-                // todo: remove setTimeout
-                setLoading(false);
-                clearInput();
-              }, 4000);
-              // clearInput();
-            }
-          }}
+          onSubmit={onTweetSubmit}
         >
           <div
             className="text-xl outline-0 resize-none overflow-hidden break-words w-full"
@@ -62,6 +89,9 @@ const TweetInput = ({ userInfo }: { userInfo: User }) => {
         </div>
       )}
       <div className="flex justify-end items-center gap-4 px-1">
+        {errorMessage.length > 0 && (
+          <span className="text-red-600">{errorMessage}</span>
+        )}
         {inputText.length < TWEET_LENGTH_LIMIT + 1 || (
           <span className="text-red-600">{280 - inputText.length}</span>
         )}

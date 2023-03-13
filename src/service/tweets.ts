@@ -10,6 +10,7 @@ import {
   getCountByQuery,
   updateDocInFireStore,
   deleteDocFromFirestore,
+  addDocToFirestore,
 } from "../firebase/firestore";
 import { type Tweet } from "../types";
 
@@ -17,7 +18,10 @@ const COLLECTION_NAME = "tweets";
 
 // POST
 
-export const postTweet = () => {};
+export const postTweet = async (tweetObj: Tweet) => {
+  const id = await addDocToFirestore(COLLECTION_NAME, tweetObj);
+  return id;
+};
 
 // UPDATE
 

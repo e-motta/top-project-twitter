@@ -32,7 +32,11 @@ export const addDocToFirestore = async <Doc>(
   docObj: Doc
 ) => {
   const converter = selectConverter(collectionName);
-  await addDoc(collection(db, collectionName).withConverter(converter), docObj);
+  const ref = await addDoc(
+    collection(db, collectionName).withConverter(converter),
+    docObj
+  );
+  return ref.id;
 };
 
 export const setDocToFirestore = async <Doc>(

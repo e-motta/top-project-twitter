@@ -1,4 +1,3 @@
-import TweetInput from "./TweetInput";
 import NavButton from "../../generics/buttons/NavButton";
 import Header from "../../generics/Header/Header";
 import { useUserInfo, useAllUserIds } from "../../../service/hooks/usersHooks";
@@ -84,14 +83,17 @@ const Home = () => {
           )}
         </nav>
 
-        {isUsernameSuccess && userInfo !== null && (
+        {/* {isUsernameSuccess && userInfo !== null && (
           <TweetInput userInfo={userInfo} />
+        )} */}
+        {isUsernameSuccess && (
+          <TweetsTimeline
+            userIds={tweetsUserIds}
+            showTweetInput
+            userInfo={userInfo}
+            key={JSON.stringify(tweetsUserIds)}
+          />
         )}
-
-        <TweetsTimeline
-          userIds={tweetsUserIds}
-          key={JSON.stringify(tweetsUserIds)}
-        />
       </div>
     );
 
