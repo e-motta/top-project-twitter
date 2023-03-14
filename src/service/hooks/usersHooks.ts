@@ -13,7 +13,38 @@ import {
 } from "./genericHooks";
 
 export const useUserInfo = (username: string | null) => {
-  return useFetchFromFirestoreGeneric<User>(getUserByUsername, username);
+  const { data, setData, isLoading, isSuccess, isError, error } =
+    useFetchFromFirestoreGeneric<User>(getUserByUsername, username);
+
+  const addToFollowing = (id: string) => {
+    setData((d) => {
+      if (d !== null) {
+        return { ...d, following: [...d.following, id] };
+      } else {
+        return null;
+      }
+    });
+  };
+
+  const removeFromFollowing = (id: string) => {
+    setData((d) => {
+      if (d !== null) {
+        return { ...d, following: d?.following.filter((f) => f !== id) };
+      } else {
+        return null;
+      }
+    });
+  };
+
+  return {
+    data,
+    addToFollowing,
+    removeFromFollowing,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  };
 };
 
 export const useUsersByUsernamesLazy = (usernames: string[] | null) => {

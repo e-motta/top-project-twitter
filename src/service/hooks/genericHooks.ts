@@ -33,7 +33,7 @@ export const useFetchFromFirestoreGeneric = <Doc>(
     if (param !== null) void getData();
   }, [effectDeps]);
 
-  return { data, isLoading, isSuccess, isError, error };
+  return { data, setData, isLoading, isSuccess, isError, error };
 };
 
 export const useFetchFromFirestoreGenericLazy = <Doc extends { id?: string }>(

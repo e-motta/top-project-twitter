@@ -54,6 +54,44 @@ export const removeFromTweetsLikedByUser = async (
   await updateDocInFireStore(COLLECTION_NAME, partialDoc, userId);
 };
 
+export const addToFollowedByUser = async (
+  authUserId: string,
+  followUserId: string
+) => {
+  const partialDocAuthUser = {
+    following: arrayUnion(followUserId),
+  };
+  await updateDocInFireStore(COLLECTION_NAME, partialDocAuthUser, authUserId);
+
+  const partialDocFollowUser = {
+    followers: arrayUnion(authUserId),
+  };
+  await updateDocInFireStore(
+    COLLECTION_NAME,
+    partialDocFollowUser,
+    followUserId
+  );
+};
+
+export const removeFromFollowedByUser = async (
+  authUserId: string,
+  followUserId: string
+) => {
+  const partialDocAuthUser = {
+    following: arrayRemove(followUserId),
+  };
+  await updateDocInFireStore(COLLECTION_NAME, partialDocAuthUser, authUserId);
+
+  const partialDocFollowUser = {
+    followers: arrayRemove(authUserId),
+  };
+  await updateDocInFireStore(
+    COLLECTION_NAME,
+    partialDocFollowUser,
+    followUserId
+  );
+};
+
 // GET
 
 export const getUsersById = async (ids: string[] | null) => {

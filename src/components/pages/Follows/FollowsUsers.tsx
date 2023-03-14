@@ -21,7 +21,11 @@ const FollowsUsers = ({
   selected: "followers" | "following";
 }) => {
   const { username: authUserUsername } = useAuthUserUsername();
-  const { data: authUserInfo } = useUserInfo(authUserUsername ?? "");
+  const {
+    data: authUserInfo,
+    addToFollowing,
+    removeFromFollowing,
+  } = useUserInfo(authUserUsername ?? "");
   const authUserFollowing = authUserInfo?.following;
 
   const [followsUsernames, setFollowsUsernames] = useState<string[] | null>(
@@ -100,11 +104,21 @@ const FollowsUsers = ({
                   <span className="text-gray-500">@{f.username}</span>
                 </Link>
               </div>
-              {authUserFollowing === undefined ||
-              authUserFollowing.includes(f.id ?? "") ? (
-                <FollowingButton />
+              {authUserInfo?.id === f.id ? null : authUserFollowing ===
+                  undefined || authUserFollowing.includes(f.id ?? "") ? (
+                <FollowingButton
+                  authUserId={authUserInfo?.id ?? ""}
+                  followUserId={f.id ?? ""}
+                  addToFollowing={addToFollowing}
+                  removeFromFollowing={removeFromFollowing}
+                />
               ) : (
-                <FollowButton />
+                <FollowButton
+                  authUserId={authUserInfo?.id ?? ""}
+                  followUserId={f.id ?? ""}
+                  addToFollowing={addToFollowing}
+                  removeFromFollowing={removeFromFollowing}
+                />
               )}
             </div>
           ))}

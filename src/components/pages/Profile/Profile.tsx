@@ -21,7 +21,11 @@ import TweetsTimeline from "../../generics/Tweets/TweetsTimeline";
 
 const Profile = () => {
   const { username: authUserUsername } = useAuthUserUsername();
-  const { data: authUserInfo } = useUserInfo(authUserUsername ?? "");
+  const {
+    data: authUserInfo,
+    addToFollowing,
+    removeFromFollowing,
+  } = useUserInfo(authUserUsername ?? "");
   const authUserFollowing = authUserInfo?.following;
 
   const { username } = useParams();
@@ -108,9 +112,19 @@ const Profile = () => {
               <EditProfileButton />
             ) : authUserFollowing === undefined ||
               authUserFollowing.includes(profileInfo.id ?? "") ? (
-              <FollowingButton />
+              <FollowingButton
+                authUserId={authUserInfo?.id ?? ""}
+                followUserId={profileInfo.id ?? ""}
+                addToFollowing={addToFollowing}
+                removeFromFollowing={removeFromFollowing}
+              />
             ) : (
-              <FollowButton />
+              <FollowButton
+                authUserId={authUserInfo?.id ?? ""}
+                followUserId={profileInfo.id ?? ""}
+                addToFollowing={addToFollowing}
+                removeFromFollowing={removeFromFollowing}
+              />
             )}
           </div>
           <div className="flex flex-col px-4">
