@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import { useAuthUserUsernameAndEmail } from "../../../service/hooks/useAuthUserUsername";
 import { useUserInfo } from "../../../service/hooks/usersHooks";
 import Avatar from "../Avatar";
 import { formatDate } from "../../../lib/formatUtils";
@@ -26,7 +26,7 @@ const Tweet = ({
   avatarUrl: string | null;
   deleteTweet: (id: string) => void;
 }) => {
-  const { username: authUsername } = useAuthUserUsername();
+  const { username: authUsername } = useAuthUserUsernameAndEmail();
   const { data: userInfo } = useUserInfo(authUsername);
 
   const isLoggedIn = authUsername !== null;

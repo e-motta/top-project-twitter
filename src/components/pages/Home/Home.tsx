@@ -1,7 +1,7 @@
 import NavButton from "../../generics/buttons/NavButton";
 import Header from "../../generics/Header/Header";
 import { useUserInfo, useAllUserIds } from "../../../service/hooks/usersHooks";
-import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import { useAuthUserUsernameAndEmail } from "../../../service/hooks/useAuthUserUsername";
 import Loading from "../../generics/Loading";
 import NetworkError from "../NetworkError";
 import { useEffect, useMemo, useState } from "react";
@@ -21,7 +21,7 @@ const Home = () => {
     isLoading: isUsernameLoading,
     isSuccess: isUsernameSuccess,
     isError: isUsernameError,
-  } = useAuthUserUsername();
+  } = useAuthUserUsernameAndEmail();
 
   const {
     data: userInfo,

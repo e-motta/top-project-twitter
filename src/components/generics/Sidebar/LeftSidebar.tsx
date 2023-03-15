@@ -4,12 +4,12 @@ import NavSidebarButton from "./NavSidebarButton";
 import NavSidebarLink from "./NavSidebarLink";
 import { useContext } from "react";
 import { AuthContext } from "../../../firebase/AuthContext";
-import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import { useAuthUserUsernameAndEmail } from "../../../service/hooks/useAuthUserUsername";
 import NetworkError from "../../pages/NetworkError";
 
 const LeftSidebar = () => {
   const authUser = useContext(AuthContext);
-  const { username, isError } = useAuthUserUsername();
+  const { username, isError } = useAuthUserUsernameAndEmail();
 
   if (isError) {
     return <NetworkError />;

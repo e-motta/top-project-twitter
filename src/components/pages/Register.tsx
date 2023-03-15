@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import TwitterLogo from "../../assets/twitter-logo-blue.png";
 import { useLogOut } from "../../firebase/authHooks";
 import { useUserInfo } from "../../service/hooks/usersHooks";
-import { useAuthUserUsername } from "../../service/hooks/useAuthUserUsername";
+import { useAuthUserUsernameAndEmail } from "../../service/hooks/useAuthUserUsername";
 import Loading from "../generics/Loading";
 import NetworkError from "./NetworkError";
 import { useEffect } from "react";
@@ -21,7 +21,7 @@ const Register = () => {
     isLoading: isUsernameLoading,
     isSuccess: isUsernameSuccess,
     isError: isUsernameError,
-  } = useAuthUserUsername();
+  } = useAuthUserUsernameAndEmail();
 
   const {
     data: userInfo,
@@ -70,7 +70,7 @@ const Register = () => {
           </div>
         </div>
 
-        <UserInfoForm redirectTo="/" />
+        <UserInfoForm />
       </div>
     </div>
   );

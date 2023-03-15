@@ -60,7 +60,7 @@ export const updateDocInFireStore = async (
 
 // GET
 
-export const getAllCollectionDocsFromFirestore = async (
+export const getAllCollectionIdsFromFirestore = async (
   collectionName: Collection
 ) => {
   const converter = selectConverter(collectionName);
@@ -70,6 +70,20 @@ export const getAllCollectionDocsFromFirestore = async (
   const data: string[] = [];
   querySnapshot.forEach((doc) => {
     data.push(doc.id);
+  });
+  return data;
+};
+
+export const getAllCollectionDocsFromFirestore = async <Doc>(
+  collectionName: Collection
+) => {
+  const converter = selectConverter(collectionName);
+  const querySnapshot = await getDocs(
+    collection(db, collectionName).withConverter(converter)
+  );
+  const data: Doc[] = [];
+  querySnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
   });
   return data;
 };

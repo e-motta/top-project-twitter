@@ -1,16 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { getUserByEmail } from "../users";
 import { AuthContext } from "../../firebase/AuthContext";
+import { UsernameContext } from "../UsernameContext";
 
-export function useAuthUserUsername() {
+export function useAuthUserUsernameAndEmail() {
   const authUser = useContext(AuthContext);
+  const { username, setUsername } = useContext(UsernameContext);
 
-  const [username, setUsername] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  let email: string;
+  let email: string | null = null;
   if (authUser !== null) email = authUser.email ?? "anonymousUser";
 
   useEffect(() => {
@@ -31,5 +32,5 @@ export function useAuthUserUsername() {
     void getUsername();
   }, [authUser]);
 
-  return { username, isLoading, isSuccess, isError };
+  return { username, setUsername, email, isLoading, isSuccess, isError };
 }

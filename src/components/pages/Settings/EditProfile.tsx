@@ -1,7 +1,7 @@
 import Header from "../../generics/Header/Header";
 import Loading from "../../generics/Loading";
 import { useUserInfo } from "../../../service/hooks/usersHooks";
-import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import { useAuthUserUsernameAndEmail } from "../../../service/hooks/useAuthUserUsername";
 import NetworkError from "../NetworkError";
 import { useEffect } from "react";
 import NotFound from "../NotFound";
@@ -16,7 +16,7 @@ const EditProfile = () => {
     username,
     isLoading: isUsernameLoading,
     isError: isUsernameError,
-  } = useAuthUserUsername();
+  } = useAuthUserUsernameAndEmail();
 
   const {
     data: userInfo,
@@ -46,7 +46,7 @@ const EditProfile = () => {
           showBackBtn
         />
 
-        <UserInfoForm redirectTo={`/${userInfo.username ?? ""}`} />
+        <UserInfoForm />
       </div>
     );
 

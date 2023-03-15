@@ -4,7 +4,7 @@ import {
   useUserInfo,
   useUsersByIdLazy,
 } from "../../../service/hooks/usersHooks";
-import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import { useAuthUserUsernameAndEmail } from "../../../service/hooks/useAuthUserUsername";
 import Loading from "../../generics/Loading";
 import { useEffect, useState } from "react";
 import { type User } from "../../../types";
@@ -20,7 +20,7 @@ const FollowsUsers = ({
   userInfo: User;
   selected: "followers" | "following";
 }) => {
-  const { username: authUserUsername } = useAuthUserUsername();
+  const { username: authUserUsername } = useAuthUserUsernameAndEmail();
   const {
     data: authUserInfo,
     addToFollowing,

@@ -1,24 +1,24 @@
 import { CameraIcon } from "@heroicons/react/24/outline";
 import { useEffect } from "react";
-import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import { useAuthUserUsernameAndEmail } from "../../../service/hooks/useAuthUserUsername";
 import { useUserInfo } from "../../../service/hooks/usersHooks";
 import NetworkError from "../../pages/NetworkError";
 import NotFound from "../../pages/NotFound";
-import Input from "../../pages/Settings/Input";
+import Input from "./Input";
 import Avatar from "../Avatar";
 import Button from "../buttons/Button";
 import Loading from "../Loading";
 import useForm from "./useForm";
 
-const UserInfoForm = ({ redirectTo }: { redirectTo?: string }) => {
-  const form = useForm(redirectTo);
+const UserInfoForm = () => {
+  const form = useForm();
 
   const {
     username,
     isLoading: isUsernameLoading,
     isSuccess: isUsernameSuccess,
     isError: isUsernameError,
-  } = useAuthUserUsername();
+  } = useAuthUserUsernameAndEmail();
 
   const {
     data: userInfo,
@@ -103,8 +103,8 @@ const UserInfoForm = ({ redirectTo }: { redirectTo?: string }) => {
           id="edit-profile"
           action="#"
           className="flex flex-col gap-5 p-4"
-          onSubmit={(e) => {
-            form.onSubmitForm(e);
+          onSubmit={async (e) => {
+            await form.onSubmitForm(e);
           }}
         >
           <div className="flex flex-col gap-5 relative">
@@ -128,19 +128,20 @@ const UserInfoForm = ({ redirectTo }: { redirectTo?: string }) => {
             />
             {form.submitLoading && <Loading />}
           </div>
-          <div className="flex justify-start">
+          <div className="flex justify-start items-center gap-4">
             <div onClick={form.onClickDisabledButton}>
               <Button
                 className="text-white bg-black font-bold disabled:pointer-events-none"
                 type="submit"
                 form="edit-profile"
-                disabled={
-                  form.newName.length === 0 || form.newUsername.length === 0
-                }
+                disabled={form.disableSubmitButton}
               >
                 Save
               </Button>
             </div>
+            {form.isSubmitError && (
+              <span className="text-red-500">{form.submitErrorMessage}</span>
+            )}
           </div>
         </form>
       </>

@@ -10,7 +10,7 @@ import {
   useTweetsCount,
 } from "../../../service/hooks/tweetsHooks";
 import { useUserInfo } from "../../../service/hooks/usersHooks";
-import { useAuthUserUsername } from "../../../service/hooks/useAuthUserUsername";
+import { useAuthUserUsernameAndEmail } from "../../../service/hooks/useAuthUserUsername";
 import NetworkError from "../NetworkError";
 import EditProfileButton from "../../generics/buttons/EditProfileButton";
 import FollowButton from "../../generics/buttons/FollowButton";
@@ -20,7 +20,7 @@ import NotFound from "../NotFound";
 import TweetsTimeline from "../../generics/Tweets/TweetsTimeline";
 
 const Profile = () => {
-  const { username: authUserUsername } = useAuthUserUsername();
+  const { username: authUserUsername } = useAuthUserUsernameAndEmail();
   const {
     data: authUserInfo,
     addToFollowing,

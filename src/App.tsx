@@ -8,7 +8,7 @@ import Home from "./components/pages/Home/Home";
 import Login from "./components/pages/Login/Login";
 import Profile from "./components/pages/Profile/Profile";
 import EditProfile from "./components/pages/Settings/EditProfile";
-import { useAuthUserUsername } from "./service/hooks/useAuthUserUsername";
+import { useAuthUserUsernameAndEmail } from "./service/hooks/useAuthUserUsername";
 import Layout from "./Layout";
 import NotFound from "./components/pages/NotFound";
 import { useContext } from "react";
@@ -22,7 +22,7 @@ function App() {
     isLoading: isUsernameLoading,
     isSuccess: isUsernameSuccess,
     isError: isUsernameError,
-  } = useAuthUserUsername();
+  } = useAuthUserUsernameAndEmail();
 
   if (isUsernameLoading) {
     return <Loading />;

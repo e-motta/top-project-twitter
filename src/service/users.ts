@@ -13,9 +13,9 @@ import {
   queryDocsByFieldsFromFirestore,
   type QueryDocsByFirestoreLazy,
   queryDocsFromFirestoreLazy,
-  setDocToFirestore,
-  getAllCollectionDocsFromFirestore,
+  getAllCollectionIdsFromFirestore,
   updateDocInFireStore,
+  getAllCollectionDocsFromFirestore,
 } from "../firebase/firestore";
 import { type User } from "../types";
 
@@ -23,15 +23,16 @@ const COLLECTION_NAME = "users";
 
 // POST
 
-export const postUser = async (data: User) => {
-  await addDocToFirestore(COLLECTION_NAME, data);
-};
-
-export const postUserWithId = async (data: User, id: string) => {
-  await setDocToFirestore(COLLECTION_NAME, data, id);
+export const postUser = async (doc: User) => {
+  await addDocToFirestore(COLLECTION_NAME, doc);
 };
 
 // UPDATE
+
+export const updateUser = async (id: string, partialDoc: Partial<User>) => {
+  await updateDocInFireStore(COLLECTION_NAME, partialDoc, id);
+};
+
 export const addToTweetsLikedByUser = async (
   tweetId: string,
   userId: string
@@ -163,6 +164,19 @@ export const getFollowersCount = async (userId: string) => {
 };
 
 export const getAllUserIds = async () => {
-  const ids = await getAllCollectionDocsFromFirestore(COLLECTION_NAME);
-  return ids;
+  return await getAllCollectionIdsFromFirestore(COLLECTION_NAME);
+};
+
+export const isUsernameTaken = async (username: string) => {
+  const allDocs = await getAllCollectionDocsFromFirestore<User>(
+    COLLECTION_NAME
+  );
+  const allUsernames = allDocs.map((d: User) => {
+    if (d !== null) {
+      return d.username;
+    } else {
+      return false;
+    }
+  });
+  return allUsernames.includes(username);
 };
