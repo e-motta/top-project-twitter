@@ -20,8 +20,8 @@ export const user = {
 
 // NEXT STEPS:
 // 1. Fix routing when logging in as new user
-// 4. Post to backend when updating profile
-// 5. Post to backend when registering as new user
+// 2. Add component with profile_pic, name and username in sidebar bottom
+// 3. Add tooltips for date and likes
 // 6. Upload images (expand task)
 
 // *. Delete mock_data.ts and new_data_structure.ts when finished

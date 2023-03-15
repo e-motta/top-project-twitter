@@ -103,6 +103,7 @@ const useForm = () => {
         setSubmitLoading(false);
       }
     }
+    setSubmitLoading(false);
   };
 
   const onClickDisabledButton = () => {
