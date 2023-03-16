@@ -19,7 +19,6 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 2. Add component with profile_pic, name and username in sidebar bottom
 // 1. Fix: routes for usernames with capital letters
 // 3. Add tooltips for date and likes
 // 6. Upload images (expand task)
