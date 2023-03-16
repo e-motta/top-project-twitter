@@ -1,6 +1,7 @@
 import { signInAnonymously, signInWithPopup, signOut } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthUserUsernameAndEmail } from "../service/hooks/useAuthUserUsername";
 import { auth, provider } from "./auth";
 
 export const useSignIn = () => {
@@ -48,11 +49,13 @@ export const useSignInAnonymous = () => {
 };
 
 export const useLogOut = () => {
+  const { setUsername } = useAuthUserUsernameAndEmail();
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
   const logOut = async () => {
     await signOut(auth)
       .then(() => {
+        setUsername(null);
         navigate("/login");
       })
       .catch((e) => {

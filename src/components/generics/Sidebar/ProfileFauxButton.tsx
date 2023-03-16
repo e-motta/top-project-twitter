@@ -9,7 +9,7 @@ const ProfileFauxButton = ({ username }: { username: string | null }) => {
   const profileImageUrl = userInfo?.profile_image_url;
 
   return (
-    <div className="relative mb-4">
+    <div className="relative mb-4 -translate-x-3 md:translate-x-0">
       <button
         type="button"
         onClick={() => {

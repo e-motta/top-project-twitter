@@ -1,30 +1,17 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Footer from "./components/generics/Footer/Footer";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AuthContext } from "./firebase/AuthContext";
 import Delayed from "./components/generics/Delayed";
 import LeftSidebar from "./components/generics/Sidebar/LeftSidebar";
-import { useAuthUserUsernameAndEmail } from "./service/hooks/useAuthUserUsername";
 import NetworkError from "./components/pages/NetworkError";
+import useRedirectToRegister from "./useRedirectToRegister";
 
 const Layout = () => {
   const authUser = useContext(AuthContext);
-  const navigate = useNavigate();
+  const isError = useRedirectToRegister();
 
-  const {
-    username,
-    email,
-    isSuccess: isUsernameSuccess,
-    isError: isUsernameError,
-  } = useAuthUserUsernameAndEmail();
-
-  useEffect(() => {
-    if (isUsernameSuccess && username === null && email !== null) {
-      navigate("/signup");
-    }
-  }, [isUsernameSuccess, username]);
-
-  if (isUsernameError) return <NetworkError />;
+  if (isError) return <NetworkError />;
 
   return (
     <div id="main-container" className="flex justify-center">

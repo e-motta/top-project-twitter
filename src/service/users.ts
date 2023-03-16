@@ -180,3 +180,17 @@ export const isUsernameTaken = async (username: string) => {
   });
   return allUsernames.includes(username);
 };
+
+export const isEmailRegistered = async (email: string) => {
+  const allDocs = await getAllCollectionDocsFromFirestore<User>(
+    COLLECTION_NAME
+  );
+  const allEmails = allDocs.map((d: User) => {
+    if (d !== null) {
+      return d.email;
+    } else {
+      return false;
+    }
+  });
+  return allEmails.includes(email);
+};

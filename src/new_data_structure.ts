@@ -19,7 +19,7 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 2. Fix routing when user is not logged in
+// 1. Fix routing when user is logged in and refreshes (redirects to Register and then Home)
 // 6. Upload images (expand task)
 
 // *. Delete mock_data.ts and new_data_structure.ts when finished
