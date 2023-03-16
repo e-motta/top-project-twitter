@@ -2,7 +2,7 @@ import { HeartIcon as HearIconOutline } from "@heroicons/react/24/outline";
 import { HeartIcon as HearIconSolid } from "@heroicons/react/24/solid";
 
 import { useEffect, useState } from "react";
-import { formatNum } from "../../../lib/formatUtils";
+import { formatNumWithPrefix } from "../../../lib/formatUtils";
 import { updateTweetLikes } from "../../../service/tweets";
 import {
   addToTweetsLikedByUser,
@@ -70,6 +70,7 @@ const LikeButton = ({
       type="button"
       onClick={onLikeClick}
       disabled={disabled}
+      title={likesNum.toLocaleString()}
     >
       <span
         className={`rounded-full p-2 transition-all ${
@@ -82,7 +83,7 @@ const LikeButton = ({
           <HearIconOutline className="h-5 w-5" />
         )}
       </span>
-      <span className="text-sm">{formatNum(likesNum, 1)}</span>
+      <span className="text-sm">{formatNumWithPrefix(likesNum, 1)}</span>
     </button>
   );
 };

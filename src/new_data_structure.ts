@@ -19,7 +19,6 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 1. Fix: routes for usernames with capital letters
 // 3. Add tooltips for date and likes
 // 6. Upload images (expand task)
 

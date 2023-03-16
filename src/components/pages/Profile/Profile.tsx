@@ -2,7 +2,7 @@ import Avatar from "../../generics/Avatar";
 import NavButton from "../../generics/buttons/NavButton";
 import Header from "../../generics/Header/Header";
 import { Link, useParams } from "react-router-dom";
-import { formatNum } from "../../../lib/formatUtils";
+import { formatNumWithPrefix } from "../../../lib/formatUtils";
 import Loading from "../../generics/Loading";
 import { type User } from "../../../types";
 import {
@@ -65,11 +65,6 @@ const Profile = () => {
   if (profileInfoIsError || isFollowersCountError || isTweetsCountError) {
     return <NetworkError />;
   }
-
-  // todo: redirect to register username
-  // if (profileInfo.username === undefined || profileInfo.username === null) {
-  //   return;
-  // }
 
   if (isProfileInfoSuccess && profileInfo === null) {
     return <NotFound />;
@@ -140,7 +135,7 @@ const Profile = () => {
                 className="flex gap-1"
               >
                 <span className="font-bold">
-                  {formatNum(profileInfo.following.length ?? 0, 1)}
+                  {formatNumWithPrefix(profileInfo.following.length ?? 0, 1)}
                 </span>
                 <span className="text-gray-500">Following</span>
               </Link>
@@ -149,7 +144,7 @@ const Profile = () => {
                 className="flex gap-1"
               >
                 <span className="font-bold">
-                  {formatNum(followersCount ?? 0, 1)}
+                  {formatNumWithPrefix(followersCount ?? 0, 1)}
                 </span>
                 <span className="text-gray-500">Followers</span>
               </Link>

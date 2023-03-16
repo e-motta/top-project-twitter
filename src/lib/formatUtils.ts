@@ -1,4 +1,26 @@
-export const formatDate = (date: Date) => {
+const dateDiff = (a: Date, b: Date, format: "minutes" | "hours") => {
+  const _MS_PER_PERIOD = format === "minutes" ? 1000 * 60 : 1000 * 60 * 60;
+
+  // Discard the time and time-zone information.
+  const utc1 = Date.UTC(
+    a.getFullYear(),
+    a.getMonth(),
+    a.getDate(),
+    a.getHours(),
+    a.getMinutes()
+  );
+  const utc2 = Date.UTC(
+    b.getFullYear(),
+    b.getMonth(),
+    b.getDate(),
+    b.getHours(),
+    b.getMinutes()
+  );
+
+  return Math.abs(Math.floor((utc2 - utc1) / _MS_PER_PERIOD));
+};
+
+export const formatDatePretty = (date: Date) => {
   const timeDelta = Math.abs(new Date().getTime() - date.getTime());
 
   let formattedDate = "";
@@ -27,29 +49,7 @@ export const formatDate = (date: Date) => {
   return formattedDate;
 };
 
-const dateDiff = (a: Date, b: Date, format: "minutes" | "hours") => {
-  const _MS_PER_PERIOD = format === "minutes" ? 1000 * 60 : 1000 * 60 * 60;
-
-  // Discard the time and time-zone information.
-  const utc1 = Date.UTC(
-    a.getFullYear(),
-    a.getMonth(),
-    a.getDate(),
-    a.getHours(),
-    a.getMinutes()
-  );
-  const utc2 = Date.UTC(
-    b.getFullYear(),
-    b.getMonth(),
-    b.getDate(),
-    b.getHours(),
-    b.getMinutes()
-  );
-
-  return Math.abs(Math.floor((utc2 - utc1) / _MS_PER_PERIOD));
-};
-
-export const formatNum = (num: number, digits: number) => {
+export const formatNumWithPrefix = (num: number, digits: number) => {
   const lookup = [
     { value: 1, symbol: "" },
     { value: 1e3, symbol: "K" },

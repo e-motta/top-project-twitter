@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuthUserUsernameAndEmail } from "../../../service/hooks/useAuthUserUsername";
 import { useUserInfo } from "../../../service/hooks/usersHooks";
 import Avatar from "../Avatar";
-import { formatDate } from "../../../lib/formatUtils";
+import { formatDatePretty } from "../../../lib/formatUtils";
 import LikeButton from "./LikeButton";
 import DeleteButton from "./DeleteButton";
 
@@ -51,8 +51,13 @@ const Tweet = ({
             <span className="font-bold hover:underline">{name}</span>
             <span className="text-gray-500 flex gap-1">
               <span>@{username}</span>·
-              <span className="hover:underline">
-                {formatDate(date ?? new Date())}
+              <span
+                className="hover:underline"
+                title={`${date?.toLocaleTimeString() ?? ""} · ${
+                  date?.toDateString().slice(4) ?? ""
+                }`}
+              >
+                {formatDatePretty(date ?? new Date())}
               </span>
             </span>
           </div>
