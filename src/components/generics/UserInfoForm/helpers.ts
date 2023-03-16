@@ -22,7 +22,7 @@ export const validateName = (name: string) => {
 export const validateUsername = (username: string) => {
   let message: string;
   let valid: boolean;
-  const limit = 20;
+  const limit = 15;
 
   switch (true) {
     case username.length > limit:

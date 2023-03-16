@@ -60,12 +60,7 @@ const useForm = () => {
 
     if (isNewNameValid && isNewUsernameValid) {
       try {
-        if (newUsername === username && newName === userInfo?.name) {
-          setSubmitLoading(false);
-        } else if (
-          (await isUsernameTaken(newUsername)) &&
-          newUsername !== username
-        ) {
+        if ((await isUsernameTaken(newUsername)) && newUsername !== username) {
           setNewUsernameMessage("This Username is already taken.");
           setSubmitLoading(false);
         } else {
