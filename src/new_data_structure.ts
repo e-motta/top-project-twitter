@@ -19,7 +19,8 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 3. Add tooltips for date and likes
+// 1. Fix loading when deleting only tweet in timeline
+// 2. Fix routing when user is not logged in
 // 6. Upload images (expand task)
 
 // *. Delete mock_data.ts and new_data_structure.ts when finished

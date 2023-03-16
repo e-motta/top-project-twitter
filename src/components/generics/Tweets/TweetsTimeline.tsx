@@ -67,9 +67,11 @@ const TweetsTimeline = ({
           next={loadMoreTweets}
           hasMore={hasMoreTweets}
           loader={
-            <div className="relative h-12">
-              <Loading />
-            </div>
+            tweets.length > 0 ? (
+              <div className="relative h-12">
+                <Loading />
+              </div>
+            ) : null
           }
           endMessage={
             <span className="flex justify-center mt-4 mb-8">
