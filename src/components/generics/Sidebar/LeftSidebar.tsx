@@ -34,7 +34,7 @@ const LeftSidebar = () => {
             </>
           )}
         </div>
-        <ProfileFauxButton username={username} />
+        {authUser !== null && <ProfileFauxButton username={username} />}
       </div>
     </nav>
   );

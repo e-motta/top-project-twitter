@@ -13,12 +13,13 @@ const Layout = () => {
 
   const {
     username,
+    email,
     isSuccess: isUsernameSuccess,
     isError: isUsernameError,
   } = useAuthUserUsernameAndEmail();
 
   useEffect(() => {
-    if (isUsernameSuccess && username === null) {
+    if (isUsernameSuccess && username === null && email !== null) {
       navigate("/signup");
     }
   }, [isUsernameSuccess, username]);

@@ -19,7 +19,6 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 1. Fix loading when deleting only tweet in timeline
 // 2. Fix routing when user is not logged in
 // 6. Upload images (expand task)
 
