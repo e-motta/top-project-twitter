@@ -69,6 +69,7 @@ const useForm = () => {
             const newUser: User = {
               name: newName,
               username: newUsername,
+              username_lowercase: newUsername.toLowerCase(),
               email,
               profile_image_url: null,
               background_image_url: null,

@@ -126,8 +126,8 @@ export const getUsersByIdLazy = async (
 export const getUserByUsername = async (username: string | null) => {
   const users = await queryDocsByFieldFromFirestore<User>(
     COLLECTION_NAME,
-    "username",
-    username ?? "?"
+    "username_lowercase",
+    username?.toLowerCase() ?? "?"
   );
   return users.length === 1 ? users[0] : null;
 };

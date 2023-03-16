@@ -19,7 +19,6 @@ const Layout = () => {
 
   useEffect(() => {
     if (isUsernameSuccess && username === null) {
-      console.log("test");
       navigate("/signup");
     }
   }, [isUsernameSuccess, username]);
