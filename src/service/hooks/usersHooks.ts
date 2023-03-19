@@ -36,10 +36,31 @@ export const useUserInfo = (username: string | null) => {
     });
   };
 
+  const updateImage = (newUrl: string, type: "profile" | "background") => {
+    if (type === "background") {
+      setData((d) => {
+        if (d !== null) {
+          return { ...d, background_image_url: newUrl };
+        } else {
+          return null;
+        }
+      });
+    } else {
+      setData((d) => {
+        if (d !== null) {
+          return { ...d, profile_image_url: newUrl };
+        } else {
+          return null;
+        }
+      });
+    }
+  };
+
   return {
     data,
     addToFollowing,
     removeFromFollowing,
+    updateImage,
     isLoading,
     isSuccess,
     isError,

@@ -15,7 +15,7 @@ const Layout = () => {
 
   return (
     <div id="main-container" className="flex justify-center">
-      <div className="hidden sm:block z-50">
+      <div className="hidden sm:block z-40">
         <LeftSidebar />
       </div>
       <main className="border-x w-full max-w-[600px] border-slate-100">

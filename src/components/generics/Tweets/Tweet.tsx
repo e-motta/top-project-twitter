@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuthUserUsernameAndEmail } from "../../../service/hooks/useAuthUserUsername";
 import { useUserInfo } from "../../../service/hooks/usersHooks";
 import Avatar from "../Avatar";
-import { formatDatePretty } from "../../../lib/formatUtils";
+import { formatDatePretty } from "../../../lib/stringFormattingUtils";
 import LikeButton from "./LikeButton";
 import DeleteButton from "./DeleteButton";
 

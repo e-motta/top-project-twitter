@@ -55,13 +55,9 @@ const Register = () => {
             <span className="text-gray-500">
               Choose a Name and a Username to finish signing up.
             </span>
-            <span className="text-gray-500">
-              You can also upload an avatar and a background picture for your
-              profile.
-            </span>
             <span>
               <button
-                className="text-red-300 text-sm hover:text-red-400"
+                className="text-red-400 text-sm hover:text-red-400"
                 onClick={logOut}
               >
                 Or click here to cancel.
@@ -69,7 +65,6 @@ const Register = () => {
             </span>
           </div>
         </div>
-
         <UserInfoForm />
       </div>
     </div>

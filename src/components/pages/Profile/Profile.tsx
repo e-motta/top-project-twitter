@@ -2,9 +2,8 @@ import Avatar from "../../generics/Avatar";
 import NavButton from "../../generics/buttons/NavButton";
 import Header from "../../generics/Header/Header";
 import { Link, useParams } from "react-router-dom";
-import { formatNumWithPrefix } from "../../../lib/formatUtils";
+import { formatNumWithPrefix } from "../../../lib/stringFormattingUtils";
 import Loading from "../../generics/Loading";
-import { type User } from "../../../types";
 import {
   useFollowersCount,
   useTweetsCount,
@@ -81,14 +80,17 @@ const Profile = () => {
 
         <div
           id="bg-img"
-          className="max-h-48 aspect-[25/8] bg-gray-300 relative"
+          className={`max-h-48 aspect-[25/8] relative ${
+            profileInfo.background_image_url === null ? "bg-gray-300" : ""
+          }`}
         >
-          {profileInfo === null && (
-            <img
-              src={(profileInfo as User).background_image_url ?? ""}
-              alt="background image relative"
-            />
-          )}
+          {profileInfo === null ||
+            profileInfo.background_image_url === null || (
+              <img
+                src={profileInfo.background_image_url ?? ""}
+                alt="background image"
+              />
+            )}
           <div
             className="absolute -bottom-2 left-0 translate-y-1/2 p-1 bg-white 
           rounded-full ml-4"

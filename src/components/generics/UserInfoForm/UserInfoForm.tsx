@@ -1,5 +1,5 @@
 import { CameraIcon } from "@heroicons/react/24/outline";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuthUserUsernameAndEmail } from "../../../service/hooks/useAuthUserUsername";
 import { useUserInfo } from "../../../service/hooks/usersHooks";
 import NetworkError from "../../pages/NetworkError";
@@ -9,8 +9,15 @@ import Avatar from "../Avatar";
 import Button from "../buttons/Button";
 import Loading from "../Loading";
 import useForm from "./useForm";
+import EditMedia from "./EditMedia";
 
 const UserInfoForm = () => {
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageType, setImageType] = useState<"background" | "profile" | null>(
+    null
+  );
+  const [showImages, setShowImages] = useState(false);
+
   const form = useForm();
 
   const {
@@ -22,10 +29,20 @@ const UserInfoForm = () => {
 
   const {
     data: userInfo,
+    updateImage,
     isSuccess: isUserInfoSuccess,
     isLoading: isUserInfoLoading,
     isError: isUserInfoError,
   } = useUserInfo(username);
+
+  const onUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files !== null) setImageFile(e.target.files[0]);
+    if (e.target.id === "profile-image-input") {
+      setImageType("profile");
+    } else {
+      setImageType("background");
+    }
+  };
 
   useEffect(() => {
     if (userInfo !== null) {
@@ -33,6 +50,12 @@ const UserInfoForm = () => {
       if (userInfo.username !== null) form.setNewUsername(userInfo.username);
     }
   }, [userInfo]);
+
+  useEffect(() => {
+    isUsernameSuccess && username === null
+      ? setShowImages(false)
+      : setShowImages(true);
+  }, [username, isUsernameSuccess]);
 
   if (isUsernameLoading || isUserInfoLoading) {
     return <Loading />;
@@ -49,55 +72,72 @@ const UserInfoForm = () => {
   if (isUsernameSuccess)
     return (
       <>
-        <div
-          id="bg-img"
-          className="max-h-48 aspect-[25/8] bg-gray-300 relative mb-24"
-        >
-          {userInfo !== null
-            ? userInfo.background_image_url !== null && (
+        {showImages && (
+          <div
+            id="bg-img"
+            className={`max-h-48 aspect-[25/8] relative mb-24 ${
+              userInfo?.background_image_url === null ? "bg-gray-300" : ""
+            }`}
+          >
+            {userInfo === null ||
+              (userInfo.background_image_url !== null && (
                 <img
                   src={userInfo.background_image_url}
                   alt="background image"
                 />
-              )
-            : // <img src={"/"} alt="background image" />  todo: fix when upload is working
-              ""}
+              ))}
 
-          <button
-            type="button"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-            p-3 rounded-full bg-gray-800 bg-opacity-50 transition-all
-            hover:bg-opacity-40"
-          >
-            <CameraIcon className="h-6 w-6 text-white" />
-          </button>
-          <div
-            className="absolute bottom-0 left-0 translate-y-1/2 p-1 bg-white
+            <input
+              onChange={onUploadImage}
+              id="background-image-input"
+              type="file"
+              className="hidden"
+              accept="image/png, image/jpeg"
+            />
+            <label
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+            p-3 rounded-full bg-gray-900 bg-opacity-50 transition-all cursor-pointer
+            hover:bg-opacity-80"
+              htmlFor="background-image-input"
+            >
+              <CameraIcon className="h-6 w-6 text-white" />
+            </label>
+
+            <div
+              className="absolute bottom-0 left-0 translate-y-1/2 p-1 bg-white
           rounded-full ml-4"
-          >
-            <div>
-              {userInfo !== null ? (
-                <Avatar
-                  size="lg"
-                  url={userInfo.profile_image_url}
-                  username={userInfo.username ?? ""}
-                  disabled
-                />
-              ) : (
-                <Avatar size="lg" url={""} username={""} disabled />
-              )}
+            >
+              <div>
+                {userInfo !== null ? (
+                  <Avatar
+                    size="lg"
+                    url={userInfo.profile_image_url}
+                    username={userInfo.username ?? ""}
+                    disabled
+                  />
+                ) : (
+                  <Avatar size="lg" url={""} username={""} disabled />
+                )}
 
-              <button
-                type="button"
-                className="absolute top-1/2 left-1/2 -translate-x-1/2
+                <input
+                  id="profile-image-input"
+                  type="file"
+                  className="hidden"
+                  onChange={onUploadImage}
+                  accept="image/png, image/jpeg"
+                />
+                <label
+                  htmlFor="profile-image-input"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 cursor-pointer
                 -translate-y-1/2 p-3 rounded-full bg-gray-900 bg-opacity-50
-                transition-all hover:bg-gray-800"
-              >
-                <CameraIcon className="h-6 w-6 text-white" />
-              </button>
+                transition-all hover:bg-opacity-80"
+                >
+                  <CameraIcon className="h-6 w-6 text-white" />
+                </label>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <form
           id="edit-profile"
@@ -144,6 +184,15 @@ const UserInfoForm = () => {
             )}
           </div>
         </form>
+        {imageFile !== null && imageType !== null && (
+          <EditMedia
+            file={imageFile}
+            setFile={setImageFile}
+            type={imageType}
+            userId={userInfo?.id ?? ""}
+            updateImage={updateImage}
+          />
+        )}
       </>
     );
 

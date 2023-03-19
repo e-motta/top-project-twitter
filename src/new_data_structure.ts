@@ -19,8 +19,7 @@ export const user = {
 };
 
 // NEXT STEPS:
-// 1. Fix routing when user is logged in and refreshes (redirects to Register and then Home)
-// 6. Upload images (expand task)
+// 1.
 
 // *. Delete mock_data.ts and new_data_structure.ts when finished
 // *2. Remove any comments, console.log, unused files
