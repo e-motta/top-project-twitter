@@ -73,7 +73,7 @@ const TweetInput = ({
           onSubmit={onTweetSubmit}
         >
           <div
-            className="text-xl outline-0 resize-none overflow-hidden break-words w-full"
+            className="text-xl outline-none resize-none overflow-hidden break-words w-full"
             role="textbox"
             contentEditable
             onInput={(e) => {
