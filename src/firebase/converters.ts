@@ -5,7 +5,7 @@ const userDataConverter: FirestoreDataConverter<User> = {
   toFirestore: (data) => data,
   fromFirestore(snapshot, options) {
     const data = snapshot.data(options);
-    data.id = snapshot.id; // todo: change id ?
+    data.id = snapshot.id;
     return data as User;
   },
 };

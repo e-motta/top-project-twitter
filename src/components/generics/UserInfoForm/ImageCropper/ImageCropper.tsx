@@ -96,7 +96,6 @@ const ImageCropper = ({
       }
 
       previewCanvasRef.current.toBlob((blob) => {
-        console.log({ blob });
         if (blob !== null) {
           const upload = async () => {
             const url = await uploadToStorage(blob, `${type}-images`);

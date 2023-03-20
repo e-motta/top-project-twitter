@@ -4,7 +4,6 @@ const cropAndResizeImage = (
   width: number
 ) => {
   const imageUrl = URL.createObjectURL(imageFile);
-  console.log({ imageUrl });
 
   const image = new Image();
   image.src = imageUrl;
