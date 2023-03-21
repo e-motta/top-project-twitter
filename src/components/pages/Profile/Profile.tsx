@@ -76,6 +76,7 @@ const Profile = () => {
           mainText={profileInfo.name ?? ""}
           subText={tweetsCount !== null ? `${tweetsCount} Tweets` : ""}
           showBackBtn
+          altBackBtnHref="/"
         />
 
         <div
