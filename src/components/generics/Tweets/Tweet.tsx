@@ -46,7 +46,10 @@ const Tweet = ({
         <div className="ml-4 mt-3">
           <Avatar size="md" url={avatarUrl} username={username} />
         </div>
-        <Link to={`/${username}`} className="pt-3 flex flex-col text-[0.95rem]">
+        <Link
+          to={`/${username}`}
+          className="pt-3 flex flex-col text-[0.95rem] whitespace-normal"
+        >
           <div id="tweet-header" className="flex gap-2">
             <span className="font-bold hover:underline">{name}</span>
             <span className="text-gray-500 flex gap-1">
@@ -61,7 +64,9 @@ const Tweet = ({
               </span>
             </span>
           </div>
-          <div id="tweet-body">{text}</div>
+          <div id="tweet-body" style={{ wordBreak: "break-word" }}>
+            {text}
+          </div>
         </Link>
         {authUsername === username && (
           <DeleteButton tweetId={id} onClick={deleteTweet} />
@@ -74,7 +79,7 @@ const Tweet = ({
           likedByAuthUser={liked}
           likes={likes}
           setLiked={setLiked}
-          isLoggedIn={isLoggedIn} // move to component?
+          isLoggedIn={isLoggedIn}
         />
       </div>
     </div>
