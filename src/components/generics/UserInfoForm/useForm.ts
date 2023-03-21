@@ -84,6 +84,7 @@ const useForm = () => {
             const partialUser: Partial<User> = {
               name: newName,
               username: newUsername,
+              username_lowercase: newUsername.toLowerCase(),
             };
             await updateUser(userInfo?.id ?? "", partialUser);
             setUsername(newUsername);
