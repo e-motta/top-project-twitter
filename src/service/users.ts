@@ -98,7 +98,7 @@ export const removeFromFollowedByUser = async (
 export const getUsersById = async (ids: string[] | null) => {
   const users = await queryDocsByFieldsFromFirestore<User[]>(
     COLLECTION_NAME,
-    ids ?? [""],
+    ids?.slice(0, 10) ?? [""],
     documentId()
   );
   return users;
