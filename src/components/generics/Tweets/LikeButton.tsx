@@ -1,13 +1,8 @@
 import { HeartIcon as HearIconOutline } from "@heroicons/react/24/outline";
 import { HeartIcon as HearIconSolid } from "@heroicons/react/24/solid";
-
 import { useEffect, useState } from "react";
+import { updateLikes } from "../../../domain/tweets/likes";
 import { formatNumWithPrefix } from "../../../lib/stringFormattingUtils";
-import { updateTweetLikes } from "../../../service/tweets";
-import {
-  addToTweetsLikedByUser,
-  removeFromTweetsLikedByUser,
-} from "../../../service/users";
 import { type User } from "../../../types";
 
 const LikeButton = ({
@@ -39,19 +34,7 @@ const LikeButton = ({
       setLikesNum((l) => (likedByAuthUser ? (l -= 1) : (l += 1)));
 
       try {
-        if (userInfo === null) throw new ReferenceError();
-
-        let updatedLikes: number;
-        if (!(userInfo?.liked_tweets.includes(tweetId) ?? false)) {
-          updatedLikes = likes + 1;
-          await updateTweetLikes(tweetId, updatedLikes);
-          await addToTweetsLikedByUser(tweetId, userInfo.id ?? "");
-        } else {
-          updatedLikes = likes - 1;
-          await updateTweetLikes(tweetId, updatedLikes);
-          await removeFromTweetsLikedByUser(tweetId, userInfo.id ?? "");
-        }
-
+        await updateLikes(likes, userInfo, tweetId);
         setDisabled(false);
       } catch (e) {
         console.error(e);
