@@ -3,7 +3,7 @@ import { HeartIcon as HearIconSolid } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { updateLikes } from "../../domain/tweets/likes";
 import { formatNumWithPrefix } from "../../lib/stringFormattingUtils";
-import { type User } from "../../types";
+import { type User } from "../../domain/types";
 
 const LikeButton = ({
   tweetId,

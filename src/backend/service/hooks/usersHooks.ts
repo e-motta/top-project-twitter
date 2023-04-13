@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { type User } from "../../../types";
+import { type User } from "../../../domain/types";
 import {
   getUsersByUsernamesLazy,
   getUserByUsername,

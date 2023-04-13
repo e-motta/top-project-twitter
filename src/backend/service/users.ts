@@ -17,7 +17,7 @@ import {
   updateDocInFireStore,
   getAllCollectionDocsFromFirestore,
 } from "../firebase/firestore";
-import { type User } from "../../types";
+import { type User } from "../../domain/types";
 
 const COLLECTION_NAME = "users";
 

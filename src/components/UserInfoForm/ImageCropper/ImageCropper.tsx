@@ -11,7 +11,7 @@ import { useDebounceEffect } from "./useDebounceEffect";
 
 import "react-image-crop/dist/ReactCrop.css";
 import { uploadToStorage } from "../../../backend/firebase/storage";
-import { type User } from "../../../types";
+import { type User } from "../../../domain/types";
 import { updateUser } from "../../../backend/service/users";
 
 function centerAspectCrop(

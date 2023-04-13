@@ -21,7 +21,7 @@ import {
 } from "firebase/firestore";
 import { app } from "./config";
 import { selectConverter } from "./converters";
-import { type Collection } from "../../types";
+import { type Collection } from "../../domain/types";
 
 export const db = getFirestore(app);
 

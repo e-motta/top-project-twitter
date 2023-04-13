@@ -2,7 +2,7 @@ import TwitterLogo from "../../assets/twitter-logo-blue.png";
 import Tweet from "./Tweet";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "../Loading";
-import { type User } from "../../types";
+import { type User } from "../../domain/types";
 import { useTweetsbyUserIdsLazy } from "../../backend/service/hooks/tweetsHooks";
 import { useUsersByIds } from "../../backend/service/hooks/usersHooks";
 import NetworkError from "../../pages/NetworkError";

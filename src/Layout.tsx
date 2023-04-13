@@ -5,7 +5,7 @@ import { AuthContext } from "./backend/firebase/AuthContext";
 import Delayed from "./components/Delayed";
 import LeftSidebar from "./components/Sidebar/LeftSidebar";
 import NetworkError from "./pages/NetworkError";
-import useRedirectToRegister from "./useRedirectToRegister";
+import useRedirectToRegister from "./lib/useRedirectToRegister";
 
 const Layout = () => {
   const authUser = useContext(AuthContext);

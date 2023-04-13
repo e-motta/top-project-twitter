@@ -3,7 +3,7 @@ import {
   addToTweetsLikedByUser,
   removeFromTweetsLikedByUser,
 } from "../../backend/service/users";
-import { type User } from "../../types";
+import { type User } from "../types";
 
 export const updateLikes = async (
   likes: number,

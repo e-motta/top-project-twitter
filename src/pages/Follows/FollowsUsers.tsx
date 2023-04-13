@@ -5,7 +5,7 @@ import {
 } from "../../backend/service/hooks/usersHooks";
 import { useAuthUserUsernameAndEmail } from "../../backend/service/hooks/useAuthUserUsername";
 import { useEffect, useState } from "react";
-import { type User } from "../../types";
+import { type User } from "../../domain/types";
 import NetworkError from "../NetworkError";
 import InfiniteScroll from "react-infinite-scroll-component";
 import FollowButton from "../../components/buttons/FollowButton";

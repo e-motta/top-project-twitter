@@ -7,7 +7,7 @@ import {
   postUser,
   updateUser,
 } from "../../backend/service/users";
-import { type User } from "../../types";
+import { type User } from "../../domain/types";
 import { validateName, validateUsername } from "./helpers";
 
 const useForm = () => {
