@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import Follows from "./components/pages/Follows/Follows";
-import Register from "./components/pages/Register";
+import Follows from "./pages/Follows/Follows";
+import Register from "./pages/Register";
 
-import Home from "./components/pages/Home/Home";
-import Login from "./components/pages/Login/Login";
-import Profile from "./components/pages/Profile/Profile";
-import EditProfile from "./components/pages/Settings/EditProfile";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
+import Profile from "./pages/Profile/Profile";
+import EditProfile from "./pages/Settings/EditProfile";
 import Layout from "./Layout";
-import NotFound from "./components/pages/NotFound";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (

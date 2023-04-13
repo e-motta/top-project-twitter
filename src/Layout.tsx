@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import Footer from "./components/generics/Footer/Footer";
+import Footer from "./components/Footer/Footer";
 import { useContext } from "react";
 import { AuthContext } from "./firebase/AuthContext";
-import Delayed from "./components/generics/Delayed";
-import LeftSidebar from "./components/generics/Sidebar/LeftSidebar";
-import NetworkError from "./components/pages/NetworkError";
+import Delayed from "./components/Delayed";
+import LeftSidebar from "./components/Sidebar/LeftSidebar";
+import NetworkError from "./pages/NetworkError";
 import useRedirectToRegister from "./useRedirectToRegister";
 
 const Layout = () => {
