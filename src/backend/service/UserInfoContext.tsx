@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { type User } from "../types";
+import { type User } from "../../types";
 
 interface ContextType {
   userInfo: Partial<User> | null;

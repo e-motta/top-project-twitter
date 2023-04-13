@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
-import { useUserInfo, useUsersByIdLazy } from "../../service/hooks/usersHooks";
-import { useAuthUserUsernameAndEmail } from "../../service/hooks/useAuthUserUsername";
+import {
+  useUserInfo,
+  useUsersByIdLazy,
+} from "../../backend/service/hooks/usersHooks";
+import { useAuthUserUsernameAndEmail } from "../../backend/service/hooks/useAuthUserUsername";
 import { useEffect, useState } from "react";
 import { type User } from "../../types";
 import NetworkError from "../NetworkError";

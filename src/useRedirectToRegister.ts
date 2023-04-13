@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthUserUsernameAndEmail } from "./service/hooks/useAuthUserUsername";
-import { isEmailRegistered } from "./service/users";
+import { useAuthUserUsernameAndEmail } from "./backend/service/hooks/useAuthUserUsername";
+import { isEmailRegistered } from "./backend/service/users";
 
 const useRedirectToRegister = () => {
   const navigate = useNavigate();

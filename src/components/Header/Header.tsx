@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../firebase/AuthContext";
+import { AuthContext } from "../../backend/firebase/AuthContext";
 import NavSidebarButton from "../Sidebar/NavSidebarButton";
 
 const Header = ({

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
 import { useContext } from "react";
-import { AuthContext } from "./firebase/AuthContext";
+import { AuthContext } from "./backend/firebase/AuthContext";
 import Delayed from "./components/Delayed";
 import LeftSidebar from "./components/Sidebar/LeftSidebar";
 import NetworkError from "./pages/NetworkError";

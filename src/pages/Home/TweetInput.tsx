@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { type Tweet, type User } from "../../types";
 import TweetButton from "../../components/buttons/TweetButton";
-import { postTweet } from "../../service/tweets";
+import { postTweet } from "../../backend/service/tweets";
 import Avatar from "../../components/Avatar";
 
 const TweetInput = ({

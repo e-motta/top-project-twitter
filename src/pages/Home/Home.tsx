@@ -1,6 +1,9 @@
 import NavButton from "../../components/buttons/NavButton";
-import { useUserInfo, useAllUserIds } from "../../service/hooks/usersHooks";
-import { useAuthUserUsernameAndEmail } from "../../service/hooks/useAuthUserUsername";
+import {
+  useUserInfo,
+  useAllUserIds,
+} from "../../backend/service/hooks/usersHooks";
+import { useAuthUserUsernameAndEmail } from "../../backend/service/hooks/useAuthUserUsername";
 import NetworkError from "../NetworkError";
 import { useEffect, useMemo, useState } from "react";
 import Loading from "../../components/Loading";

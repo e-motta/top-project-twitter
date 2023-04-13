@@ -3,8 +3,8 @@ import Tweet from "./Tweet";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "../Loading";
 import { type User } from "../../types";
-import { useTweetsbyUserIdsLazy } from "../../service/hooks/tweetsHooks";
-import { useUsersByIds } from "../../service/hooks/usersHooks";
+import { useTweetsbyUserIdsLazy } from "../../backend/service/hooks/tweetsHooks";
+import { useUsersByIds } from "../../backend/service/hooks/usersHooks";
 import NetworkError from "../../pages/NetworkError";
 import TweetInput from "../../pages/Home/TweetInput";
 

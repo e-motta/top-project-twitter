@@ -1,7 +1,7 @@
 import Header from "../../components/Header/Header";
 import Loading from "../../components/Loading";
-import { useUserInfo } from "../../service/hooks/usersHooks";
-import { useAuthUserUsernameAndEmail } from "../../service/hooks/useAuthUserUsername";
+import { useUserInfo } from "../../backend/service/hooks/usersHooks";
+import { useAuthUserUsernameAndEmail } from "../../backend/service/hooks/useAuthUserUsername";
 import NetworkError from "../NetworkError";
 import { useEffect } from "react";
 import NotFound from "../NotFound";

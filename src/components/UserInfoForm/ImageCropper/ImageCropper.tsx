@@ -10,9 +10,9 @@ import { canvasPreview } from "./canvasPreview";
 import { useDebounceEffect } from "./useDebounceEffect";
 
 import "react-image-crop/dist/ReactCrop.css";
-import { uploadToStorage } from "../../../firebase/storage";
+import { uploadToStorage } from "../../../backend/firebase/storage";
 import { type User } from "../../../types";
-import { updateUser } from "../../../service/users";
+import { updateUser } from "../../../backend/service/users";
 
 function centerAspectCrop(
   mediaWidth: number,

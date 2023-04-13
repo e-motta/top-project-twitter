@@ -1,12 +1,12 @@
 import { useLocation, useParams } from "react-router-dom";
 import NavButton from "../../components/buttons/NavButton";
-import { useUserInfo } from "../../service/hooks/usersHooks";
 import FollowsUsers from "./FollowsUsers";
 import NetworkError from "../NetworkError";
 import { useEffect } from "react";
 import NotFound from "../NotFound";
 import Loading from "../../components/Loading";
 import Header from "../../components/Header/Header";
+import { useUserInfo } from "../../backend/service/hooks/usersHooks";
 
 const Follows = () => {
   const { pathname } = useLocation();

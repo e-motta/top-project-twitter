@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthUserUsernameAndEmail } from "../../service/hooks/useAuthUserUsername";
-import { useUserInfo } from "../../service/hooks/usersHooks";
-import { isUsernameTaken, postUser, updateUser } from "../../service/users";
+import { useAuthUserUsernameAndEmail } from "../../backend/service/hooks/useAuthUserUsername";
+import { useUserInfo } from "../../backend/service/hooks/usersHooks";
+import {
+  isUsernameTaken,
+  postUser,
+  updateUser,
+} from "../../backend/service/users";
 import { type User } from "../../types";
 import { validateName, validateUsername } from "./helpers";
 

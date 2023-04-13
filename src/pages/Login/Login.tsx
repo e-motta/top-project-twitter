@@ -4,9 +4,12 @@ import { useCallback, useEffect } from "react";
 import logoImg from "../../assets/twitter-logo-blue.png";
 import Button from "../../components/buttons/Button";
 import googleLogo from "../../assets/google-logo.svg";
-import { auth } from "../../firebase/auth";
+import { auth } from "../../backend/firebase/auth";
 import NetworkError from "../NetworkError";
-import { useSignIn, useSignInAnonymous } from "../../firebase/authHooks";
+import {
+  useSignIn,
+  useSignInAnonymous,
+} from "../../backend/firebase/authHooks";
 import Loading from "../../components/Loading";
 
 const Login = () => {

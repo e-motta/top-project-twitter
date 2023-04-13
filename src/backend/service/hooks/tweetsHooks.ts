@@ -1,6 +1,6 @@
 import { getTweetsByUserIdsLazy, getTweetsCount } from "../tweets";
 import { getFollowersCount } from "../users";
-import { type Tweet } from "../../types";
+import { type Tweet } from "../../../types";
 import {
   useFetchCountGeneric,
   useFetchFromFirestoreGenericLazy,

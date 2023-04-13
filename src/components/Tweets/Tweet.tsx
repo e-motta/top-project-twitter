@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import Avatar from "../Avatar";
 import LikeButton from "./LikeButton";
 import DeleteButton from "./DeleteButton";
-import { useAuthUserUsernameAndEmail } from "../../service/hooks/useAuthUserUsername";
-import { useUserInfo } from "../../service/hooks/usersHooks";
+import { useAuthUserUsernameAndEmail } from "../../backend/service/hooks/useAuthUserUsername";
+import { useUserInfo } from "../../backend/service/hooks/usersHooks";
 import { formatDatePretty } from "../../lib/stringFormattingUtils";
 
 const Tweet = ({

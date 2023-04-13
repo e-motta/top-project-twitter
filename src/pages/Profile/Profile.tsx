@@ -4,9 +4,9 @@ import { formatNumWithPrefix } from "../../lib/stringFormattingUtils";
 import {
   useFollowersCount,
   useTweetsCount,
-} from "../../service/hooks/tweetsHooks";
-import { useUserInfo } from "../../service/hooks/usersHooks";
-import { useAuthUserUsernameAndEmail } from "../../service/hooks/useAuthUserUsername";
+} from "../../backend/service/hooks/tweetsHooks";
+import { useUserInfo } from "../../backend/service/hooks/usersHooks";
+import { useAuthUserUsernameAndEmail } from "../../backend/service/hooks/useAuthUserUsername";
 import NetworkError from "../NetworkError";
 import EditProfileButton from "../../components/buttons/EditProfileButton";
 import FollowButton from "../../components/buttons/FollowButton";

@@ -6,8 +6,8 @@ import Button from "../buttons/Button";
 import Loading from "../Loading";
 import useForm from "./useForm";
 import EditMedia from "./EditMedia";
-import { useAuthUserUsernameAndEmail } from "../../service/hooks/useAuthUserUsername";
-import { useUserInfo } from "../../service/hooks/usersHooks";
+import { useAuthUserUsernameAndEmail } from "../../backend/service/hooks/useAuthUserUsername";
+import { useUserInfo } from "../../backend/service/hooks/usersHooks";
 import NotFound from "../../pages/NotFound";
 import NetworkError from "../../pages/NetworkError";
 

@@ -1,6 +1,6 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { deleteTweet } from "../../service/tweets";
+import { deleteTweet } from "../../backend/service/tweets";
 
 const DeleteButton = ({
   tweetId,

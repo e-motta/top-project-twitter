@@ -1,8 +1,8 @@
-import { updateTweetLikes } from "../../service/tweets";
+import { updateTweetLikes } from "../../backend/service/tweets";
 import {
   addToTweetsLikedByUser,
   removeFromTweetsLikedByUser,
-} from "../../service/users";
+} from "../../backend/service/users";
 import { type User } from "../../types";
 
 export const updateLikes = async (

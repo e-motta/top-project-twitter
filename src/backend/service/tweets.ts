@@ -12,7 +12,7 @@ import {
   deleteDocFromFirestore,
   addDocToFirestore,
 } from "../firebase/firestore";
-import { type Tweet } from "../types";
+import { type Tweet } from "../../types";
 
 const COLLECTION_NAME = "tweets";
 

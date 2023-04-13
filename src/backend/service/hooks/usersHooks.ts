@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { type User } from "../../../types";
 import {
   getUsersByUsernamesLazy,
   getUserByUsername,
@@ -6,7 +7,6 @@ import {
   getUsersByIdLazy,
   getAllUserIds,
 } from "../users";
-import { type User } from "../../types";
 import {
   useFetchFromFirestoreGeneric,
   useFetchFromFirestoreGenericLazy,

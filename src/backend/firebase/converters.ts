@@ -1,5 +1,5 @@
 import { Timestamp, type FirestoreDataConverter } from "firebase/firestore";
-import { type Tweet, type User } from "../types";
+import { type Tweet, type User } from "../../types";
 
 const userDataConverter: FirestoreDataConverter<User> = {
   toFirestore: (data) => data,

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { removeFromFollowedByUser } from "../../service/users";
+import { removeFromFollowedByUser } from "../../backend/service/users";
 import Button from "./Button";
 
 const FollowingButton = ({
