@@ -7,6 +7,11 @@ import { useTweetsbyUserIdsLazy } from "../../backend/service/hooks/tweetsHooks"
 import { useUsersByIds } from "../../backend/service/hooks/usersHooks";
 import NetworkError from "../../pages/NetworkError";
 import TweetInput from "../../pages/Home/TweetInput";
+import {
+  getAuthorAvatar,
+  getAuthorName,
+  getAuthorUsername,
+} from "../../domain/tweets/tweets";
 
 const TweetsTimeline = ({
   userIds,
@@ -87,20 +92,12 @@ const TweetsTimeline = ({
             <Tweet
               key={t.id}
               id={t.id ?? ""}
-              name={
-                tweetsUsersInfo.find((u) => u.id === t.author_id)?.name ?? ""
-              }
-              username={
-                tweetsUsersInfo.find((u) => u.id === t.author_id)?.username ??
-                ""
-              }
+              name={getAuthorName(tweetsUsersInfo, t)}
+              username={getAuthorUsername(tweetsUsersInfo, t)}
               date={t.created_at}
               text={t.text}
               likes={t.likes}
-              avatarUrl={
-                tweetsUsersInfo.find((u) => u.id === t.author_id)
-                  ?.profile_image_url ?? ""
-              }
+              avatarUrl={getAuthorAvatar(tweetsUsersInfo, t)}
               deleteTweet={deleteTweet}
             />
           ))}

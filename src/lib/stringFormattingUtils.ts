@@ -49,6 +49,12 @@ export const formatDatePretty = (date: Date) => {
   return formattedDate;
 };
 
+export const timeString = (date?: Date) =>
+  date !== undefined ? date.toLocaleTimeString() : "";
+
+export const yearString = (date?: Date) =>
+  date !== undefined ? date.toDateString().slice(4) : "";
+
 export const formatNumWithPrefix = (num: number, digits: number) => {
   const lookup = [
     { value: 1, symbol: "" },

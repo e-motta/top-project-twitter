@@ -5,7 +5,11 @@ import LikeButton from "./LikeButton";
 import DeleteButton from "./DeleteButton";
 import { useAuthUserUsernameAndEmail } from "../../backend/service/hooks/useAuthUserUsername";
 import { useUserInfo } from "../../backend/service/hooks/usersHooks";
-import { formatDatePretty } from "../../lib/stringFormattingUtils";
+import {
+  timeString,
+  formatDatePretty,
+  yearString,
+} from "../../lib/stringFormattingUtils";
 
 const Tweet = ({
   id,
@@ -56,9 +60,7 @@ const Tweet = ({
               <span>@{username}</span>·
               <span
                 className="hover:underline"
-                title={`${date?.toLocaleTimeString() ?? ""} · ${
-                  date?.toDateString().slice(4) ?? ""
-                }`}
+                title={`${timeString(date)} · ${yearString(date)}`}
               >
                 {formatDatePretty(date ?? new Date())}
               </span>
